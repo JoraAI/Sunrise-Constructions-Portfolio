@@ -1,0 +1,11 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='200' height='48' viewBox='0 0 200 48' role='img' aria-label='Sunrise Constructions logo'>
+  <g stroke='#F5A623' stroke-width='2' stroke-linecap='round'>
+    <path d='M24 4v6'/><path d='M9 11l4 4'/><path d='M2 24h6'/><path d='M39 11l-4 4'/><path d='M46 24h-6'/>
+  </g>
+  <circle cx='24' cy='26' r='8' fill='#F5A623'/>
+  <g fill='#0B1B33'>
+    <rect x='8' y='36' width='7' height='10'/><rect x='17' y='28' width='8' height='18'/><rect x='27' y='33' width='7' height='13'/><rect x='36' y='37' width='8' height='9'/>
+  </g>
+  <text x='60' y='26' font-family='Arial' font-size='18' font-weight='bold' fill='#0B1B33'>SUNRISE</text>
+  <text x='60' y='42' font-family='Arial' font-size='9' letter-spacing='4' fill='#6B6B6B'>CONSTRUCTIONS</text>
+</svg>
