@@ -79,7 +79,7 @@ export function organizationJsonLd() {
     name: siteConfig.name,
     legalName: siteConfig.legalName,
     url: baseUrl,
-    logo: `${baseUrl}/images/logo.svg`,
+    logo: `${baseUrl}/images/logo.png`,
     image: `${baseUrl}/og/og-default.svg`,
     description: siteConfig.description,
     telephone: siteConfig.contact.phone,
@@ -186,7 +186,7 @@ export function articleJsonLd(post: {
       name: siteConfig.name,
       logo: {
         '@type': 'ImageObject',
-        url: `${baseUrl}/images/logo.svg`,
+        url: `${baseUrl}/images/logo.png`,
       },
     },
     mainEntityOfPage: {

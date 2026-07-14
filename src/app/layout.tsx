@@ -49,6 +49,10 @@ export const metadata: Metadata = {
     follow: true,
     'max-image-preview': 'large',
   },
+  icons: {
+    icon: '/images/favicon.png',
+    apple: '/images/favicon.png',
+  },
 };
 
 export default function RootLayout({
