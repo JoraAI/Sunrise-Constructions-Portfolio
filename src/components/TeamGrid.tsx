@@ -1,10 +1,12 @@
+import type { TeamMember } from '@/types/content';
+import { team as defaultTeam } from '@/lib/content';
 import { Linkedin } from 'lucide-react';
-import { team } from '@/lib/content';
+
 import { SectionHeading } from './SectionHeading';
 import { SmartImage } from './SmartImage';
 import { Reveal } from './Reveal';
 
-export function TeamGrid() {
+export function TeamGrid({ team = defaultTeam }: { team?: TeamMember[] }) {
   return (
     <section className="section bg-white" aria-labelledby="team-heading">
       <div className="container-page">

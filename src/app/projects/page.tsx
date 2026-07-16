@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import type { Metadata } from 'next';
 import { PageHeader } from '@/components/PageHeader';
 import { ProjectCard } from '@/components/ProjectCard';
@@ -6,7 +7,7 @@ import { CTABand } from '@/components/CTABand';
 import { JsonLd } from '@/components/JsonLd';
 import { SectionHeading } from '@/components/SectionHeading';
 import { buildMetadata, breadcrumbJsonLd } from '@/lib/seo';
-import { projects } from '@/lib/content';
+import { loadProjects } from '@/lib/content-loader';
 
 export const metadata: Metadata = buildMetadata({
   title: 'Projects - Landmark Construction Portfolio',
@@ -22,7 +23,8 @@ export const metadata: Metadata = buildMetadata({
   ],
 });
 
-export default function ProjectsPage() {
+export default async function ProjectsPage() {
+  const projects = await loadProjects();
   const categories = Array.from(new Set(projects.map((p) => p.category)));
 
   return (

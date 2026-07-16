@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Calendar, Clock, ArrowRight } from 'lucide-react';
@@ -7,7 +8,7 @@ import { JsonLd } from '@/components/JsonLd';
 import { SmartImage } from '@/components/SmartImage';
 import { CTABand } from '@/components/CTABand';
 import { buildMetadata, breadcrumbJsonLd } from '@/lib/seo';
-import { blogPosts } from '@/lib/content';
+import { loadBlogPosts } from '@/lib/content-loader';
 import { formatDate, truncate } from '@/lib/utils';
 
 export const metadata: Metadata = buildMetadata({
@@ -24,7 +25,8 @@ export const metadata: Metadata = buildMetadata({
   ],
 });
 
-export default function BlogPage() {
+export default async function BlogPage() {
+  const blogPosts = await loadBlogPosts();
   const [featured, ...rest] = blogPosts;
 
   return (

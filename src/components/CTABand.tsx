@@ -41,10 +41,12 @@ export function CTABand() {
               {ctaBand.cta.label}
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Link>
-            <a href={ctaBand.phoneHref} className="btn-secondary group">
-              <Phone className="h-4 w-4" />
-              {ctaBand.phone}
-            </a>
+            {ctaBand.phone && (
+              <a href={ctaBand.phoneHref} className="btn-secondary group">
+                <Phone className="h-4 w-4" />
+                {ctaBand.phone}
+              </a>
+            )}
           </div>
         </Reveal>
       </div>

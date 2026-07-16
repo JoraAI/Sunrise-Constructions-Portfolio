@@ -1,13 +1,15 @@
+import type { BlogPost } from '@/types/content';
+import { blogPosts as defaultBlogPosts } from '@/lib/content';
 import Link from 'next/link';
 import { ArrowRight, Calendar, Clock } from 'lucide-react';
-import { blogPosts } from '@/lib/content';
+
 import { SectionHeading } from './SectionHeading';
 import { SmartImage } from './SmartImage';
 import { Reveal } from './Reveal';
 import { formatDate, truncate } from '@/lib/utils';
 
-export function BlogTeaser() {
-  const latest = blogPosts.slice(0, 3);
+export function BlogTeaser({ posts = defaultBlogPosts }: { posts?: BlogPost[] }) {
+  const latest = posts.slice(0, 3);
 
   return (
     <section className="section bg-white" aria-labelledby="blog-heading">

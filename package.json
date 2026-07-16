@@ -2,21 +2,29 @@
   "name": "sunrise-constructions",
   "version": "1.0.0",
   "private": true,
-  "description": "Premium marketing website for Sunrise Constructions — a ₹300Cr+ tier construction enterprise.",
+  "description": "Premium marketing website for Sunrise Constructions — a ₹150Cr+ tier construction enterprise.",
   "scripts": {
-    "dev": "next dev",
+    "dev": "NODE_OPTIONS='--dns-result-order=ipv4first' next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "NODE_OPTIONS='--dns-result-order=ipv4first' next start",
     "lint": "next lint",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "create-superadmin": "NODE_OPTIONS='--dns-result-order=ipv4first' node scripts/create-superadmin.js",
+    "migrate-media": "NODE_OPTIONS='--dns-result-order=ipv4first' node scripts/migrate-media.js",
+    "seed-content": "NODE_OPTIONS='--dns-result-order=ipv4first' node scripts/seed-content.js",
+    "update-jobs": "NODE_OPTIONS='--dns-result-order=ipv4first' node scripts/update-jobs.js"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "@supabase/supabase-js": "^2.109.0",
     "clsx": "^2.1.1",
     "framer-motion": "^11.3.19",
+    "gray-matter": "^4.0.3",
     "lucide-react": "^0.417.0",
     "next": "14.2.33",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "resend": "^6.17.2",
     "tailwind-merge": "^2.4.0"
   },
   "devDependencies": {

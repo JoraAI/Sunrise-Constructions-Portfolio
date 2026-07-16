@@ -10,6 +10,7 @@ import { Icon } from '@/components/Icon';
 import { SectionHeading } from '@/components/SectionHeading';
 import { ProjectCard } from '@/components/ProjectCard';
 import { buildMetadata, breadcrumbJsonLd } from '@/lib/seo';
+import { loadIndustryBySlug } from '@/lib/content-loader';
 import { industries, projects } from '@/lib/content';
 
 export const dynamicParams = false;

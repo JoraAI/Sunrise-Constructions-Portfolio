@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import type { Metadata } from 'next';
 import { PageHeader } from '@/components/PageHeader';
 import { ServiceCard } from '@/components/ServiceCard';
@@ -6,7 +7,7 @@ import { CTABand } from '@/components/CTABand';
 import { JsonLd } from '@/components/JsonLd';
 import { ProcessTimeline } from '@/components/ProcessTimeline';
 import { buildMetadata, breadcrumbJsonLd } from '@/lib/seo';
-import { services } from '@/lib/content';
+import { loadServices } from '@/lib/content-loader';
 
 export const metadata: Metadata = buildMetadata({
   title: 'Construction Services - Full Lifecycle Delivery',
@@ -22,7 +23,8 @@ export const metadata: Metadata = buildMetadata({
   ],
 });
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  const services = await loadServices();
   return (
     <>
       <PageHeader

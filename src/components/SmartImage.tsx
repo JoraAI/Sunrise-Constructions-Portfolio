@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils';
+import { mediaUrl } from '@/lib/cdn';
 
 interface SmartImageProps {
   src: string;
@@ -31,7 +32,7 @@ export function SmartImage({
     <div className={cn('relative overflow-hidden', aspect, className)}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src={src}
+        src={mediaUrl(src)}
         alt={alt}
         loading={priority ? 'eager' : 'lazy'}
         decoding={priority ? 'sync' : 'async'}

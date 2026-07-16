@@ -12,8 +12,29 @@ import { TeamGrid } from '@/components/TeamGrid';
 import { CareersTeaser } from '@/components/CareersTeaser';
 import { BlogTeaser } from '@/components/BlogTeaser';
 import { CTABand } from '@/components/CTABand';
+import {
+  loadServices,
+  loadProjects,
+  loadIndustries,
+  loadTestimonials,
+  loadTeam,
+  loadBlogPosts,
+} from '@/lib/content-loader';
 
-export default function HomePage() {
+export const dynamic = 'force-dynamic';
+
+export default async function HomePage() {
+  // Fetch all content from DB (with fallback to content.ts)
+  const [services, projects, industries, testimonials, team, blogPosts] =
+    await Promise.all([
+      loadServices(),
+      loadProjects(),
+      loadIndustries(),
+      loadTestimonials(),
+      loadTeam(),
+      loadBlogPosts(),
+    ]);
+
   return (
     <>
       {/* 1-2. Navbar + Hero with VideoSlideshow */}
@@ -25,23 +46,23 @@ export default function HomePage() {
       {/* 5. Mission / Vision / Values */}
       <MissionVisionValues />
       {/* 6. Services */}
-      <ServicesSection />
+      <ServicesSection services={services} />
       {/* 7. Industries */}
-      <IndustriesGrid />
+      <IndustriesGrid industries={industries} />
       {/* 8. Featured Projects */}
-      <FeaturedProjects />
+      <FeaturedProjects projects={projects} />
       {/* 9. Credibility Band */}
       <CredibilityBand />
       {/* 10. Process Timeline */}
       <ProcessTimeline />
       {/* 11. Testimonials */}
-      <TestimonialCarousel />
+      <TestimonialCarousel testimonials={testimonials} />
       {/* 12. Leadership Team */}
-      <TeamGrid />
+      <TeamGrid team={team} />
       {/* 13. Careers Teaser */}
       <CareersTeaser />
       {/* 14. Blog Teaser */}
-      <BlogTeaser />
+      <BlogTeaser posts={blogPosts} />
       {/* 15. CTA Band */}
       <CTABand />
     </>

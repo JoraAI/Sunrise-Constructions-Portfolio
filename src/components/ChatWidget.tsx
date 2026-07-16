@@ -13,30 +13,35 @@ interface ChatMessage {
 }
 
 /**
- * ============================================================================
- * LLM INTEGRATION STUB
- * ============================================================================
- * Replace the body of this function with a real API call (e.g. fetch to
- * /api/chat) when wiring up a live assistant. The UI and local state are
- * built to work unchanged once this returns a real response string.
- * ============================================================================
+ * Sends a message to the Gemini-powered /api/chat endpoint.
+ *
+ * The API route tries to answer with Gemini 2.5 Flash using the company
+ * knowledge base. If Gemini can't answer (or the API key is missing), it
+ * falls back to creating a support ticket + notifying staff, and returns
+ * a graceful "we'll get back to you" message.
  */
-async function sendMessageToLLM(message: string): Promise<string> {
-  // Simulated network + model latency so the typing indicator is visible.
-  await new Promise((resolve) => setTimeout(resolve, 1200));
+async function sendMessageToLLM(
+  message: string,
+  history: ChatMessage[],
+): Promise<string> {
+  const response = await fetch('/api/chat', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      message,
+      // Send prior conversation so Gemini has context (exclude greeting)
+      history: history
+        .filter((m) => m.id !== 'greeting')
+        .map((m) => ({ role: m.role, content: m.content })),
+    }),
+  });
 
-  // Naive canned responses - swap for real model output later.
-  const lower = message.toLowerCase();
-  if (lower.includes('service') || lower.includes('what do you')) {
-    return 'We offer General Construction, Project Management, Design & Build, Renovation & Remodeling, and Sustainable Construction. You can explore them all at /services - or tell me about your project and I\u2019ll suggest the best fit.';
+  if (!response.ok) {
+    throw new Error('Chat API request failed');
   }
-  if (lower.includes('quote') || lower.includes('price') || lower.includes('cost')) {
-    return 'I\u2019d be happy to connect you with our estimating team. Could you share the project type, location, and approximate scope? Or submit details via our /contact-us page for a formal quote.';
-  }
-  if (lower.includes('career') || lower.includes('job') || lower.includes('hiring')) {
-    return 'We\u2019re always looking for great engineers and project leaders. Check our open roles at /careers - we\u2019d love to hear from you.';
-  }
-  return 'Thanks for reaching out to Sunrise Constructions! A team member will follow up shortly. For anything urgent, call +91 712 4567 890 or email hello@sunriseconstructions.in.';
+
+  const data = await response.json();
+  return data.reply || 'Sorry, I could not process your message. Please try again.';
 }
 
 export function ChatWidget() {
@@ -79,7 +84,7 @@ export function ChatWidget() {
     setIsTyping(true);
 
     try {
-      const reply = await sendMessageToLLM(trimmed);
+      const reply = await sendMessageToLLM(trimmed, messages);
       setMessages((prev) => [
         ...prev,
         { id: `a-${Date.now()}`, role: 'assistant', content: reply },

@@ -10,7 +10,7 @@ import { siteConfig, offices } from '@/lib/content';
 export const metadata: Metadata = buildMetadata({
   title: 'Contact Us - Request a Quote',
   description:
-    'Get in touch with Sunrise Constructions. Call +91 712 4567 890, email hello@sunriseconstructions.in, or submit your project details for a quote.',
+    'Get in touch with Sunrise Constructions. Email hello@sunriseconstructions.in or submit your project details for a quote.',
   path: '/contact-us',
   keywords: [
     'contact construction company',
@@ -45,17 +45,19 @@ export default function ContactPage() {
               </p>
 
               <ul className="mt-8 space-y-5">
-                <li className="flex items-start gap-4">
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gold/10 text-gold">
-                    <Phone className="h-5 w-5" />
-                  </span>
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-wide text-charcoal-muted">Phone</p>
-                    <a href={siteConfig.contact.phoneHref} className="font-heading font-bold text-navy hover:text-gold">
-                      {siteConfig.contact.phone}
-                    </a>
-                  </div>
-                </li>
+                {siteConfig.contact.phone && (
+                  <li className="flex items-start gap-4">
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gold/10 text-gold">
+                      <Phone className="h-5 w-5" />
+                    </span>
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-wide text-charcoal-muted">Phone</p>
+                      <a href={siteConfig.contact.phoneHref} className="font-heading font-bold text-navy hover:text-gold">
+                        {siteConfig.contact.phone}
+                      </a>
+                    </div>
+                  </li>
+                )}
                 <li className="flex items-start gap-4">
                   <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gold/10 text-gold">
                     <Mail className="h-5 w-5" />

@@ -1,11 +1,13 @@
+import type { Service } from '@/types/content';
+import { services as defaultServices } from '@/lib/content';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
-import { services } from '@/lib/content';
+
 import { SectionHeading } from './SectionHeading';
 import { ServiceCard } from './ServiceCard';
 import { Reveal } from './Reveal';
 
-export function ServicesSection() {
+export function ServicesSection({ services = defaultServices }: { services?: Service[] }) {
   return (
     <section className="section bg-cream" aria-labelledby="services-heading">
       <div className="container-page">

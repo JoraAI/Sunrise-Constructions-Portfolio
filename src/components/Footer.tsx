@@ -97,12 +97,14 @@ export function Footer() {
                   {siteConfig.contact.city}, {siteConfig.contact.state} {siteConfig.contact.pincode}
                 </span>
               </li>
-              <li className="flex items-center gap-3">
-                <Phone className="h-4 w-4 shrink-0 text-gold" />
-                <a href={siteConfig.contact.phoneHref} className="hover:text-gold">
-                  {siteConfig.contact.phone}
-                </a>
-              </li>
+              {siteConfig.contact.phone && (
+                <li className="flex items-center gap-3">
+                  <Phone className="h-4 w-4 shrink-0 text-gold" />
+                  <a href={siteConfig.contact.phoneHref} className="hover:text-gold">
+                    {siteConfig.contact.phone}
+                  </a>
+                </li>
+              )}
               <li className="flex items-center gap-3">
                 <Mail className="h-4 w-4 shrink-0 text-gold" />
                 <a href={`mailto:${siteConfig.contact.email}`} className="hover:text-gold">

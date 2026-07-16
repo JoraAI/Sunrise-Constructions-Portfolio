@@ -171,6 +171,7 @@ export interface JobListing {
   responsibilities: string[];
   requirements: string[];
   niceToHave: string[];
+  qualifications?: string[];
 }
 
 export interface JobPerk {

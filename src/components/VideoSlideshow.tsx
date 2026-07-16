@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
+import { mediaUrl } from '@/lib/cdn';
 
 export interface SlideVideo {
   src: string;
@@ -62,7 +63,7 @@ export function VideoSlideshow({
   return (
     <div className={cn('absolute inset-0 overflow-hidden', className)} aria-hidden>
       <img
-        src={videos[0]?.poster}
+        src={mediaUrl(videos[0]?.poster || '')}
         alt=""
         className={cn(
           'absolute inset-0 h-full w-full object-cover transition-opacity duration-700',
@@ -78,8 +79,8 @@ export function VideoSlideshow({
               ref={(el) => {
                 videoRefs.current[i] = el;
               }}
-              src={video.src}
-              poster={video.poster}
+              src={mediaUrl(video.src)}
+              poster={mediaUrl(video.poster)}
               muted
               autoPlay={i === 0}
               playsInline

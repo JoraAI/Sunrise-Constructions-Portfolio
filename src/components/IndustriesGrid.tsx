@@ -1,12 +1,14 @@
+import type { Industry } from '@/types/content';
+import { industries as defaultIndustries } from '@/lib/content';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
-import { industries } from '@/lib/content';
+
 import { SectionHeading } from './SectionHeading';
 import { SmartImage } from './SmartImage';
 import { Reveal } from './Reveal';
 import { Icon } from './Icon';
 
-export function IndustriesGrid() {
+export function IndustriesGrid({ industries = defaultIndustries }: { industries?: Industry[] }) {
   return (
     <section className="section bg-white" aria-labelledby="industries-heading">
       <div className="container-page">

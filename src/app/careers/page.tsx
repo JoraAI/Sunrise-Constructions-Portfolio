@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import type { Metadata } from 'next';
 import { PageHeader } from '@/components/PageHeader';
 import { SectionHeading } from '@/components/SectionHeading';
@@ -8,8 +9,8 @@ import { SmartImage } from '@/components/SmartImage';
 import { JobListingsFilter } from '@/components/JobListingsFilter';
 import { ApplicationForm } from '@/components/ApplicationForm';
 import { buildMetadata, breadcrumbJsonLd } from '@/lib/seo';
+import { loadJobListings } from '@/lib/content-loader';
 import {
-  jobListings,
   jobPerks,
   careerStats,
   lifeAtSunrise,
@@ -31,7 +32,8 @@ export const metadata: Metadata = buildMetadata({
   ],
 });
 
-export default function CareersPage() {
+export default async function CareersPage() {
+  const jobListings = await loadJobListings();
   return (
     <>
       {/* Hero */}

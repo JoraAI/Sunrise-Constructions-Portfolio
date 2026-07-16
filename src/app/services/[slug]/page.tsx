@@ -10,6 +10,7 @@ import { JsonLd } from '@/components/JsonLd';
 import { Icon } from '@/components/Icon';
 import { SectionHeading } from '@/components/SectionHeading';
 import { buildMetadata, breadcrumbJsonLd } from '@/lib/seo';
+import { loadServiceBySlug } from '@/lib/content-loader';
 import { services, projects } from '@/lib/content';
 import { ProjectCard } from '@/components/ProjectCard';
 

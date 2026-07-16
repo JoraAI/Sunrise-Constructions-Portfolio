@@ -1,11 +1,13 @@
+import type { Project } from '@/types/content';
+import { projects as defaultProjects } from '@/lib/content';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
-import { projects } from '@/lib/content';
+
 import { SectionHeading } from './SectionHeading';
 import { ProjectCard } from './ProjectCard';
 import { Reveal } from './Reveal';
 
-export function FeaturedProjects() {
+export function FeaturedProjects({ projects = defaultProjects }: { projects?: Project[] }) {
   const featured = projects.filter((p) => p.featured).slice(0, 4);
 
   return (

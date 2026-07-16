@@ -8,6 +8,7 @@ import { SectionHeading } from '@/components/SectionHeading';
 import { ApplicationForm } from '@/components/ApplicationForm';
 import { JobListingCard } from '@/components/JobListingCard';
 import { buildMetadata, breadcrumbJsonLd, jobPostingJsonLd } from '@/lib/seo';
+import { loadJobBySlug } from '@/lib/content-loader';
 import { jobListings } from '@/lib/content';
 import { formatDate } from '@/lib/utils';
 

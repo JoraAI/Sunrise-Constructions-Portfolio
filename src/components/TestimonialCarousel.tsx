@@ -1,15 +1,17 @@
 'use client';
+import type { Testimonial } from '@/types/content';
+import { testimonials as defaultTestimonials } from '@/lib/content';
 
 import { useCallback, useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Star, Quote, ChevronLeft, ChevronRight } from 'lucide-react';
-import { testimonials } from '@/lib/content';
+
 import { cn } from '@/lib/utils';
 import { SmartImage } from './SmartImage';
 
 const AUTOPLAY_MS = 6000;
 
-export function TestimonialCarousel() {
+export function TestimonialCarousel({ testimonials = defaultTestimonials }: { testimonials?: Testimonial[] }) {
   const [index, setIndex] = useState(0);
   const [direction, setDirection] = useState(0);
   const [paused, setPaused] = useState(false);

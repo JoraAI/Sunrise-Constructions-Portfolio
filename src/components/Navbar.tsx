@@ -56,10 +56,12 @@ export function Navbar() {
       >
         <div className="container-page flex h-10 items-center justify-between text-xs">
           <div className="flex items-center gap-6">
-            <a href={utilityBar.phoneHref} className="flex items-center gap-2 hover:text-gold">
-              <Phone className="h-3.5 w-3.5 text-gold" />
-              {utilityBar.phone}
-            </a>
+            {utilityBar.phone && (
+              <a href={utilityBar.phoneHref} className="flex items-center gap-2 hover:text-gold">
+                <Phone className="h-3.5 w-3.5 text-gold" />
+                {utilityBar.phone}
+              </a>
+            )}
             <a
               href={`mailto:${utilityBar.email}`}
               className="flex items-center gap-2 hover:text-gold"
@@ -177,9 +179,11 @@ export function Navbar() {
                   <ArrowRight className="h-4 w-4" />
                 </Link>
                 <div className="flex flex-col gap-2 text-sm text-white/70">
-                  <a href={utilityBar.phoneHref} className="flex items-center gap-2">
-                    <Phone className="h-4 w-4 text-gold" /> {utilityBar.phone}
-                  </a>
+                  {utilityBar.phone && (
+                    <a href={utilityBar.phoneHref} className="flex items-center gap-2">
+                      <Phone className="h-4 w-4 text-gold" /> {utilityBar.phone}
+                    </a>
+                  )}
                   <a href={`mailto:${utilityBar.email}`} className="flex items-center gap-2">
                     <Mail className="h-4 w-4 text-gold" /> {utilityBar.email}
                   </a>

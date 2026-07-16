@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { headers } from 'next/headers';
 import './globals.css';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
@@ -52,29 +53,39 @@ export const metadata: Metadata = {
   icons: {
     icon: '/images/favicon.png',
     apple: '/images/favicon.png',
+    shortcut: '/images/favicon.png',
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // Check if we're in the admin area — skip website chrome for those routes
+  const headerList = headers();
+  const pathname = headerList.get('x-pathname') || '';
+  const isAdmin = pathname.startsWith('/admin');
+
   return (
     <html lang="en">
       <body className="min-h-screen bg-white font-sans antialiased">
-        <JsonLd data={organizationJsonLd()} />
-        {/* Skip to content for accessibility */}
-        <a
-          href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-gold focus:px-4 focus:py-2 focus:text-navy"
-        >
-          Skip to content
-        </a>
-        <Navbar />
+        {!isAdmin && <JsonLd data={organizationJsonLd()} />}
+        {!isAdmin && (
+          <>
+            {/* Skip to content for accessibility */}
+            <a
+              href="#main"
+              className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-gold focus:px-4 focus:py-2 focus:text-navy"
+            >
+              Skip to content
+            </a>
+            <Navbar />
+          </>
+        )}
         <main id="main">{children}</main>
-        <Footer />
-        <ChatWidget />
+        {!isAdmin && <Footer />}
+        {!isAdmin && <ChatWidget />}
       </body>
     </html>
   );

@@ -8,6 +8,7 @@ import { CTABand } from '@/components/CTABand';
 import { JsonLd } from '@/components/JsonLd';
 import { SectionHeading } from '@/components/SectionHeading';
 import { buildMetadata, breadcrumbJsonLd } from '@/lib/seo';
+import { loadProjectBySlug } from '@/lib/content-loader';
 import { projects } from '@/lib/content';
 
 export const dynamicParams = false;

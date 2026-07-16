@@ -1,10 +1,11 @@
+export const dynamic = 'force-dynamic';
 import type { Metadata } from 'next';
 import { PageHeader } from '@/components/PageHeader';
 import { Reveal } from '@/components/Reveal';
 import { CTABand } from '@/components/CTABand';
 import { JsonLd } from '@/components/JsonLd';
 import { buildMetadata, breadcrumbJsonLd } from '@/lib/seo';
-import { industries } from '@/lib/content';
+import { loadIndustries } from '@/lib/content-loader';
 import { SmartImage } from '@/components/SmartImage';
 import { Icon } from '@/components/Icon';
 import Link from 'next/link';
@@ -24,7 +25,8 @@ export const metadata: Metadata = buildMetadata({
   ],
 });
 
-export default function IndustriesPage() {
+export default async function IndustriesPage() {
+  const industries = await loadIndustries();
   return (
     <>
       <PageHeader
