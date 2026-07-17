@@ -1,0 +1,9 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300' role='img' aria-label='Image placeholder'>
+  <rect width='400' height='300' fill='#f3f4f6'/>
+  <g transform='translate(200,150)'>
+    <rect x='-40' y='-30' width='80' height='60' rx='4' fill='#d1d5db'/>
+    <circle cx='-15' cy='-10' r='8' fill='#9ca3af'/>
+    <path d='M-30 20 L-5 -5 L10 10 L20 0 L30 20 Z' fill='#9ca3af'/>
+  </g>
+  <text x='200' y='200' font-family='Arial' font-size='14' fill='#9ca3af' text-anchor='middle'>No Image Available</text>
+</svg>

@@ -367,6 +367,20 @@ SELECT 'Tables created: ' || count(*)::text AS result FROM information_schema.ta
 SELECT 'Super admin: ' || email || ' (' || role || ')' AS result FROM user_roles WHERE email = 'superadmin@sunriseconstructions.in';
 
 -- ============================================================================
+-- STEP 8: WEEKLY TICKET CLEANUP (pg_cron)
+-- Automatically deletes resolved tickets older than 30 days, every Sunday.
+-- ============================================================================
+-- NOTE: Enable pg_cron first: Supabase Dashboard → Database → Extensions → pg_cron → Enable
+
+CREATE EXTENSION IF NOT EXISTS pg_cron;
+
+SELECT cron.schedule(
+  'cleanup-resolved-tickets',
+  '0 20 * * 0',
+  $$DELETE FROM chat_tickets WHERE status = 'resolved' AND updated_at < NOW() - INTERVAL '30 days'$$
+);
+
+-- ============================================================================
 -- DONE!
 -- Login at: /admin/login
 -- Email: superadmin@sunriseconstructions.in

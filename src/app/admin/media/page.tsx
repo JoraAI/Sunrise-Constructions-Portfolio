@@ -64,6 +64,8 @@ export default function AdminMediaPage() {
   const [uploadOpen, setUploadOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<MediaAsset | null>(null);
   const [copiedUrl, setCopiedUrl] = useState<string | null>(null);
+  const [usageMap, setUsageMap] = useState<Record<string, { type: string; title: string }[]>>({});
+  const [deleteTarget, setDeleteTarget] = useState<MediaAsset | null>(null);
 
   const loadMedia = useCallback(async () => {
     setLoading(true);
@@ -84,14 +86,42 @@ export default function AdminMediaPage() {
     loadMedia();
   }, [loadMedia]);
 
-  async function handleDelete(id: string, filename: string) {
-    if (!confirm(`Delete "${filename}"? This cannot be undone.`)) return;
+  // Check usage for all media after load
+  useEffect(() => {
+    if (media.length === 0) return;
+    media.forEach(async (item) => {
+      try {
+        const res = await fetch(`/api/admin/media/${item.id}/usage`);
+        if (res.ok) {
+          const data = await res.json();
+          if (data.inUse) {
+            setUsageMap((prev) => ({ ...prev, [item.id]: data.usage }));
+          }
+        }
+      } catch { /* ignore */ }
+    });
+  }, [media]);
 
+  async function handleDelete(id: string) {
     const res = await fetch(`/api/admin/media/${id}`, { method: 'DELETE' });
     if (res.ok) {
       setMedia((prev) => prev.filter((m) => m.id !== id));
+      setUsageMap((prev) => {
+        const next = { ...prev };
+        delete next[id];
+        return next;
+      });
     } else {
       alert('Failed to delete media. Please try again.');
+    }
+  }
+
+  function handleDeleteClick(item: MediaAsset) {
+    const usage = usageMap[item.id];
+    if (usage && usage.length > 0) {
+      setDeleteTarget(item); // Opens confirmation popup
+    } else {
+      handleDelete(item.id); // Direct delete, no popup
     }
   }
 
@@ -211,7 +241,7 @@ export default function AdminMediaPage() {
                       <Pencil className="h-4 w-4" />
                     </button>
                     <button
-                      onClick={() => handleDelete(item.id, item.filename)}
+                      onClick={() => handleDeleteClick(item)}
                       title="Delete"
                       className="rounded-lg bg-white/90 p-2 text-red-500 hover:bg-white"
                     >
@@ -229,9 +259,15 @@ export default function AdminMediaPage() {
                     <span className="rounded bg-gray-100 px-1.5 py-0.5 text-[10px] font-medium uppercase text-gray-500">
                       {item.section}
                     </span>
-                    <span className="text-[10px] text-gray-400">
-                      {formatFileSize(item.file_size)}
-                    </span>
+                    {usageMap[item.id] ? (
+                      <span className="flex items-center gap-1 rounded bg-green-100 px-1.5 py-0.5 text-[10px] font-bold text-green-700" title={usageMap[item.id].map((u) => `${u.type}: ${u.title}`).join(', ')}>
+                        ● In Use ({usageMap[item.id].length})
+                      </span>
+                    ) : (
+                      <span className="text-[10px] text-gray-400">
+                        {formatFileSize(item.file_size)}
+                      </span>
+                    )}
                   </div>
                 </div>
               </motion.div>
@@ -249,6 +285,21 @@ export default function AdminMediaPage() {
             onUploaded={() => {
               setUploadOpen(false);
               loadMedia();
+            }}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Delete Confirmation Popup */}
+      <AnimatePresence>
+        {deleteTarget && (
+          <DeleteConfirmModal
+            item={deleteTarget}
+            usage={usageMap[deleteTarget.id] || []}
+            onClose={() => setDeleteTarget(null)}
+            onConfirm={() => {
+              handleDelete(deleteTarget.id);
+              setDeleteTarget(null);
             }}
           />
         )}
@@ -545,6 +596,76 @@ function EditModal({
             {saving ? 'Saving...' : 'Save Changes'}
           </button>
         </form>
+      </motion.div>
+    </motion.div>
+  );
+}
+
+/** Delete confirmation modal for in-use images */
+function DeleteConfirmModal({
+  item,
+  usage,
+  onClose,
+  onConfirm,
+}: {
+  item: MediaAsset;
+  usage: { type: string; title: string }[];
+  onClose: () => void;
+  onConfirm: () => void;
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-navy/60 p-4"
+      onClick={onClose}
+    >
+      <motion.div
+        initial={{ scale: 0.96, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.96, opacity: 0 }}
+        onClick={(e) => e.stopPropagation()}
+        className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl"
+      >
+        <div className="mb-4 flex items-center gap-3">
+          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-amber-100">
+            <AlertCircle className="h-5 w-5 text-amber-600" />
+          </span>
+          <h2 className="text-lg font-bold text-navy">Image In Use</h2>
+        </div>
+
+        <p className="text-sm text-gray-600">
+          This image is currently being used by:
+        </p>
+
+        <ul className="mt-3 space-y-2">
+          {usage.map((u, i) => (
+            <li key={i} className="flex items-center gap-2 rounded-lg bg-gray-50 px-3 py-2 text-sm">
+              <span className="rounded bg-navy/10 px-2 py-0.5 text-xs font-bold text-navy">{u.type}</span>
+              <span className="font-medium text-navy">{u.title}</span>
+            </li>
+          ))}
+        </ul>
+
+        <p className="mt-4 text-sm text-gray-500">
+          Deleting will replace this image with a placeholder on all listed items. Are you sure?
+        </p>
+
+        <div className="mt-6 flex gap-3">
+          <button
+            onClick={onClose}
+            className="flex-1 rounded-xl border border-gray-200 py-3 text-sm font-semibold text-gray-600 hover:bg-gray-50"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={onConfirm}
+            className="flex-1 rounded-xl bg-red-500 py-3 text-sm font-semibold text-white hover:bg-red-600"
+          >
+            Delete & Replace
+          </button>
+        </div>
       </motion.div>
     </motion.div>
   );

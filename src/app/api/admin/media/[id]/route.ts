@@ -40,8 +40,47 @@ export async function PATCH(
   }
 }
 
+const PLACEHOLDER = '/images/placeholder.svg';
+
+/** Replace image references with placeholder in all content tables */
+async function replaceWithPlaceholder(
+  supabase: ReturnType<typeof getServerSupabase>,
+  storagePath: string,
+  publicUrl: string,
+) {
+  const terms = [storagePath, publicUrl];
+  const tables = [
+    'content_projects', 'content_services', 'content_industries',
+    'content_team', 'content_testimonials', 'content_blog_posts',
+  ];
+
+  for (const table of tables) {
+    const { data } = await supabase.from(table).select('*');
+    if (data) {
+      for (const row of data as Record<string, unknown>[]) {
+        const image = String(row.image || '');
+        const gallery = String(row.gallery || '');
+        if (terms.some(t => image.includes(t) || gallery.includes(t))) {
+          const updates: Record<string, unknown> = {};
+          if (image && terms.some(t => image.includes(t))) updates.image = PLACEHOLDER;
+          if (gallery && terms.some(t => gallery.includes(t))) {
+            try {
+              const arr = JSON.parse(gallery) as string[];
+              updates.gallery = JSON.stringify(arr.map(g => terms.some(t => g.includes(t)) ? PLACEHOLDER : g));
+            } catch { /* ignore */ }
+          }
+          if (Object.keys(updates).length > 0) {
+            await supabase.from(table).update(updates).eq('id', row.id);
+          }
+        }
+      }
+    }
+  }
+}
+
 /**
  * DELETE — Remove a media asset from Storage and database.
+ * If the image is in use, replaces references with placeholder.
  */
 export async function DELETE(
   req: NextRequest,
@@ -53,35 +92,22 @@ export async function DELETE(
   try {
     const supabase = getServerSupabase();
 
-    // 1. Get the record to find the storage path
-    const { data: record, error: fetchError } = await supabase
+    const { data: record } = await supabase
       .from('media_assets')
-      .select('storage_path')
+      .select('storage_path, public_url')
       .eq('id', params.id)
       .single();
 
-    if (fetchError || !record) {
-      return NextResponse.json({ error: 'Media not found' }, { status: 404 });
-    }
+    if (!record) return NextResponse.json({ error: 'Media not found' }, { status: 404 });
 
-    // 2. Delete from Storage
-    const { error: storageError } = await supabase.storage
-      .from(BUCKET_NAME)
-      .remove([record.storage_path]);
+    // Replace references with placeholder before deleting
+    await replaceWithPlaceholder(supabase, record.storage_path, record.public_url);
 
-    if (storageError) {
-      console.error('Storage delete error:', storageError);
-    }
+    // Delete from Storage
+    await supabase.storage.from(BUCKET_NAME).remove([record.storage_path]);
 
-    // 3. Delete from database
-    const { error: dbError } = await supabase
-      .from('media_assets')
-      .delete()
-      .eq('id', params.id);
-
-    if (dbError) {
-      return NextResponse.json({ error: dbError.message }, { status: 500 });
-    }
+    // Delete from database
+    await supabase.from('media_assets').delete().eq('id', params.id);
 
     return NextResponse.json({ success: true });
   } catch (error) {
