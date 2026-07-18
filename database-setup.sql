@@ -41,7 +41,7 @@ DROP TABLE IF EXISTS job_applications CASCADE;
 DROP TABLE IF EXISTS user_roles CASCADE;
 
 -- Delete the super admin user from auth if it exists
-DELETE FROM auth.users WHERE email = 'superadmin@sunriseconstructions.in';
+DELETE FROM auth.users WHERE email = 'boss@sunriseconstructions.in';
 
 -- ============================================================================
 -- STEP 1: USER ROLES (Admin Authentication)
@@ -383,7 +383,7 @@ SELECT cron.schedule(
 -- ============================================================================
 -- DONE!
 -- Login at: /admin/login
--- Email: superadmin@sunriseconstructions.in
+-- Email: boss@sunriseconstructions.in
 -- Password: Sunrise@SuperAdmin2025
 --
 -- After running this SQL, create the super admin:
