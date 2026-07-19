@@ -77,8 +77,8 @@ export const utilityBar: UtilityBarContent = {
 
 export const heroContent = {
   eyebrow: 'Inspiring Possibilities',
-  headline: 'We Build Better',
-  headlineAccent: 'Tomorrows',
+  headline: 'Building Stronger Future',
+  headlineAccent: 'Together',
   subheadline:
     'Since 2014, Sunrise Group has engineered landmark highways, bridges, irrigation systems, and infrastructure across Maharashtra - delivered on time, built to last.',
   primaryCta: { label: 'Our Services', href: '/services' },
