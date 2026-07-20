@@ -150,9 +150,23 @@ export function Navbar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 top-0 z-40 bg-navy/95 backdrop-blur-md xl:hidden"
+            className="fixed inset-0 top-0 z-[60] bg-navy/95 backdrop-blur-md xl:hidden"
           >
-            <div className="flex h-full flex-col overflow-y-auto px-6 pb-10 pt-28">
+            <div className="flex h-full flex-col overflow-y-auto">
+              {/* Drawer header with logo + prominent close button */}
+              <div className="container-page flex h-20 items-center justify-between">
+                <Logo variant="light" />
+                <button
+                  type="button"
+                  onClick={() => setMobileOpen(false)}
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white transition-colors hover:border-gold hover:bg-gold hover:text-navy"
+                  aria-label="Close menu"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+              {/* Drawer body */}
+              <div className="container-page flex flex-1 flex-col px-6 pb-10">
               <ul className="flex flex-col gap-2">
                 {navLinks.map((link, i) => (
                   <motion.li
@@ -205,6 +219,7 @@ export function Navbar() {
                     );
                   })}
                 </div>
+              </div>
               </div>
             </div>
           </motion.div>

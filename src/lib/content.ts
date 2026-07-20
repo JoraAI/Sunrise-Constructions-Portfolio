@@ -129,6 +129,101 @@ export const aboutSection = {
   cta: { label: 'Learn More About Us', href: '/about-us' },
 };
 
+/* ----------------------------------------------------------------------------
+ * ABOUT PAGE - FOUNDER MESSAGE
+ * ------------------------------------------------------------------------- */
+export const founderMessage = {
+  name: 'D Mallikarjun Reddy',
+  title: 'Chairman and Founder',
+  image: '/images/team-1.svg',
+  alt: 'Portrait of D Mallikarjun Reddy, Chairman and Founder of Sunrise Constructions',
+  heading: 'A message from our founder',
+  body: [
+    'When I founded Sunrise Constructions in Nagpur in 2014, I had a simple conviction: that infrastructure built with engineering rigor and uncompromising integrity would always find a client. A decade later, that conviction has been validated by the trust of institutions like NHAI, NH-PWD, and the Irrigation Department.',
+    'Today, our 250+ strong team has delivered landmark highways, bridges, irrigation systems, and public infrastructure across Maharashtra. But I am most proud not of the structures we have built, but of the culture we have built them with - one where safety is non-negotiable, quality has no shortcuts, and every commitment we make is kept.',
+    'As we look to the next decade, our ambition is unchanged: to be the contractor that clients call when a project truly matters. Thank you for considering Sunrise Constructions. We would be honoured to build with you.',
+  ],
+  signature: 'D Mallikarjun Reddy',
+};
+
+/* ----------------------------------------------------------------------------
+ * ABOUT PAGE - APPROACH
+ * ------------------------------------------------------------------------- */
+export const aboutApproach: {
+  id: string;
+  step: number;
+  title: string;
+  description: string;
+}[] = [
+  {
+    id: 'listen',
+    step: 1,
+    title: 'Listen & Understand',
+    description:
+      'Every engagement begins with a deep understanding of your goals, constraints, site conditions, and success metrics - long before a single drawing is produced.',
+  },
+  {
+    id: 'engineer',
+    step: 2,
+    title: 'Engineer & Plan',
+    description:
+      'Our in-house design and planning teams translate your brief into constructable, costed, and scheduled solutions - with risk engineered out, not bolted on.',
+  },
+  {
+    id: 'execute',
+    step: 3,
+    title: 'Execute with Discipline',
+    description:
+      'Self-performed construction with digital project controls, real-time reporting, and a relentless focus on safety, quality, and schedule across every site.',
+  },
+  {
+    id: 'deliver',
+    step: 4,
+    title: 'Deliver & Support',
+    description:
+      'We hand over projects that perform - on time, to spec, and backed by a defect-liability commitment and post-handover support that clients can rely on.',
+  },
+];
+
+/* ----------------------------------------------------------------------------
+ * ABOUT PAGE - WHY CHOOSE US (enhanced)
+ * ------------------------------------------------------------------------- */
+export const aboutDifferentiators: {
+  id: string;
+  number: string;
+  title: string;
+  description: string;
+}[] = [
+  {
+    id: 'engineering',
+    number: '01',
+    title: 'Engineering Depth',
+    description:
+      'In-house structural, civil, and MEP engineering capability on every project - not subcontracted risk, but owned expertise.',
+  },
+  {
+    id: 'delivery',
+    number: '02',
+    title: 'On-Time Delivery',
+    description:
+      '95% of projects delivered on or ahead of schedule through disciplined planning, digital controls, and proactive risk management.',
+  },
+  {
+    id: 'safety',
+    number: '03',
+    title: 'Safety First',
+    description:
+      'A genuine zero-harm culture with ISO 45001-certified systems, daily toolbox talks, and worker empowerment to stop unsafe work.',
+  },
+  {
+    id: 'trust',
+    number: '04',
+    title: 'Institutional Trust',
+    description:
+      'Repeatedly entrusted by NHAI, NH-PWD, Irrigation Department, and GMCH on their most critical public infrastructure projects.',
+  },
+];
+
 export const aboutChecklist: ChecklistItem[] = [
   {
     id: 'quality',

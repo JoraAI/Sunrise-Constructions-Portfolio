@@ -19,7 +19,7 @@ export function MissionVisionValues() {
             What drives us forward
           </h2>
           <p className="mt-4 text-white/70">
-            For over three decades, a clear sense of purpose has guided every decision
+            For over a decade, a clear sense of purpose has guided every decision
             we make and every structure we build.
           </p>
         </Reveal>
