@@ -91,7 +91,7 @@ export const heroVideos = [
   { src: '/videos/hero-2.mp4', poster: '/images/hero-poster-2.jpg', label: 'Site development' },
   { src: '/videos/hero-3.mp4', poster: '/images/hero-poster-3.jpg', label: 'Structural progress' },
   { src: '/videos/hero-4.mp4', poster: '/images/hero-poster-4.jpg', label: 'Project landscape' },
-  { src: '/videos/hero-5.mp4', poster: '/images/hero-poster-5.jpg', label: 'Construction detail' },
+  { src: '/videos/hero-5.mp4', poster: '/images/hero-poster-5.jpg', label: 'NH-353J Katol highway improvement' },
   { src: '/videos/hero-6.mp4', poster: '/images/hero-poster-6.jpg', label: 'Completed structure' },
 ];
 
@@ -869,6 +869,41 @@ export const projects: Project[] = [
       { value: '\u20b925.67 Cr', label: 'Project value' },
       { value: '2026', label: 'Completed' },
       { value: 'NH-353J', label: 'Highway' },
+    ],
+  },
+  {
+    slug: 'nh353j-katol-one-time-improvement',
+    title: 'One-Time Improvement, Nagpur-Katol Section NH-353J (EPC)',
+    category: 'Infrastructure',
+    location: 'Nagpur-Katol, Maharashtra',
+    year: '2026',
+    client: 'National Highways Authority Of India, Nagpur',
+    metric: '5.7 km highway improvement \u00b7 Km 7+300 to 13+000 \u00b7 \u20b925.67 Cr',
+    image: '/images/projects/nh353j-katol.jpg',
+    alt: 'Aerial view of freshly paved NH-353J Nagpur-Katol highway section with improved shoulders and road markings',
+    featured: true,
+    gallery: [
+      '/images/projects/nh353j-katol.jpg',
+      '/images/projects/nh353j-katol-2.jpg',
+      '/images/projects/nh353j-katol-3.jpg',
+    ],
+    summary:
+      'One-time improvement of the denotified portion of the Nagpur-Katol section of NH-353J from Km 7+300 to Km 13+000, executed for the National Highways Authority Of India, Nagpur.',
+    overview:
+      'Awarded by the National Highways Authority Of India, Nagpur, this project delivered a comprehensive one-time improvement to the 5.7 km denotified stretch of NH-353J between Nagpur and Katol (chainage Km 7+300 to Km 13+000). NH-353J is a key secondary highway corridor connecting Nagpur city to the Katol tehsil and the wider western Maharashtra hinterland, carrying a steady mix of passenger, commercial, and agricultural freight traffic.\n\nThe scope covered strengthening of the existing flexible pavement, restoration of shoulders, and repair of drainage assets to arrest monsoon-related edge distress. The work also included renewal of road markings, installation of reflective highway furniture and signage, and maintenance of cross-drainage structures and minor bridges along the chainage. The package was executed on an Engineering, Procurement and Construction (EPC) basis, with quality controlled against MoRTH and IRC specifications.\n\nBy restoring the carriageway to a serviceable, all-weather standard, the project improved ride quality, reduced vehicle operating costs, and enhanced safety for the communities and freight movement that depend on the Nagpur-Katol corridor.',
+    scope: [
+      '5.7 km pavement strengthening (Km 7+300 to Km 13+000)',
+      'Shoulder restoration and edge protection',
+      'Drainage repair and cross-drainage maintenance',
+      'Road markings, signage and reflective highway furniture',
+      'Bridge and culvert maintenance along the chainage',
+    ],
+    metrics: [
+      { value: '5.7 km', label: 'Highway length' },
+      { value: 'Km 7+300 \u2013 13+000', label: 'Chainage' },
+      { value: '\u20b925.67 Cr', label: 'Project value' },
+      { value: 'NH-353J', label: 'Highway' },
+      { value: 'NHAI', label: 'Client' },
     ],
   },
 ];
