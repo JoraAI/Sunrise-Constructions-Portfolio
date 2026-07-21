@@ -1107,12 +1107,23 @@ export const projects: Project[] = [
  * CREDIBILITY
  * ------------------------------------------------------------------------- */
 export const clientLogos: { name: string; logo: string }[] = [
-  { name: 'NHAI', logo: '' },
-  { name: 'NH-PWD Nagpur', logo: '' },
-  { name: 'PWD Maharashtra', logo: '' },
-  { name: 'Pench Irrigation Division', logo: '' },
-  { name: 'GMCH Nagpur', logo: '' },
-  { name: 'Western Coalfields Ltd', logo: '' },
+  { name: 'NHAI', logo: '/images/clients/client-01.png' },
+  { name: 'NH-PWD Nagpur', logo: '/images/clients/client-02.png' },
+  { name: 'PWD Maharashtra', logo: '/images/clients/client-03.png' },
+  { name: 'MOIL Limited', logo: '/images/clients/moil.png' },
+  { name: 'Western Coalfields Ltd', logo: '/images/clients/western-coalfields.png' },
+  { name: 'Government of India', logo: '/images/clients/govt-of-india.png' },
+  { name: 'MSSIDC', logo: '/images/clients/mssidc.png' },
+  { name: 'GMCH Nagpur', logo: '/images/clients/client-08.png' },
+  { name: 'NBCC (India) Ltd', logo: '/images/clients/nbcc.png' },
+  { name: 'Pench Irrigation Division', logo: '/images/clients/client-10.png' },
+  { name: 'Irrigation Department', logo: '/images/clients/client-11.png' },
+  { name: 'NHAI Nagpur', logo: '/images/clients/client-12.png' },
+  { name: 'PMGSY', logo: '/images/clients/pmgsy.png' },
+  { name: 'NMRDA', logo: '/images/clients/nmrda.png' },
+  { name: 'MADC', logo: '/images/clients/client-15.png' },
+  { name: 'CIDCO', logo: '/images/clients/client-16.png' },
+  { name: 'WRD Maharashtra', logo: '/images/clients/wrd-maharashtra.png' },
 ];
 
 export const pressMentions: { outlet: string; headline: string }[] = [
