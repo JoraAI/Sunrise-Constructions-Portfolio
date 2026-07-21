@@ -60,12 +60,28 @@ export async function loadServices(): Promise<Service[]> {
     const s = getServerSupabase();
     const { data, error } = await s.from('content_services').select('*').order('sort_order', { ascending: true });
     if (error || !data || data.length === 0) return defaultServices;
-    return data.map((sv: Record<string, unknown>) => ({
-      slug: str(sv.slug), title: str(sv.title), shortDescription: str(sv.short_description),
-      icon: str(sv.icon) || 'hard-hat', image: str(sv.image), alt: str(sv.alt) || str(sv.title),
-      overview: str(sv.overview), keyDeliverables: parseJson(sv.key_deliverables, []),
-      process: parseJson(sv.process, []),
-    })) as Service[];
+    return data.map((sv: Record<string, unknown>) => {
+      const slug = str(sv.slug);
+      // Find matching default service to merge rich content fields
+      // (DB table doesn't have gallery/capabilities/stats/faqs columns)
+      const defaultSvc = defaultServices.find((d) => d.slug === slug);
+      return {
+        slug,
+        title: str(sv.title),
+        shortDescription: str(sv.short_description),
+        icon: str(sv.icon) || 'hard-hat',
+        image: str(sv.image),
+        alt: str(sv.alt) || str(sv.title),
+        overview: str(sv.overview),
+        keyDeliverables: parseJson(sv.key_deliverables, defaultSvc?.keyDeliverables || []),
+        process: parseJson(sv.process, defaultSvc?.process || []),
+        // Rich content fields: prefer DB if column exists, fall back to content.ts
+        gallery: sv.gallery ? parseJson(sv.gallery, undefined) : defaultSvc?.gallery,
+        capabilities: sv.capabilities ? parseJson(sv.capabilities, undefined) : defaultSvc?.capabilities,
+        stats: sv.stats ? parseJson(sv.stats, undefined) : defaultSvc?.stats,
+        faqs: sv.faqs ? parseJson(sv.faqs, undefined) : defaultSvc?.faqs,
+      } as Service;
+    });
   } catch { return defaultServices; }
 }
 

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowRight, Award, ShieldCheck } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { PageHeader } from '@/components/PageHeader';
 import { SectionHeading } from '@/components/SectionHeading';
 import { SmartImage } from '@/components/SmartImage';
@@ -16,7 +16,6 @@ import {
   founderMessage,
   aboutApproach,
   aboutDifferentiators,
-  certifications,
 } from '@/lib/content';
 
 export const metadata: Metadata = buildMetadata({
@@ -237,36 +236,6 @@ export default function AboutPage() {
               </Reveal>
             ))}
           </ol>
-        </div>
-      </section>
-
-      {/* Certifications Showcase */}
-      <section className="section bg-white" aria-labelledby="certs-heading">
-        <div className="container-page">
-          <SectionHeading
-            eyebrow="Certified & Recognised"
-            title={<span id="certs-heading">Quality you can verify</span>}
-            description="Our management systems and work are independently certified to international standards."
-          />
-          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {certifications.map((cert, i) => (
-              <Reveal key={cert.name} delay={(i % 4) * 0.08}>
-                <div className="group flex h-full items-start gap-4 rounded-2xl border border-navy/5 bg-cream/40 p-5 transition-all duration-500 hover:-translate-y-1 hover:border-gold/30 hover:bg-white hover:shadow-navy">
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gold/10 text-gold transition-colors group-hover:bg-gold group-hover:text-navy">
-                    {cert.name.toLowerCase().includes('iso') ? (
-                      <ShieldCheck className="h-5 w-5" />
-                    ) : (
-                      <Award className="h-5 w-5" />
-                    )}
-                  </span>
-                  <div>
-                    <p className="font-heading text-sm font-bold text-navy">{cert.name}</p>
-                    <p className="mt-0.5 text-xs text-charcoal-muted">{cert.description}</p>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
         </div>
       </section>
 

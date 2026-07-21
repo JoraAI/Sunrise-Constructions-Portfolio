@@ -57,6 +57,10 @@ const FIELD_CONFIGS: Record<string, { label: string; urlPrefix?: string; titleFi
       { name: 'overview', label: 'Overview', type: 'textarea' },
       { name: 'key_deliverables', label: 'Key Deliverables (one per line)', type: 'json-array' },
       { name: 'process', label: 'Process Steps (one per line)', type: 'json-array' },
+      { name: 'gallery', label: 'Gallery Images (one path per line)', type: 'json-array' },
+      { name: 'capabilities', label: 'Capabilities (one per line)', type: 'json-array' },
+      { name: 'stats', label: 'Stats (JSON array of {value, label})', type: 'textarea', placeholder: '[{"value":"28+","label":"Projects delivered"}]' },
+      { name: 'faqs', label: 'FAQs (JSON array of {question, answer})', type: 'textarea', placeholder: '[{"question":"...","answer":"..."}]' },
     ],
   },
   industries: {

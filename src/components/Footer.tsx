@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Phone, Mail, MapPin, Clock, Linkedin, Twitter, Facebook, Instagram, Youtube, ShieldCheck } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, Linkedin, Twitter, Facebook, Instagram, Youtube } from 'lucide-react';
 import { footer, siteConfig } from '@/lib/content';
 import { Logo } from './Logo';
 import { NewsletterForm } from './NewsletterForm';
@@ -138,20 +138,6 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Certifications mini-badges */}
-        <div className="mt-12 flex flex-wrap items-center gap-3 border-t border-white/10 pt-8">
-          <span className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-white/40">
-            <ShieldCheck className="h-4 w-4 text-gold" /> Certified
-          </span>
-          {footer.certificationsMini.map((c) => (
-            <span
-              key={c}
-              className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-white/70"
-            >
-              {c}
-            </span>
-          ))}
-        </div>
       </div>
 
       {/* Legal bar */}

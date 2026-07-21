@@ -31,9 +31,17 @@ function mapToStoragePath(localPath: string): string {
   if (path.startsWith('images/service-')) {
     return 'services/' + path.replace('images/', '');
   }
+  // /images/services/ → services/
+  if (path.startsWith('images/services/')) {
+    return path.replace('images/', '');
+  }
   // /images/industry-X.svg → industries/industry-X.svg
   if (path.startsWith('images/industry-')) {
     return 'industries/' + path.replace('images/', '');
+  }
+  // /images/industries/ → industries/
+  if (path.startsWith('images/industries/')) {
+    return path.replace('images/', '');
   }
   // /images/team-X.svg → team/team-X.svg
   if (path.startsWith('images/team-')) {
@@ -58,6 +66,10 @@ function mapToStoragePath(localPath: string): string {
   // /images/employee-X.svg → careers/employee-X.svg
   if (path.startsWith('images/employee-')) {
     return 'careers/' + path.replace('images/', '');
+  }
+  // /images/clients/ → clients/
+  if (path.startsWith('images/clients/')) {
+    return path.replace('images/', '');
   }
 
   // Default: just strip the /images/ or /videos/ prefix

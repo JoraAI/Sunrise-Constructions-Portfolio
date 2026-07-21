@@ -32,7 +32,7 @@ export async function PATCH(
     const body = await req.json();
 
     // Serialize JSONB fields
-    const fieldsToSerialize = ['gallery', 'scope', 'metrics', 'key_deliverables', 'process', 'capabilities', 'tags', 'content', 'responsibilities', 'requirements', 'qualifications', 'stats', 'about_body', 'certifications', 'process_steps'];
+    const fieldsToSerialize = ['gallery', 'scope', 'metrics', 'key_deliverables', 'process', 'capabilities', 'tags', 'content', 'responsibilities', 'requirements', 'qualifications', 'stats', 'about_body', 'certifications', 'process_steps', 'faqs'];
     const updates: Record<string, unknown> = { ...body };
     for (const field of fieldsToSerialize) {
       if (updates[field] !== undefined && typeof updates[field] !== 'string') {

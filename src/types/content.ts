@@ -69,6 +69,11 @@ export interface Service {
   overview: string;
   keyDeliverables: string[];
   process: string[];
+  /** Rich content extensions (optional for backward compatibility) */
+  gallery?: string[];
+  capabilities?: string[];
+  stats?: { value: string; label: string }[];
+  faqs?: { question: string; answer: string }[];
 }
 
 export interface Industry {

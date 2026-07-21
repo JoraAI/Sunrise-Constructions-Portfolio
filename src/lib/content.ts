@@ -9,7 +9,6 @@ import type {
   Service,
   Industry,
   Project,
-  Certification,
   Testimonial,
   TeamMember,
   ProcessStep,
@@ -291,15 +290,17 @@ export const services: Service[] = [
     shortDescription:
       'Self-performed structural, civil, and finishing works for landmark builds of every scale.',
     icon: 'hard-hat',
-    image: '/images/service-construction.svg',
-    alt: 'Workers in safety gear at a large Sunrise Constructions site',
+    image: '/images/services/general-construction.jpg',
+    alt: 'Construction workers in safety gear executing structural concrete works on a large building site',
     overview:
-      'Our core capability. We self-perform reinforced concrete, structural steel, masonry, MEP rough-in, and architectural finishing - backed by an in-house plant, machinery fleet, and a 2,400-strong workforce. By controlling execution end-to-end, we hold ourselves accountable for quality, schedule, and budget from the first pour to final handover.',
+      'Our core capability. We self-perform reinforced concrete, structural steel, masonry, MEP rough-in, and architectural finishing - backed by an in-house plant, machinery fleet, and a 2,400-strong workforce. By controlling execution end-to-end, we hold ourselves accountable for quality, schedule, and budget from the first pour to final handover. From high-rise towers to highway bridges, our general construction teams bring the same discipline: engineered methodology, daily progress controls, and a zero-harm safety culture on every site.',
     keyDeliverables: [
       'Structural concrete & steel works',
       'Civil, MEP, and finishing trades',
       'In-house batching & formwork systems',
       'Real-time schedule & cost reporting',
+      'QA/QC inspection and testing regime',
+      'Safety, environmental and traffic management plans',
     ],
     process: [
       'Mobilisation & site setup',
@@ -308,6 +309,44 @@ export const services: Service[] = [
       'Finishes & commissioning',
       'QA/QC sign-off & handover',
     ],
+    gallery: [
+      '/images/services/general-construction.jpg',
+      '/images/services/general-construction-2.jpg',
+      '/images/services/general-construction-3.jpg',
+      '/images/services/general-construction-4.jpg',
+    ],
+    capabilities: [
+      'Reinforced cement concrete (RCC) - foundations, columns, beams, slabs, shear walls',
+      'Structural steel fabrication and erection - columns, trusses, decks',
+      'Masonry, blockwork, and plastering',
+      'MEP rough-in and finishing - electrical, plumbing, HVAC, fire-fighting',
+      'Architectural finishes - flooring, cladding, glazing, painting',
+      'Industrial and heavy-duty floors',
+      'Site infrastructure - roads, drainage, boundary walls, landscaping',
+    ],
+    stats: [
+      { value: '28+', label: 'Projects delivered' },
+      { value: '95%', label: 'On-time completion' },
+      { value: '250+', label: 'Skilled workforce' },
+      { value: 'Zero', label: 'Lost-time incidents (FY24)' },
+    ],
+    faqs: [
+      {
+        question: 'Do you self-perform structural works or subcontract them?',
+        answer:
+          'We self-perform the majority of structural concrete, steel, and civil works using our own workforce and plant. Specialist MEP, lifts, and façade packages are delivered under our management by pre-qualified subcontractors.',
+      },
+      {
+        question: 'What project sizes do you take on?',
+        answer:
+          'Our general construction team typically delivers projects valued from ₹1 Cr to ₹115 Cr, ranging from individual buildings and bridges to multi-structure campuses and highway packages.',
+      },
+      {
+        question: 'How do you control quality on site?',
+        answer:
+          'Every site operates a documented QA/QC plan covering material approvals, pour cards, reinforcement inspections, cube testing, and snagging. Checklists are digital, and sign-offs are tracked against the master construction programme.',
+      },
+    ],
   },
   {
     slug: 'project-management',
@@ -315,15 +354,17 @@ export const services: Service[] = [
     shortDescription:
       'Owner\u2019s representative services with digital controls, cost certainty, and transparent reporting.',
     icon: 'clipboard',
-    image: '/images/service-pm.svg',
-    alt: 'Project managers reviewing Gantt charts and digital dashboards',
+    image: '/images/services/project-management.jpg',
+    alt: 'Project managers reviewing construction schedules, drawings and progress dashboards',
     overview:
-      'We act as your single point of accountability - managing design consultants, contractors, vendors, and authorities so you don\u2019t have to. Our PMO brings enterprise-grade digital controls, earned-value tracking, and risk management to every engagement, giving stakeholders real-time visibility into cost, schedule, and quality.',
+      'We act as your single point of accountability - managing design consultants, contractors, vendors, and authorities so you don\u2019t have to. Our PMO brings enterprise-grade digital controls, earned-value tracking, and risk management to every engagement, giving stakeholders real-time visibility into cost, schedule, and quality. Whether you need an owner\u2019s engineer for a single asset or a programme manager for a multi-site portfolio, our team plugs into your governance structure and protects your interests end-to-end.',
     keyDeliverables: [
       'Integrated master scheduling (Primavera/MS Project)',
       'Cost planning & earned-value management',
       'Procurement & contract administration',
       'Risk, quality & HSE governance',
+      'Stakeholder and authority coordination',
+      'Monthly progress and financial reporting',
     ],
     process: [
       'Project initiation & scope baselining',
@@ -332,6 +373,43 @@ export const services: Service[] = [
       'Change & risk management',
       'Close-out & performance review',
     ],
+    gallery: [
+      '/images/services/project-management.jpg',
+      '/images/services/project-management-2.jpg',
+    ],
+    capabilities: [
+      'Owner\u2019s representative / engineer services',
+      'Master scheduling and programme controls (Primavera P6, MS Project)',
+      'Cost estimating, budgeting, and earned-value analysis',
+      'Procurement strategy, tendering, and contract administration',
+      'Design review and value engineering',
+      'Construction supervision and quality assurance',
+      'Risk, HSE, and compliance management',
+      'Programme management for multi-project portfolios',
+    ],
+    stats: [
+      { value: '₹300Cr+', label: 'Projects under PM' },
+      { value: '15+', label: 'Active programmes' },
+      { value: '98%', label: 'Budget adherence' },
+      { value: '24/7', label: 'Dashboard access' },
+    ],
+    faqs: [
+      {
+        question: 'Can you act as our owner\u2019s representative on an EPC contract?',
+        answer:
+          'Yes. We frequently act as the owner\u2019s engineer on EPC and DBFOT packages - reviewing the contractor\u2019s designs, witnessing quality tests, approving invoices, and protecting your commercial and technical interests through to handover.',
+      },
+      {
+        question: 'What reporting cadence do you follow?',
+        answer:
+          'Standard reporting includes daily site logs, weekly progress notes, and a comprehensive monthly report covering schedule, cost, quality, safety, and risk. A live digital dashboard can be provided for real-time access.',
+      },
+      {
+        question: 'Do you handle statutory approvals and liaising with authorities?',
+        answer:
+          'Yes. Our PMO coordinates with municipal authorities, NHAI, PWD, Irrigation Department, fire and environmental regulators to secure approvals, NOCs, and clearances - keeping the critical path on schedule.',
+      },
+    ],
   },
   {
     slug: 'design-and-build',
@@ -339,15 +417,17 @@ export const services: Service[] = [
     shortDescription:
       'Single-contract design and delivery - faster decisions, fewer disputes, one accountable team.',
     icon: 'pencil-ruler',
-    image: '/images/service-designbuild.svg',
-    alt: 'Architects and engineers collaborating over building models',
+    image: '/images/services/design-build.jpg',
+    alt: 'Architects and engineers collaborating over building models and drawings',
     overview:
-      'One team, one contract, one point of accountability. Our integrated design-build service brings architecture, structural engineering, MEP, and construction under a single roof - collapsing timelines, reducing change orders, and aligning design intent with buildability from day one.',
+      'One team, one contract, one point of accountability. Our integrated design-build service brings architecture, structural engineering, MEP, and construction under a single roof - collapsing timelines, reducing change orders, and aligning design intent with buildability from day one. With design and construction teams co-located, decisions are made in hours rather than weeks, and constructability is engineered into every detail before a shovel hits the ground.',
     keyDeliverables: [
       'Architectural & structural design',
       'MEP engineering & coordination',
       'BIM-led clash detection',
       'Value engineering & constructability',
+      'Guaranteed Maximum Price (GMP) option',
+      'Single-source warranty',
     ],
     process: [
       'Brief & concept design',
@@ -356,6 +436,43 @@ export const services: Service[] = [
       'Construction & commissioning',
       'Handover & warranties',
     ],
+    gallery: [
+      '/images/services/design-build.jpg',
+      '/images/services/design-build-2.jpg',
+    ],
+    capabilities: [
+      'Architectural concept and detailed design',
+      'Structural engineering - RCC, steel, composite',
+      'MEP design - electrical, HVAC, plumbing, fire',
+      'Building Information Modelling (BIM) coordination',
+      '3D clash detection and resolution',
+      'Value engineering and constructability reviews',
+      'Statutory design approvals and permits',
+      'Integrated construction and handover',
+    ],
+    stats: [
+      { value: '30%', label: 'Schedule reduction' },
+      { value: '15%', label: 'Fewer change orders' },
+      { value: '1', label: 'Point of accountability' },
+      { value: 'BIM', label: 'On every project' },
+    ],
+    faqs: [
+      {
+        question: 'How is design-build different from the traditional design-bid-build approach?',
+        answer:
+          'In design-build, a single team is accountable for both design and construction under one contract. This eliminates the owner-mediated disputes between designer and builder, accelerates decisions, and allows construction to overlap with detailed design - typically compressing overall delivery by 20-30%.',
+      },
+      {
+        question: 'Can we still use our preferred architect or consultant?',
+        answer:
+          'Yes. We can integrate your preferred architect or consultant into our design-build team as a nominated sub-consultant, or work with our in-house design studio. Either way, you retain a single contract with Sunrise Constructions.',
+      },
+      {
+        question: 'Do you offer a Guaranteed Maximum Price (GMP)?',
+        answer:
+          'Yes. Once the detailed design is sufficiently developed (typically at 60-70% completion), we can convert the engagement to a GMP contract - giving you cost certainty while preserving shared-savings incentives for innovation.',
+      },
+    ],
   },
   {
     slug: 'renovation-and-remodeling',
@@ -363,15 +480,17 @@ export const services: Service[] = [
     shortDescription:
       'Heritage restoration, brownfield retrofits, and adaptive reuse delivered with minimal disruption.',
     icon: 'wrench',
-    image: '/images/service-renovation.svg',
-    alt: 'Refurbished commercial interior with exposed structure',
+    image: '/images/services/renovation.jpg',
+    alt: 'Interior renovation and remodeling work with structural strengthening and modern finishes',
     overview:
-      'Bringing new life to existing structures demands a different skillset. Our renovation team specialises in occupied-building retrofits, heritage restoration, structural strengthening, and adaptive reuse - engineered to modern performance standards while respecting what makes a building worth keeping.',
+      'Bringing new life to existing structures demands a different skillset. Our renovation team specialises in occupied-building retrofits, heritage restoration, structural strengthening, and adaptive reuse - engineered to modern performance standards while respecting what makes a building worth keeping. We work in live hospitals, functioning offices, and occupied residential blocks - engineering phasing plans that keep your operations running while we modernise the asset around you.',
     keyDeliverables: [
       'Structural assessment & strengthening',
       'Heritage & facade restoration',
       'MEP modernisation & retro-commissioning',
       'Phased, low-disruption execution',
+      'As-built documentation and BIM',
+      'Post-handover defect management',
     ],
     process: [
       'Condition assessment & survey',
@@ -380,6 +499,43 @@ export const services: Service[] = [
       'Restoration & upgrade works',
       'Commissioning & handover',
     ],
+    gallery: [
+      '/images/services/renovation.jpg',
+      '/images/services/renovation-2.jpg',
+    ],
+    capabilities: [
+      'Structural condition assessment and NDT testing',
+      'Structural strengthening - jacketing, FRP, underpinning',
+      'Heritage façade and element restoration',
+      'MEP modernisation and retro-commissioning',
+      'Interior fit-out and remodeling',
+      'Energy and envelope upgrades',
+      'Adaptive reuse and change-of-occupancy conversions',
+      'Phased execution in occupied buildings',
+    ],
+    stats: [
+      { value: '40+', label: 'Retrofit projects' },
+      { value: '0', label: 'Operational shutdowns' },
+      { value: '30%', label: 'Avg. energy savings' },
+      { value: 'NDT', label: 'Structural diagnostics' },
+    ],
+    faqs: [
+      {
+        question: 'Can you work in an occupied building without disrupting operations?',
+        answer:
+          'Yes. We engineer a phasing and segregation plan - dust barriers, noise windows, dedicated access routes, and vibration monitoring - so that occupants can continue to use the building safely while renovation proceeds zone by zone.',
+      },
+      {
+        question: 'How do you assess the condition of an existing structure?',
+        answer:
+          'We combine visual inspection with non-destructive testing (rebound hammer, ultrasonic pulse velocity, half-cell potential), cover meter surveys, and selective core cutting. The results feed into a structural condition report that scopes the strengthening works required.',
+      },
+      {
+        question: 'Do you handle heritage building restoration?',
+        answer:
+          'Yes. We have experience restoring heritage façades and structural elements in compliance with conservation guidelines - matching original materials, documenting existing details, and strengthening behind the historic envelope to meet modern loading requirements.',
+      },
+    ],
   },
   {
     slug: 'sustainable-construction',
@@ -387,15 +543,17 @@ export const services: Service[] = [
     shortDescription:
       'IGBC, LEED, and net-zero aligned delivery reducing embodied and operational carbon.',
     icon: 'leaf',
-    image: '/images/service-sustainable.svg',
-    alt: 'Green-rated building with solar panels and vegetation',
+    image: '/images/services/sustainable.jpg',
+    alt: 'Green-rated sustainable building with solar panels, daylighting, and vegetation',
     overview:
-      'Sustainability is engineered in, not bolted on. We help owners target IGBC, LEED, and GRIHA ratings - and increasingly, net-zero operational carbon - through material selection, passive design integration, on-site renewable systems, and rigorous waste and water management during construction.',
+      'Sustainability is engineered in, not bolted on. We help owners target IGBC, LEED, and GRIHA ratings - and increasingly, net-zero operational carbon - through material selection, passive design integration, on-site renewable systems, and rigorous waste and water management during construction. Our sustainability team works alongside design from day one, running embodied-carbon assessments, specifying low-carbon materials, and modelling operational energy so that the building you hand over performs for decades, not just on the rating certificate.',
     keyDeliverables: [
       'IGBC / LEED / GRIHA certification support',
       'Low-embodied-carbon material strategy',
       'On-site renewables & rainwater harvesting',
       'Construction waste management (70%+ diversion)',
+      'Energy and water modelling',
+      'Post-occupancy performance verification',
     ],
     process: [
       'Sustainability goal-setting',
@@ -403,6 +561,43 @@ export const services: Service[] = [
       'Green construction practices',
       'Commissioning & measurement',
       'Certification & post-occupancy review',
+    ],
+    gallery: [
+      '/images/services/sustainable.jpg',
+      '/images/services/sustainable-2.jpg',
+    ],
+    capabilities: [
+      'IGBC, LEED, and GRIHA certification advisory',
+      'Embodied carbon assessment and reduction',
+      'Passive design - daylight, shading, natural ventilation',
+      'High-performance building envelope',
+      'On-site solar PV and solar hot water',
+      'Rainwater harvesting and greywater recycling',
+      'Construction and demolition waste management',
+      'Building commissioning and post-occupancy evaluation',
+    ],
+    stats: [
+      { value: '40%', label: 'Lower embodied carbon' },
+      { value: '70%+', label: 'Waste diverted' },
+      { value: 'Net-zero', label: 'Ready delivery' },
+      { value: 'IGBC', label: 'Certification support' },
+    ],
+    faqs: [
+      {
+        question: 'What green building ratings do you support?',
+        answer:
+          'We support all major Indian and international rating systems - IGBC (Green Homes, Green New Buildings), LEED (BD+C, ID+C), and GRIHA. We can also deliver net-zero operational carbon and net-zero energy buildings using ASHRAE and World GBC frameworks.',
+      },
+      {
+        question: 'How much does sustainable construction add to project cost?',
+        answer:
+          'Targeting an IGBC Gold or LEED Silver rating typically adds 1-3% to capital cost, with payback in 3-7 years through energy and water savings. Net-zero buildings cost 5-10% more upfront. We run a rigorous cost-benefit analysis at concept stage so you can make an informed decision.',
+      },
+      {
+        question: 'Do you measure actual performance after handover?',
+        answer:
+          'Yes. We offer post-occupancy evaluation (POE) services - monitoring energy, water, and indoor environmental quality for 12-24 months after handover, comparing actual performance against the design model, and tuning systems for continuous improvement.',
+      },
     ],
   },
 ];
@@ -417,7 +612,7 @@ export const industries: Industry[] = [
     shortDescription:
       'Grade-A office towers, IT campuses, and mixed-use developments built for performance.',
     icon: 'briefcase',
-    image: '/images/industry-commercial.svg',
+    image: '/images/industries/commercial.jpg',
     alt: 'Glass-clad commercial office tower at dusk',
     overview:
       'We deliver Grade-A commercial space that meets the demands of global occupiers - efficient floor plates, smart building systems, and the sustainability credentials corporate tenants now require. Our commercial portfolio spans 40+ million sq.ft of delivered space.',
@@ -439,7 +634,7 @@ export const industries: Industry[] = [
     shortDescription:
       'Premium apartments, gated communities, and affordable housing at city scale.',
     icon: 'home',
-    image: '/images/industry-residential.svg',
+    image: '/images/industries/residential.jpg',
     alt: 'Large residential apartment community with landscaped grounds',
     overview:
       'From luxury high-rises to large-scale affordable housing, we build homes that people are proud to live in. Our residential work emphasises structural quality, efficient MEP, and amenities delivered on schedule - critical in a market where buyer trust depends on handover dates.',
@@ -461,7 +656,7 @@ export const industries: Industry[] = [
     shortDescription:
       'Manufacturing plants, warehouses, and logistics hubs engineered for throughput.',
     icon: 'factory',
-    image: '/images/industry-industrial.svg',
+    image: '/images/industries/industrial.jpg',
     alt: 'Large-span industrial warehouse with loading bays',
     overview:
       'Speed-to-commissioning is everything in industrial construction. We deliver pre-engineered buildings, heavy manufacturing facilities, and logistics parks with large clear spans, heavy-duty floors, and the utility infrastructure that production lines depend on.',
@@ -483,7 +678,7 @@ export const industries: Industry[] = [
     shortDescription:
       'Hospitals and medical facilities built to stringent clinical and regulatory standards.',
     icon: 'heart-pulse',
-    image: '/images/industry-healthcare.svg',
+    image: '/images/industries/healthcare.jpg',
     alt: 'Modern multi-specialty hospital building exterior',
     overview:
       'Healthcare construction demands precision. We build multi-specialty hospitals, diagnostic centres, and medical colleges with the HVAC, medical gas, infection-control, and electrical redundancy systems that clinical operations and patient safety depend on.',
@@ -505,7 +700,7 @@ export const industries: Industry[] = [
     shortDescription:
       'Schools, colleges, and campuses designed for learning and built to last.',
     icon: 'graduation-cap',
-    image: '/images/industry-education.svg',
+    image: '/images/industries/education.jpg',
     alt: 'University campus building with landscaped courtyard',
     overview:
       'We build the institutions that shape the next generation - K-12 schools, university campuses, research labs, and student housing - with acoustics, daylighting, safety, and durability engineered for daily, high-traffic use.',
@@ -527,7 +722,7 @@ export const industries: Industry[] = [
     shortDescription:
       'Hotels, resorts, and convention centres delivered to global brand standards.',
     icon: 'bed',
-    image: '/images/industry-hospitality.svg',
+    image: '/images/industries/hospitality.jpg',
     alt: 'Luxury hotel resort with pool and landscaped gardens',
     overview:
       'Hospitality construction is a test of finishes, FF&E coordination, and programme discipline. We deliver business hotels, luxury resorts, and convention centres to the exacting brand standards of international operators - on schedule for soft openings.',
@@ -549,7 +744,7 @@ export const industries: Industry[] = [
     shortDescription:
       'Roads, bridges, metro viaducts, and civil works that connect cities.',
     icon: 'road',
-    image: '/images/industry-infrastructure.svg',
+    image: '/images/industries/infrastructure.jpg',
     alt: 'Elevated metro viaduct under construction over a busy highway',
     overview:
       'Beyond buildings, we engineer the civil infrastructure that economies run on - metro viaducts, flyovers, urban roads, water and sewage treatment plants, and industrial utility networks - built to last decades of heavy service.',
@@ -909,26 +1104,15 @@ export const projects: Project[] = [
 ];
 
 /* ----------------------------------------------------------------------------
- * CERTIFICATIONS / CREDIBILITY
+ * CREDIBILITY
  * ------------------------------------------------------------------------- */
-export const certifications: Certification[] = [
-  { name: 'ISO 9001:2015', description: 'Quality Management' },
-  { name: 'ISO 14001:2015', description: 'Environmental Management' },
-  { name: 'ISO 45001:2018', description: 'Occupational Health & Safety' },
-  { name: 'OHSAS 18001', description: 'Safety Standards' },
-  { name: 'IGBC Member', description: 'Green Building Council' },
-  { name: 'Builder\u2019s Association of India', description: 'Industry Member' },
-  { name: 'CREDAI', description: 'Real Estate Body' },
-  { name: 'RoSPA Gold', description: 'Safety Excellence Award' },
-];
-
-export const clientLogos: string[] = [
-  'NHAI',
-  'NH-PWD Nagpur',
-  'PWD Maharashtra',
-  'Pench Irrigation Division',
-  'GMCH Nagpur',
-  'Western Coalfields Ltd',
+export const clientLogos: { name: string; logo: string }[] = [
+  { name: 'NHAI', logo: '' },
+  { name: 'NH-PWD Nagpur', logo: '' },
+  { name: 'PWD Maharashtra', logo: '' },
+  { name: 'Pench Irrigation Division', logo: '' },
+  { name: 'GMCH Nagpur', logo: '' },
+  { name: 'Western Coalfields Ltd', logo: '' },
 ];
 
 export const pressMentions: { outlet: string; headline: string }[] = [
@@ -1473,7 +1657,6 @@ export const footer = {
     'Sunrise Constructions is a ₹115Cr+ engineering and construction enterprise delivering landmark projects across Maharashtra.',
   quickLinks: navLinks,
   serviceLinks: services.map((s) => ({ label: s.title, href: `/services/${s.slug}` })),
-  certificationsMini: ['ISO 9001', 'ISO 14001', 'ISO 45001', 'IGBC'],
   legal: [
     { label: 'Privacy Policy', href: '/privacy-policy' },
     { label: 'Terms of Service', href: '/terms' },
