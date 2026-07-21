@@ -59,6 +59,10 @@ function mapToStoragePath(localPath: string): string {
   if (path.startsWith('images/about-')) {
     return 'about/' + path.replace('images/', '');
   }
+  // /images/pageheader-X.jpg → pageheaders/pageheader-X.jpg
+  if (path.startsWith('images/pageheader-')) {
+    return 'pageheaders/' + path.replace('images/', '');
+  }
   // /images/life-X.svg → careers/life-X.svg
   if (path.startsWith('images/life-')) {
     return 'careers/' + path.replace('images/', '');

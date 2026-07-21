@@ -52,6 +52,7 @@ export default function AboutPage() {
         }
         description="A ₹115Cr+ engineering and construction enterprise delivering landmark highways, bridges, irrigation systems, and public infrastructure across Maharashtra - on time, built to last."
         breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'About Us' }]}
+        backgroundImage="/images/pageheader-about.jpg"
       />
 
       {/* Founder's Message */}

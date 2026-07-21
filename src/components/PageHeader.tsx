@@ -2,18 +2,35 @@ import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { Reveal } from './Reveal';
+import { mediaUrl } from '@/lib/cdn';
 
 interface PageHeaderProps {
   eyebrow?: string;
   title: ReactNode;
   description?: ReactNode;
   breadcrumbs?: { label: string; href?: string }[];
+  backgroundImage?: string;
 }
 
-export function PageHeader({ eyebrow, title, description, breadcrumbs }: PageHeaderProps) {
+export function PageHeader({ eyebrow, title, description, breadcrumbs, backgroundImage }: PageHeaderProps) {
   return (
     <section className="relative overflow-hidden bg-navy pb-16 pt-36 lg:pb-20 lg:pt-44">
-      <div className="bg-navy-grid pointer-events-none absolute inset-0 opacity-40" aria-hidden />
+      {/* Background image (optional) */}
+      {backgroundImage ? (
+        <>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={mediaUrl(backgroundImage)}
+            alt=""
+            className="absolute inset-0 h-full w-full object-cover"
+            aria-hidden
+          />
+          {/* Gradient overlay for text legibility */}
+          <div className="absolute inset-0 bg-gradient-to-br from-navy/90 via-navy/75 to-navy/60" aria-hidden />
+        </>
+      ) : (
+        <div className="bg-navy-grid pointer-events-none absolute inset-0 opacity-40" aria-hidden />
+      )}
       <div
         className="pointer-events-none absolute -right-20 top-0 h-72 w-72 rounded-full bg-gold/10 blur-3xl"
         aria-hidden
