@@ -33,7 +33,7 @@ export default async function ProjectsPage() {
         eyebrow="Our Portfolio"
         title={
           <>
-            Projects that <span className="text-gradient-gold">define skylines</span>
+            Projects that <span className="text-gradient-gold">quality engineering</span>
           </>
         }
         description="A selection of landmark builds - each delivered with the scale, discipline, and craft our clients trust us with."
