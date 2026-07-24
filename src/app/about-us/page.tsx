@@ -112,7 +112,7 @@ export default function AboutPage() {
             <div>
               <SectionHeading
                 eyebrow="Our Story"
-                title={<span id="story-heading">From a Nagpur contractor to an engineering enterprise</span>}
+                title={<span id="story-heading">From a village contractor to an emerging engineering enterprise</span>}
                 align="left"
               />
               <div className="mt-6 space-y-4">
