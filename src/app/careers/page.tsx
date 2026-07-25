@@ -119,33 +119,42 @@ export default async function CareersPage() {
       </section>
 
       {/* Open Positions */}
-      <section className="section bg-white" id="open-positions">
-        <div className="container-page">
-          <SectionHeading
-            eyebrow="Open Positions"
-            title="Find your next role"
-            description="Browse our current openings. Filter by department or location to find the right fit."
-          />
-          <div className="mt-12">
-            <JobListingsFilter jobs={jobListings} />
+      <section className="relative overflow-hidden bg-navy py-20 lg:py-24" id="open-positions">
+        <div className="bg-navy-grid pointer-events-none absolute inset-0 opacity-40" aria-hidden />
+        <div className="pointer-events-none absolute -left-20 top-10 h-72 w-72 rounded-full bg-gold/10 blur-3xl" aria-hidden />
+        <div className="container-page relative">
+          {/* Prominent header */}
+          <div className="mb-12 text-center">
+            <span className="inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-4 py-1.5 text-sm font-semibold text-gold">
+              {jobListings.length} Open Role{jobListings.length !== 1 ? 's' : ''} — Hiring Now
+            </span>
+            <h2 className="mt-5 font-heading text-3xl font-extrabold text-white lg:text-4xl">
+              Find your next role
+            </h2>
+            <div className="mx-auto mt-4 h-1 w-20 rounded-full bg-gold" aria-hidden />
+            <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-white/70">
+              Browse our current openings. Filter by department or location to find the right fit.
+            </p>
           </div>
+          {/* Job listings */}
+          <JobListingsFilter jobs={jobListings} />
         </div>
       </section>
 
       {/* Employee testimonials */}
-      <section className="section bg-navy">
+      <section className="section bg-white">
         <div className="container-page">
           <SectionHeading
             eyebrow="Employee Voices"
             title="Hear from our team"
-            variant="dark"
+            description="The people who build with us every day - in their own words."
           />
           <div className="mt-12 grid gap-6 md:grid-cols-3">
             {employeeTestimonials.map((emp, i) => (
-              <Reveal key={emp.id} delay={i * 0.1}>
-                <figure className="h-full rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
+              <Reveal key={emp.id} delay={(i % 3) * 0.1}>
+                <figure className="h-full rounded-2xl border border-navy/5 bg-cream/40 p-6 transition-all duration-500 hover:border-gold/30 hover:bg-white hover:shadow-navy">
                   <Quote className="h-7 w-7 text-gold" aria-hidden />
-                  <blockquote className="mt-4 text-sm leading-relaxed text-white/80">
+                  <blockquote className="mt-4 text-sm leading-relaxed text-charcoal-light">
                     &ldquo;{emp.quote}&rdquo;
                   </blockquote>
                   <figcaption className="mt-5 flex items-center gap-3">
@@ -158,8 +167,8 @@ export default async function CareersPage() {
                       />
                     </div>
                     <div>
-                      <p className="font-heading text-sm font-bold text-white">{emp.name}</p>
-                      <p className="text-xs text-white/60">{emp.role}</p>
+                      <p className="font-heading text-sm font-bold text-navy">{emp.name}</p>
+                      <p className="text-xs text-charcoal-light/70">{emp.role} &middot; {emp.project}</p>
                     </div>
                   </figcaption>
                   <div className="mt-3 flex gap-0.5">
