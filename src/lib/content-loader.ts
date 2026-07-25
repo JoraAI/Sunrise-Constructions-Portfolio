@@ -62,8 +62,8 @@ export async function loadServices(): Promise<Service[]> {
     if (error || !data || data.length === 0) return defaultServices;
     return data.map((sv: Record<string, unknown>) => {
       const slug = str(sv.slug);
-      // Find matching default service to merge rich content fields
-      // (DB table doesn't have gallery/capabilities/stats/faqs columns)
+      // Fall back to content.ts for legacy DBs that lack the rich columns,
+      // otherwise prefer whatever the DB row provides.
       const defaultSvc = defaultServices.find((d) => d.slug === slug);
       return {
         slug,
@@ -75,7 +75,6 @@ export async function loadServices(): Promise<Service[]> {
         overview: str(sv.overview),
         keyDeliverables: parseJson(sv.key_deliverables, defaultSvc?.keyDeliverables || []),
         process: parseJson(sv.process, defaultSvc?.process || []),
-        // Rich content fields: prefer DB if column exists, fall back to content.ts
         gallery: sv.gallery ? parseJson(sv.gallery, undefined) : defaultSvc?.gallery,
         capabilities: sv.capabilities ? parseJson(sv.capabilities, undefined) : defaultSvc?.capabilities,
         stats: sv.stats ? parseJson(sv.stats, undefined) : defaultSvc?.stats,
@@ -156,11 +155,19 @@ export async function loadJobListings(): Promise<JobListing[]> {
     const { data, error } = await s.from('content_job_listings').select('*').eq('active', true).order('sort_order', { ascending: true });
     if (error || !data || data.length === 0) return defaultJobListings;
     return data.map((j: Record<string, unknown>) => ({
-      slug: str(j.slug), title: str(j.title), department: str(j.department) || 'Engineering',
-      location: str(j.location) || 'Nagpur', employmentType: str(j.employment_type) || 'Full-time',
-      description: str(j.description), responsibilities: parseJson(j.responsibilities, []),
-      requirements: parseJson(j.requirements, []), qualifications: parseJson(j.qualifications, []),
-      type: 'Full-time', experience: '', postedDate: '', summary: str(j.description), niceToHave: [],
+      slug: str(j.slug),
+      title: str(j.title),
+      department: str(j.department) || 'Engineering',
+      location: str(j.location) || 'Nagpur',
+      type: str(j.employment_type) || 'Full-time',
+      experience: str(j.experience),
+      postedDate: str(j.posted_date),
+      summary: str(j.summary || j.description),
+      description: str(j.description),
+      responsibilities: parseJson(j.responsibilities, []),
+      requirements: parseJson(j.requirements, []),
+      qualifications: parseJson(j.qualifications, []),
+      niceToHave: parseJson(j.nice_to_have, []),
     })) as JobListing[];
   } catch { return defaultJobListings; }
 }

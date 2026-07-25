@@ -63,7 +63,7 @@ export async function POST(
     const body = await req.json();
 
     // Convert JSONB arrays/objects to JSON strings for Supabase
-    const fieldsToSerialize = ['gallery', 'scope', 'metrics', 'key_deliverables', 'process', 'capabilities', 'tags', 'content', 'responsibilities', 'requirements', 'qualifications', 'stats', 'about_body', 'certifications', 'process_steps', 'faqs'];
+    const fieldsToSerialize = ['gallery', 'scope', 'metrics', 'key_deliverables', 'process', 'capabilities', 'tags', 'content', 'responsibilities', 'requirements', 'qualifications', 'nice_to_have', 'stats', 'about_body', 'certifications', 'process_steps', 'faqs'];
     const row: Record<string, unknown> = { ...body };
     for (const field of fieldsToSerialize) {
       if (row[field] && typeof row[field] !== 'string') {

@@ -1,6 +1,10 @@
 /**
  * Creates the super admin account via Supabase Admin API.
- * Run AFTER scripts/fix-auth.sql has been executed in Supabase SQL Editor.
+ * Run AFTER database-setup.sql has been executed in Supabase SQL Editor.
+ *
+ * Super admin credentials are read from .env:
+ *   SUPERADMIN_EMAIL
+ *   SUPERADMIN_PASSWORD
  *
  * Usage: npm run create-superadmin
  */
@@ -25,22 +29,54 @@ if (fs.existsSync(envPath)) {
 }
 
 const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
-const SUPABASE_URL =
-  process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://zobbbsjcagfnceoeotpk.supabase.co';
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
 
-if (!SERVICE_KEY) {
-  console.error('Error: SUPABASE_SERVICE_ROLE_KEY not set in .env');
-  console.error('Make sure your .env file has the SUPABASE_SERVICE_ROLE_KEY variable.');
+if (!SERVICE_KEY || !SUPABASE_URL) {
+  console.error('Error: NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set in .env');
   process.exit(1);
 }
 
-const EMAIL = 'superadmin@sunriseconstructions.in';
-const PASSWORD = 'Sunrise@SuperAdmin2025';
+// Credentials are sourced from env vars (see .env.example).
+// Fallbacks exist only so the script stays runnable for legacy setups.
+const EMAIL = process.env.SUPERADMIN_EMAIL || 'superadmin@sunriseconstructions.in';
+const PASSWORD = process.env.SUPERADMIN_PASSWORD;
+
+if (!PASSWORD) {
+  console.error('Error: SUPERADMIN_PASSWORD is not set in .env');
+  console.error('Add SUPERADMIN_EMAIL and SUPERADMIN_PASSWORD to your .env file.');
+  process.exit(1);
+}
+
+/**
+ * Finds and deletes any existing auth user with the configured email.
+ * This makes the script idempotent (safe to re-run) without relying on SQL.
+ * Returns the former user id (if any) so role cleanup can run.
+ */
+async function deleteExistingUser() {
+  const listRes = await fetch(`${SUPABASE_URL}/auth/v1/admin/users`, {
+    headers: { apikey: SERVICE_KEY, Authorization: 'Bearer ' + SERVICE_KEY },
+  });
+  if (!listRes.ok) return null;
+  const listData = await listRes.json();
+  const existing = (listData.users || []).find((u) => u.email === EMAIL);
+  if (!existing) return null;
+
+  console.log(`  Existing user found (${existing.id}), deleting to recreate cleanly...`);
+  const delRes = await fetch(`${SUPABASE_URL}/auth/v1/admin/users/${existing.id}`, {
+    method: 'DELETE',
+    headers: { apikey: SERVICE_KEY, Authorization: 'Bearer ' + SERVICE_KEY },
+  });
+  console.log(delRes.ok ? '  ✓ Existing user deleted' : `  ! Delete failed: ${await delRes.text()}`);
+  return existing.id;
+}
 
 async function main() {
   console.log('Creating super admin via Supabase Admin API...');
   console.log('URL:', SUPABASE_URL);
   console.log('Email:', EMAIL);
+
+  // Step 0: Remove any existing user with this email so the script is re-runnable.
+  await deleteExistingUser();
 
   // Step 1: Create the auth user
   const createRes = await fetch(`${SUPABASE_URL}/auth/v1/admin/users`, {
@@ -62,32 +98,6 @@ async function main() {
 
   if (!createRes.ok) {
     console.error('Failed to create user:', JSON.stringify(createData, null, 2));
-
-    // If user already exists, try to update password
-    if (createData.msg && createData.msg.includes('already')) {
-      console.log('\nUser already exists. Listing users to find ID...');
-      const listRes = await fetch(`${SUPABASE_URL}/auth/v1/admin/users`, {
-        headers: {
-          apikey: SERVICE_KEY,
-          Authorization: 'Bearer ' + SERVICE_KEY,
-        },
-      });
-      const listData = await listRes.json();
-      const user = (listData.users || []).find((u) => u.email === EMAIL);
-      if (user) {
-        console.log('Found user:', user.id);
-        const updRes = await fetch(`${SUPABASE_URL}/auth/v1/admin/users/${user.id}`, {
-          method: 'PUT',
-          headers: {
-            apikey: SERVICE_KEY,
-            Authorization: 'Bearer ' + SERVICE_KEY,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ password: PASSWORD }),
-        });
-        console.log('Password update:', updRes.ok ? 'OK' : await updRes.text());
-      }
-    }
     return;
   }
 
@@ -124,7 +134,7 @@ async function main() {
     console.log('  Super Admin is ready!');
     console.log('  Login at: /admin/login');
     console.log('  Email: ' + EMAIL);
-    console.log('  Password: ' + PASSWORD);
+    console.log('  Password: (set in your .env as SUPERADMIN_PASSWORD)');
     console.log('========================================');
   } else {
     const signData = await signRes.json();
