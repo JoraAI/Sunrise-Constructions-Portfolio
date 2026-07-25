@@ -11,11 +11,13 @@ import { TeamGrid } from '@/components/TeamGrid';
 import { CTABand } from '@/components/CTABand';
 import { JsonLd } from '@/components/JsonLd';
 import { buildMetadata, breadcrumbJsonLd } from '@/lib/seo';
+import { Star, Quote } from 'lucide-react';
 import {
   aboutSection,
   founderMessage,
   aboutApproach,
   aboutDifferentiators,
+  employeeTestimonials,
 } from '@/lib/content';
 
 export const metadata: Metadata = buildMetadata({
@@ -241,6 +243,50 @@ export default function AboutPage() {
       </section>
 
       <TeamGrid />
+
+      {/* Employee Testimonials */}
+      <section className="section bg-navy" aria-labelledby="emp-testimonials-heading">
+        <div className="container-page">
+          <SectionHeading
+            eyebrow="Employee Voices"
+            title={<span id="emp-testimonials-heading" className="text-white">Hear from our team</span>}
+            description="The people who build with us every day - in their own words."
+            variant="dark"
+          />
+          <div className="mt-12 grid gap-6 md:grid-cols-3">
+            {employeeTestimonials.map((emp, i) => (
+              <Reveal key={emp.id} delay={(i % 3) * 0.1}>
+                <figure className="h-full rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition-colors hover:border-gold/30">
+                  <Quote className="h-7 w-7 text-gold" aria-hidden />
+                  <blockquote className="mt-4 text-sm leading-relaxed text-white/80">
+                    &ldquo;{emp.quote}&rdquo;
+                  </blockquote>
+                  <figcaption className="mt-5 flex items-center gap-3">
+                    <div className="h-10 w-10 overflow-hidden rounded-full border border-gold/30">
+                      <SmartImage
+                        src={emp.image}
+                        alt={emp.alt}
+                        aspect="aspect-square"
+                        sizes="2.5rem"
+                      />
+                    </div>
+                    <div>
+                      <p className="font-heading text-sm font-bold text-white">{emp.name}</p>
+                      <p className="text-xs text-white/60">{emp.role} &middot; {emp.project}</p>
+                    </div>
+                  </figcaption>
+                  <div className="mt-3 flex gap-0.5">
+                    {Array.from({ length: emp.rating }).map((_, s) => (
+                      <Star key={s} className="h-3.5 w-3.5 fill-gold text-gold" />
+                    ))}
+                  </div>
+                </figure>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <CTABand />
 
       <JsonLd
