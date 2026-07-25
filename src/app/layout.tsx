@@ -8,6 +8,7 @@ import { JsonLd } from '@/components/JsonLd';
 import { organizationJsonLd } from '@/lib/seo';
 import { siteConfig } from '@/lib/content';
 import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -88,6 +89,7 @@ export default async function RootLayout({
         {!isAdmin && <Footer />}
         {!isAdmin && <ChatWidget />}
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
