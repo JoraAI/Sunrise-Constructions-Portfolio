@@ -19,16 +19,16 @@ export function TeamGrid({ team = defaultTeam }: { team?: TeamMember[] }) {
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {team.map((member, i) => (
             <Reveal key={member.id} delay={(i % 3) * 0.1}>
-              <article className="card card-hover group h-full overflow-hidden">
+              <article className="card group h-full overflow-hidden ring-1 ring-transparent transition-all duration-500 hover:shadow-xl hover:ring-gold/40">
                 <div className="relative">
                   <SmartImage
                     src={member.image}
                     alt={member.alt}
                     aspect="aspect-[4/5]"
                     sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
-                    imgClassName="grayscale transition-all duration-500 group-hover:grayscale-0 group-hover:scale-105"
+                    imgClassName="transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-navy/30 to-transparent opacity-0 transition-opacity group-hover:opacity-100" aria-hidden />
+                  <div className="absolute inset-0 bg-gradient-to-t from-navy/40 to-transparent opacity-60 transition-opacity duration-500 group-hover:opacity-90" aria-hidden />
                   {member.linkedin && (
                     <a
                       href={member.linkedin}

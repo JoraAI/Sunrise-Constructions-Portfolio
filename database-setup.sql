@@ -11,9 +11,9 @@
 -- INSTRUCTIONS:
 --   1. Go to Supabase Dashboard → SQL Editor
 --   2. Paste this ENTIRE file → Click "Run"
---   3. Done! Login at /admin/login
---      Email: superadmin@sunriseconstructions.in
---      Password: Sunrise@SuperAdmin2025
+--   3. Then run: npm run create-superadmin
+--      (credentials come from SUPERADMIN_EMAIL / SUPERADMIN_PASSWORD in .env)
+--   4. Done! Login at /admin/login
 --
 -- ⚠️  This DELETES all existing data and recreates from scratch.
 -- ⚠️  Change the super admin password after first login at /admin/settings.
@@ -40,8 +40,8 @@ DROP TABLE IF EXISTS contact_submissions CASCADE;
 DROP TABLE IF EXISTS job_applications CASCADE;
 DROP TABLE IF EXISTS user_roles CASCADE;
 
--- Delete the super admin user from auth if it exists
-DELETE FROM auth.users WHERE email = 'boss@sunriseconstructions.in';
+-- Note: Super admin user cleanup is now handled by `npm run create-superadmin`
+-- (it reads SUPERADMIN_EMAIL from .env and deletes/recreates the user via the Admin API).
 
 -- ============================================================================
 -- STEP 1: USER ROLES (Admin Authentication)
@@ -81,6 +81,23 @@ CREATE INDEX idx_user_roles_user_id ON user_roles(user_id);
 CREATE INDEX idx_user_roles_role ON user_roles(role);
 
 -- ============================================================================
+-- Helper: returns true if the current user is an admin or super_admin.
+-- Used by RLS policies on operational tables (tickets, submissions, etc.).
+-- SECURITY DEFINER + fixed search_path prevents RLS recursion.
+-- ============================================================================
+CREATE OR REPLACE FUNCTION public.is_admin()
+RETURNS BOOLEAN
+LANGUAGE sql
+SECURITY DEFINER SET search_path = public
+AS $$
+  SELECT EXISTS (
+    SELECT 1 FROM public.user_roles
+    WHERE user_id = auth.uid()
+      AND role IN ('admin', 'super_admin')
+  );
+$$;
+
+-- ============================================================================
 -- STEP 2: AUTO-ASSIGN TRIGGER (new signups get 'admin' role automatically)
 -- ============================================================================
 CREATE OR REPLACE FUNCTION public.handle_new_user()
@@ -115,8 +132,8 @@ CREATE TABLE chat_tickets (
 );
 ALTER TABLE chat_tickets ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Anyone can create chat tickets" ON chat_tickets FOR INSERT WITH CHECK (true);
-CREATE POLICY "Anyone can view chat tickets" ON chat_tickets FOR SELECT USING (true);
-CREATE POLICY "Anyone can update chat tickets" ON chat_tickets FOR UPDATE USING (true);
+CREATE POLICY "Admins can view chat tickets" ON chat_tickets FOR SELECT USING (public.is_admin());
+CREATE POLICY "Admins can update chat tickets" ON chat_tickets FOR UPDATE USING (public.is_admin());
 
 CREATE TABLE newsletter_subscribers (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -125,7 +142,7 @@ CREATE TABLE newsletter_subscribers (
 );
 ALTER TABLE newsletter_subscribers ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Anyone can subscribe" ON newsletter_subscribers FOR INSERT WITH CHECK (true);
-CREATE POLICY "Anyone can view subscribers" ON newsletter_subscribers FOR SELECT USING (true);
+CREATE POLICY "Admins can view subscribers" ON newsletter_subscribers FOR SELECT USING (public.is_admin());
 
 CREATE TABLE contact_submissions (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -142,8 +159,8 @@ CREATE TABLE contact_submissions (
 );
 ALTER TABLE contact_submissions ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Anyone can submit contact" ON contact_submissions FOR INSERT WITH CHECK (true);
-CREATE POLICY "Anyone can view contact" ON contact_submissions FOR SELECT USING (true);
-CREATE POLICY "Anyone can update contact" ON contact_submissions FOR UPDATE USING (true);
+CREATE POLICY "Admins can view contact" ON contact_submissions FOR SELECT USING (public.is_admin());
+CREATE POLICY "Admins can update contact" ON contact_submissions FOR UPDATE USING (public.is_admin());
 
 CREATE TABLE job_applications (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -159,8 +176,8 @@ CREATE TABLE job_applications (
 );
 ALTER TABLE job_applications ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Anyone can apply" ON job_applications FOR INSERT WITH CHECK (true);
-CREATE POLICY "Anyone can view applications" ON job_applications FOR SELECT USING (true);
-CREATE POLICY "Anyone can update applications" ON job_applications FOR UPDATE USING (true);
+CREATE POLICY "Admins can view applications" ON job_applications FOR SELECT USING (public.is_admin());
+CREATE POLICY "Admins can update applications" ON job_applications FOR UPDATE USING (public.is_admin());
 
 -- ============================================================================
 -- STEP 4: MEDIA ASSETS TABLE
@@ -222,6 +239,10 @@ CREATE TABLE content_services (
   overview TEXT,
   key_deliverables JSONB DEFAULT '[]'::jsonb,
   process JSONB DEFAULT '[]'::jsonb,
+  gallery JSONB DEFAULT '[]'::jsonb,
+  capabilities JSONB DEFAULT '[]'::jsonb,
+  stats JSONB DEFAULT '[]'::jsonb,
+  faqs JSONB DEFAULT '[]'::jsonb,
   sort_order INTEGER DEFAULT 0,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
@@ -318,10 +339,14 @@ CREATE TABLE content_job_listings (
   department TEXT NOT NULL DEFAULT 'Engineering',
   location TEXT NOT NULL DEFAULT 'Nagpur',
   employment_type TEXT DEFAULT 'Full-time',
+  experience TEXT,
+  posted_date TEXT,
+  summary TEXT,
   description TEXT,
   responsibilities JSONB DEFAULT '[]'::jsonb,
   requirements JSONB DEFAULT '[]'::jsonb,
   qualifications JSONB DEFAULT '[]'::jsonb,
+  nice_to_have JSONB DEFAULT '[]'::jsonb,
   active BOOLEAN DEFAULT true,
   sort_order INTEGER DEFAULT 0,
   created_at TIMESTAMPTZ DEFAULT NOW(),
@@ -364,7 +389,7 @@ CREATE POLICY "Update settings" ON content_site_settings FOR UPDATE USING (true)
 -- ============================================================================
 SELECT 'Tables created: ' || count(*)::text AS result FROM information_schema.tables WHERE table_schema = 'public' AND table_name LIKE 'content_%' OR table_name IN ('user_roles', 'media_assets', 'chat_tickets', 'newsletter_subscribers', 'contact_submissions', 'job_applications');
 
-SELECT 'Super admin: ' || email || ' (' || role || ')' AS result FROM user_roles WHERE email = 'superadmin@sunriseconstructions.in';
+SELECT 'Super admins: ' || COALESCE(string_agg(email || ' (' || role || ')', ', '), 'none yet — run npm run create-superadmin') AS result FROM user_roles WHERE role = 'super_admin';
 
 -- ============================================================================
 -- STEP 8: WEEKLY TICKET CLEANUP (pg_cron)
@@ -379,15 +404,3 @@ SELECT cron.schedule(
   '0 20 * * 0',
   $$DELETE FROM chat_tickets WHERE status = 'resolved' AND updated_at < NOW() - INTERVAL '30 days'$$
 );
-
--- ============================================================================
--- DONE!
--- Login at: /admin/login
--- Email: boss@sunriseconstructions.in
--- Password: Sunrise@SuperAdmin2025
---
--- After running this SQL, create the super admin:
---   npm run create-superadmin
--- Then upload media:
---   npm run migrate-media
--- ============================================================================
