@@ -1470,6 +1470,7 @@ export const careerStats: CareerStat[] = [
   { id: 'c1', value: '250+', label: 'Team members', icon: 'users' },
   { id: 'c2', value: '4 years', label: 'Avg. tenure', icon: 'clock' },
   { id: 'c3', value: '1', label: 'Head office in Nagpur', icon: 'map-pin' },
+  { id: 'c4', value: '5', label: 'Site offices', icon: 'building' },
 ];
 
 export const employeeTestimonials: Testimonial[] = [
