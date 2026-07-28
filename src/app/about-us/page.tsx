@@ -73,7 +73,7 @@ export default function AboutPage() {
                     aspect="aspect-[4/5]"
                     className="relative rounded-2xl shadow-navy"
                     sizes="(max-width: 1024px) 100vw, 40vw"
-                    imgClassName="grayscale"
+                    imgClassName=""
                   />
                 </div>
               </Reveal>
