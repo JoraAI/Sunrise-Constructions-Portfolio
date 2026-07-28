@@ -40,7 +40,7 @@ export const siteConfig = {
     city: 'Nagpur',
     state: 'Maharashtra',
     pincode: '440012',
-    mapUrl: 'https://maps.app.goo.gl/gSKmAXYMepF4X9369?g_st=aw',
+    mapUrl: 'https://maps.app.goo.gl/ajuSEx2VScxB4Sww9',
     hours: 'Mon-Sat: 10:00 AM - 7:00 PM',
   } satisfies ContactInfo,
   socials: [
@@ -134,7 +134,7 @@ export const aboutSection = {
 export const founderMessage = {
   name: 'D Mallikarjun Reddy',
   title: 'Chairman and Founder',
-  image: '/images/team-1.svg',
+  image: '/images/team/mallikarjun-reddy.jpg',
   alt: 'Portrait of D Mallikarjun Reddy, Chairman and Founder of Sunrise Constructions',
   heading: 'A message from our founder',
   body: [
@@ -984,10 +984,14 @@ export const projects: Project[] = [
     year: '2020',
     client: 'National Highways Authority of India (NHAI)',
     metric: 'Underpass at Km 685+820 \u00b7 EPC mode \u00b7 \u20b912.64 Cr',
-    image: '/images/project-metro.svg',
+    image: '/images/projects/pedestrian-underpass-nh44.jpg',
     alt: 'Pedestrian underpass constructed at Km 685 on NH-44 Jabalpur-Nagpur section',
     featured: false,
-    gallery: ['/images/project-metro.svg'],
+    gallery: [
+      '/images/projects/pedestrian-underpass-nh44.jpg',
+      '/images/projects/pedestrian-underpass-nh44-2.jpg',
+      '/images/projects/pedestrian-underpass-nh44-3.jpg',
+    ],
     summary:
       'Construction of a pedestrian underpass with service road at Km 685+820 on the Jabalpur-Nagpur section of NH-44 under EPC mode.',
     overview:
@@ -1100,6 +1104,36 @@ export const projects: Project[] = [
       { value: '\u20b925.67 Cr', label: 'Project value' },
       { value: 'NH-353J', label: 'Highway' },
       { value: 'NHAI', label: 'Client' },
+    ],
+  },
+  {
+    slug: 'deoli-nh361-white-topping',
+    title: 'One-Time Improvement of Carriageway in Deoli Town with White Topping, NH-361',
+    category: 'Infrastructure',
+    location: 'Deoli, Wardha-Yavatmal Section, Maharashtra',
+    year: '2026',
+    client: 'National Highways Authority Of India, Chandrapur',
+    metric: '3.200 Km white topping \u00b7 NH-361 \u00b7 EPC mode \u00b7 \u20b920.73 Cr',
+    image: '/images/projects/deoli-nh361-white-topping.jpg',
+    alt: 'White topping highway improvement on NH-361 at Deoli Town, Yavatmal-Wardha section',
+    featured: false,
+    gallery: ['/images/projects/deoli-nh361-white-topping.jpg'],
+    summary:
+      'One-time improvement of the existing carriageway in Deoli Town with white topping (3.200 km) on the Yavatmal-Wardha section of NH-361, executed on EPC mode.',
+    overview:
+      'This NHAI project involved the one-time improvement of the existing carriageway passing through Deoli Town on the Yavatmal-Wardha section of NH-361. The work comprised laying rigid white topping (cement concrete pavement) over a 3.200 km stretch, strengthening the existing road structure to withstand heavy traffic loads and improve longevity. The project was executed on an Engineering, Procurement, and Construction (EPC) basis for the National Highways Authority of India, Chandrapur. White topping provides a durable, low-maintenance surface with superior riding quality and reflectivity, enhancing both safety and service life on this important state highway corridor.',
+    scope: [
+      '3.200 km of white topping (rigid pavement) over existing carriageway',
+      'Pavement strengthening and surface preparation',
+      'Drainage and shoulder improvements through Deoli Town',
+      'Road markings, signage, and safety furniture',
+      'Traffic management during execution',
+    ],
+    metrics: [
+      { value: '3.200 km', label: 'Highway length' },
+      { value: '\u20b920.73 Cr', label: 'Project value' },
+      { value: '2026', label: 'Completed' },
+      { value: 'EPC', label: 'Mode' },
     ],
   },
 ];
@@ -1250,7 +1284,7 @@ export const team: TeamMember[] = [
     name: 'D Mallikarjun Reddy',
     title: 'Chairman and Founder',
     bio: 'Founded Sunrise Constructions in 2014 in Nagpur, Maharashtra. A visionary leader with deep expertise in large-scale infrastructure and highway construction, Mallikarjun guides the group\u2019s long-term strategy and growth.',
-    image: '/images/team-1.svg',
+    image: '/images/team/mallikarjun-reddy.jpg',
     alt: 'Portrait of D Mallikarjun Reddy, Chairman and Founder',
     linkedin: '',
   },
@@ -1259,7 +1293,7 @@ export const team: TeamMember[] = [
     name: 'D Anant Reddy',
     title: 'Managing Director',
     bio: 'Leads day-to-day operations and project delivery across all sites. Anant brings hands-on engineering expertise and a relentless focus on quality, safety, and on-time delivery.',
-    image: '/images/team-2.svg',
+    image: '/images/team/anant-reddy.jpg',
     alt: 'Portrait of D Anant Reddy, Managing Director',
     linkedin: '',
   },
