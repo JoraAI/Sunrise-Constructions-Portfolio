@@ -190,7 +190,7 @@ export interface CareerStat {
   id: string;
   value: string;
   label: string;
-  icon: 'users' | 'clock' | 'map-pin' | 'shield';
+  icon: 'users' | 'clock' | 'map-pin' | 'shield' | 'building';
 }
 
 export interface OfficeLocation {
