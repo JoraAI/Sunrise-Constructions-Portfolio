@@ -122,9 +122,9 @@ export const aboutSection = {
     'Founded in 2014 in Nagpur, Maharashtra, Sunrise Constructions has grown into a ₹115 crore+ engineering and construction enterprise. We deliver highway, bridge, irrigation, residential, healthcare, and infrastructure projects across Maharashtra, working with prestigious clients including NHAI, NH-PWD, and the Irrigation Department.',
     'Our team of 250+ engineers, project managers, and skilled tradespeople brings institutional rigor to every build - combining modern project controls with years of hands-on field expertise. The result: 95% on-time delivery, 99% client satisfaction, and infrastructure built to perform for generations.',
   ],
-  image: '/images/about-building.svg',
+  image: '/images/about-building.jpg',
   imageAlt:
-    'Sunrise Constructions engineers reviewing blueprints at a construction site in Nagpur, Maharashtra',
+    'Aerial view of a large-scale construction site with cranes and infrastructure development',
   cta: { label: 'Learn More About Us', href: '/about-us' },
 };
 
