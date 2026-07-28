@@ -92,14 +92,29 @@ export default function ContactPage() {
                 </li>
               </ul>
 
-              {/* Map placeholder */}
-              <div className="mt-8 overflow-hidden rounded-2xl border border-navy/10 bg-navy-50">
-                <div className="flex aspect-[4/3] items-center justify-center bg-navy-grid">
-                  <div className="text-center">
-                    <MapPin className="mx-auto h-10 w-10 text-gold" />
-                    <p className="mt-2 text-sm font-semibold text-navy">Interactive Map</p>
-                    <p className="text-xs text-charcoal-muted">Sitabuldi Main Road, Nagpur</p>
+              {/* Interactive Google Map */}
+              <div className="mt-8 overflow-hidden rounded-2xl border border-navy/10 shadow-navy-sm">
+                <iframe
+                  src="https://www.google.com/maps?q=21.138231,79.0806359&z=17&output=embed"
+                  className="aspect-[4/3] w-full border-0"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Sunrise Constructions office location on Google Maps"
+                  allowFullScreen
+                />
+                <div className="flex items-center justify-between bg-navy px-4 py-3">
+                  <div className="flex items-center gap-2">
+                    <MapPin className="h-4 w-4 text-gold" />
+                    <span className="text-sm font-semibold text-white">Sunrise Constructions, Nagpur</span>
                   </div>
+                  <a
+                    href={siteConfig.contact.mapUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs font-semibold text-gold hover:text-amber"
+                  >
+                    Get Directions →
+                  </a>
                 </div>
               </div>
             </div>
