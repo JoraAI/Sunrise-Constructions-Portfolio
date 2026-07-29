@@ -888,18 +888,18 @@ export const projects: Project[] = [
   },
   {
     slug: 'gmc-paying-ward-nagpur',
-    title: 'Paying Ward with Electrification, GMC Hospital Nagpur',
+    title: '100-Bedded Paying Ward, GMC Hospital Nagpur',
     category: 'Healthcare',
     location: 'Nagpur, Maharashtra',
     year: '2026',
     client: 'Integrated Unit Medical PWD, Nagpur',
-    metric: 'Hospital paying ward \u00b7 Government Medical College \u00b7 \u20b915.31 Cr',
+    metric: '100-bedded paying ward \u00b7 Government Medical College \u00b7 \u20b922.38 Cr',
     image: '/images/projects/gmc-paying-ward.jpg',
     alt: 'Interior of paying ward with electrification at Government Medical College Hospital Nagpur',
     featured: true,
     gallery: ['/images/projects/gmc-paying-ward.jpg', '/images/projects/gmc-paying-ward-2.jpg'],
     summary:
-      'Construction of a paying ward with complete electrification at the Government Medical College and Hospital (GMCH), Nagpur.',
+      'Construction of a 100-bedded paying ward with complete electrification at the Government Medical College and Hospital (GMCH), Nagpur.',
     overview:
       'This healthcare infrastructure project involved the construction of a modern paying ward facility within the premises of the Government Medical College and Hospital (GMCH), Nagpur - one of the largest government hospitals in central India. The scope included structural construction, internal finishes to hospital standards, complete electrical and backup power infrastructure, medical gas pipeline systems, nurse call systems, and HVAC. The facility provides upgraded patient accommodation options while meeting the stringent requirements of a functioning tertiary-care hospital environment.',
     scope: [
@@ -910,7 +910,7 @@ export const projects: Project[] = [
       'Hospital-grade finishes and fixtures',
     ],
     metrics: [
-      { value: '\u20b915.31 Cr', label: 'Project value' },
+      { value: '\u20b922.38 Cr', label: 'Project value' },
       { value: 'GMCH', label: 'Hospital' },
       { value: '2026', label: 'Completed' },
       { value: 'Medical PWD', label: 'Client' },
@@ -1041,43 +1041,13 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: 'nh353j-nagpur-katol-improvement',
-    title: 'One-Time Improvement, Nagpur-Katol Section NH-353J',
-    category: 'Infrastructure',
-    location: 'Nagpur, Maharashtra',
-    year: '2026',
-    client: 'National Highways Authority of India (NHAI), Nagpur',
-    metric: '5.7 km highway improvement \u00b7 \u20b925.67 Cr',
-    image: '/images/projects/nh7-laning-2.jpg',
-    alt: 'Highway improvement work on Nagpur-Katol section of NH-353J',
-    featured: false,
-    gallery: ['/images/projects/nh7-laning-2.jpg'],
-    summary:
-      'One-time improvement of the denotified portion of the Nagpur-Katol section of NH-353J from Km 7+300 to Km 13+000.',
-    overview:
-      'This NHAI project involved a comprehensive one-time improvement of a 5.7 km stretch of NH-353J on the Nagpur-Katol section. The scope included pavement strengthening, shoulder improvement, drainage works, and highway safety features. This corridor connects Nagpur city to the Katol region and serves as an important secondary highway route, carrying both passenger and agricultural freight traffic.',
-    scope: [
-      '5.7 km highway pavement improvement',
-      'Drainage and shoulder works',
-      'Highway safety features',
-      'Signage and road markings',
-      'Bridge and culvert maintenance',
-    ],
-    metrics: [
-      { value: '5.7 km', label: 'Highway length' },
-      { value: '\u20b925.67 Cr', label: 'Project value' },
-      { value: '2026', label: 'Completed' },
-      { value: 'NH-353J', label: 'Highway' },
-    ],
-  },
-  {
     slug: 'nh353j-katol-one-time-improvement',
     title: 'One-Time Improvement, Nagpur-Katol Section NH-353J (EPC)',
     category: 'Infrastructure',
     location: 'Nagpur-Katol, Maharashtra',
     year: '2026',
     client: 'National Highways Authority Of India, Nagpur',
-    metric: '5.7 km highway improvement \u00b7 Km 7+300 to 13+000 \u00b7 \u20b925.67 Cr',
+    metric: '6.7 km highway improvement \u00b7 Km 7+300 to 13+400 \u00b7 \u20b925.67 Cr',
     image: '/images/projects/nh353j-katol.jpg',
     alt: 'Aerial view of freshly paved NH-353J Nagpur-Katol highway section with improved shoulders and road markings',
     featured: true,
@@ -1090,17 +1060,17 @@ export const projects: Project[] = [
     summary:
       'One-time improvement of the denotified portion of the Nagpur-Katol section of NH-353J from Km 7+300 to Km 13+000, executed for the National Highways Authority Of India, Nagpur.',
     overview:
-      'Awarded by the National Highways Authority Of India, Nagpur, this project delivered a comprehensive one-time improvement to the 5.7 km denotified stretch of NH-353J between Nagpur and Katol (chainage Km 7+300 to Km 13+000). NH-353J is a key secondary highway corridor connecting Nagpur city to the Katol tehsil and the wider western Maharashtra hinterland, carrying a steady mix of passenger, commercial, and agricultural freight traffic.\n\nThe scope covered strengthening of the existing flexible pavement, restoration of shoulders, and repair of drainage assets to arrest monsoon-related edge distress. The work also included renewal of road markings, installation of reflective highway furniture and signage, and maintenance of cross-drainage structures and minor bridges along the chainage. The package was executed on an Engineering, Procurement and Construction (EPC) basis, with quality controlled against MoRTH and IRC specifications.\n\nBy restoring the carriageway to a serviceable, all-weather standard, the project improved ride quality, reduced vehicle operating costs, and enhanced safety for the communities and freight movement that depend on the Nagpur-Katol corridor.',
+      'Awarded by the National Highways Authority Of India, Nagpur, this project delivered a comprehensive one-time improvement to the 6.7 km denotified stretch of NH-353J between Nagpur and Katol (chainage Km 7+300 to Km 13+400). NH-353J is a key secondary highway corridor connecting Nagpur city to the Katol tehsil and the wider western Maharashtra hinterland, carrying a steady mix of passenger, commercial, and agricultural freight traffic.\n\nThe scope covered strengthening of the existing flexible pavement, restoration of shoulders, and repair of drainage assets to arrest monsoon-related edge distress. The work also included renewal of road markings, installation of reflective highway furniture and signage, and maintenance of cross-drainage structures and minor bridges along the chainage. The package was executed on an Engineering, Procurement and Construction (EPC) basis, with quality controlled against MoRTH and IRC specifications.\n\nBy restoring the carriageway to a serviceable, all-weather standard, the project improved ride quality, reduced vehicle operating costs, and enhanced safety for the communities and freight movement that depend on the Nagpur-Katol corridor.',
     scope: [
-      '5.7 km pavement strengthening (Km 7+300 to Km 13+000)',
+      '6.7 km pavement strengthening (Km 7+300 to Km 13+400)',
       'Shoulder restoration and edge protection',
       'Drainage repair and cross-drainage maintenance',
       'Road markings, signage and reflective highway furniture',
       'Bridge and culvert maintenance along the chainage',
     ],
     metrics: [
-      { value: '5.7 km', label: 'Highway length' },
-      { value: 'Km 7+300 \u2013 13+000', label: 'Chainage' },
+      { value: '6.7 km', label: 'Highway length' },
+      { value: 'Km 7+300 \u2013 13+400', label: 'Chainage' },
       { value: '\u20b925.67 Cr', label: 'Project value' },
       { value: 'NH-353J', label: 'Highway' },
       { value: 'NHAI', label: 'Client' },
