@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSupabase } from '@/lib/supabase';
-import { escapeHtml, sendStaffEmail } from '@/lib/email';
+import {
+  jobApplicationEmailHtml,
+  sendStaffEmail,
+} from '@/lib/email';
 import {
   isAllowedResume,
   isValidEmail,
@@ -14,7 +17,6 @@ export const dynamic = 'force-dynamic';
 
 function isUploadFile(value: FormDataEntryValue | null): value is File {
   if (!value || typeof value === 'string') return false;
-  // Next/Node may expose Blob-like uploads; require name + size + arrayBuffer
   const maybe = value as File;
   return (
     typeof maybe.arrayBuffer === 'function' &&
@@ -128,50 +130,40 @@ export async function POST(req: NextRequest) {
     }
 
     const roleLabel = jobTitle || 'Open Application';
-    const emailResult = await sendStaffEmail({
+    let finalEmail = await sendStaffEmail({
       subject: `New Job Application — ${name} (${roleLabel})`,
       replyTo: email,
       attachments: [{ filename: resumeFileName, content: resumeBuffer }],
-      html: `
-        <div style="font-family:Arial,sans-serif;line-height:1.5;color:#0b1b33">
-          <h2 style="margin:0 0 12px">New Career Application</h2>
-          <p style="margin:0 0 16px;color:#5c6b7a">Submitted via the website careers form.</p>
-          <table style="border-collapse:collapse;width:100%;max-width:560px">
-            <tr><td style="padding:6px 0;font-weight:bold;width:140px">Name</td><td>${escapeHtml(name)}</td></tr>
-            <tr><td style="padding:6px 0;font-weight:bold">Email</td><td>${escapeHtml(email)}</td></tr>
-            <tr><td style="padding:6px 0;font-weight:bold">Phone</td><td>${escapeHtml(phone)}</td></tr>
-            <tr><td style="padding:6px 0;font-weight:bold">Role</td><td>${escapeHtml(roleLabel)}</td></tr>
-            <tr><td style="padding:6px 0;font-weight:bold">Job slug</td><td>${escapeHtml(jobSlug || '—')}</td></tr>
-            <tr><td style="padding:6px 0;font-weight:bold">Experience</td><td>${escapeHtml(experience || '—')}</td></tr>
-            <tr><td style="padding:6px 0;font-weight:bold">Resume</td><td>${escapeHtml(resumeFileName)} (attached)</td></tr>
-            <tr><td style="padding:6px 0;font-weight:bold">Application ID</td><td>${escapeHtml(applicationId || 'N/A')}</td></tr>
-          </table>
-          <h3 style="margin:20px 0 8px">Cover letter</h3>
-          <blockquote style="margin:0;padding:12px 16px;background:#f7f3ea;border-left:3px solid #f5a623;white-space:pre-wrap">${escapeHtml(coverLetter || '—')}</blockquote>
-          <hr style="margin:24px 0;border:none;border-top:1px solid #e5e7eb" />
-          <p style="font-size:13px;color:#5c6b7a">Reply directly to this email to contact the applicant.</p>
-        </div>
-      `,
+      html: jobApplicationEmailHtml({
+        name,
+        email,
+        phone,
+        roleLabel,
+        jobSlug,
+        experience,
+        resumeFileName,
+        coverLetter,
+        applicationId,
+      }),
     });
 
-    // If attachment send fails (size/provider), retry once without attachment so staff still gets notified
-    let finalEmail = emailResult;
-    if (!emailResult.ok && !emailResult.skipped && resumeBuffer.length > 0) {
+    // If attachment send fails, retry without attachment so staff still get notified
+    if (!finalEmail.ok && !finalEmail.skipped) {
       finalEmail = await sendStaffEmail({
         subject: `New Job Application — ${name} (${roleLabel}) [resume attach failed]`,
         replyTo: email,
-        html: `
-          <div style="font-family:Arial,sans-serif;line-height:1.5;color:#0b1b33">
-            <h2>New Career Application</h2>
-            <p><strong>Name:</strong> ${escapeHtml(name)}</p>
-            <p><strong>Email:</strong> ${escapeHtml(email)}</p>
-            <p><strong>Phone:</strong> ${escapeHtml(phone)}</p>
-            <p><strong>Role:</strong> ${escapeHtml(roleLabel)}</p>
-            <p><strong>Resume file:</strong> ${escapeHtml(resumeFileName)} (attachment could not be delivered — ask applicant to resend CV)</p>
-            <p><strong>Application ID:</strong> ${escapeHtml(applicationId || 'N/A')}</p>
-            <blockquote style="white-space:pre-wrap">${escapeHtml(coverLetter || '—')}</blockquote>
-          </div>
-        `,
+        html: jobApplicationEmailHtml({
+          name,
+          email,
+          phone,
+          roleLabel,
+          jobSlug,
+          experience,
+          resumeFileName,
+          coverLetter,
+          applicationId,
+          attachmentNote: 'attachment could not be delivered — ask applicant to resend CV',
+        }),
       });
     }
 

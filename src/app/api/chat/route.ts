@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { askGemini, needsTicket, type GeminiChatTurn } from '@/lib/gemini';
-import { escapeHtml, sendStaffEmail } from '@/lib/email';
+import { chatTicketEmailHtml, sendStaffEmail } from '@/lib/email';
+
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
@@ -18,7 +21,6 @@ async function createTicketAndNotify(
 ) {
   let ticketId: string | undefined;
 
-  // 1. Store ticket in Supabase
   if (supabaseUrl && supabaseServiceKey) {
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
     const { data, error: dbError } = await supabase
@@ -40,25 +42,19 @@ async function createTicketAndNotify(
     }
   }
 
-  // 2. Send email notification to staff via Resend
-  await sendStaffEmail({
+  const emailResult = await sendStaffEmail({
     subject: `New Chat Message from Website${visitorName ? ` - ${visitorName}` : ''}`,
     replyTo: visitorEmail,
-    html: `
-      <h2>New Support Request from Website Chat</h2>
-      <p><strong>From:</strong> ${escapeHtml(visitorName || 'Anonymous')}</p>
-      <p><strong>Email:</strong> ${escapeHtml(visitorEmail || 'Not provided')}</p>
-      <p><strong>Phone:</strong> ${escapeHtml(visitorPhone || 'Not provided')}</p>
-      <p><strong>Message:</strong></p>
-      <blockquote>${escapeHtml(message)}</blockquote>
-      <p><strong>Ticket ID:</strong> ${escapeHtml(ticketId || 'N/A')}</p>
-      <p><strong>Time:</strong> ${new Date().toISOString()}</p>
-      <hr>
-      <p><em>Reply directly to this visitor's email to respond.</em></p>
-    `,
+    html: chatTicketEmailHtml({
+      message,
+      visitorName,
+      visitorEmail,
+      visitorPhone,
+      ticketId,
+    }),
   });
 
-  return ticketId;
+  return { ticketId, emailResult };
 }
 
 export async function POST(req: NextRequest) {
@@ -70,7 +66,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Message is required' }, { status: 400 });
     }
 
-    // Build Gemini chat history from the client-provided conversation
     const geminiHistory: GeminiChatTurn[] = Array.isArray(history)
       ? history.map(
           (h: { role: string; content: string }): GeminiChatTurn => ({
@@ -80,16 +75,13 @@ export async function POST(req: NextRequest) {
         )
       : [];
 
-    // Ensure the latest user message is in history
     const fullHistory: GeminiChatTurn[] = [
       ...geminiHistory,
       { role: 'user', text: message },
     ];
 
-    // 1. Try answering with Gemini
     const aiResponse = await askGemini(fullHistory);
 
-    // 2. If Gemini answered successfully, return it to the user
     if (aiResponse && !needsTicket(aiResponse)) {
       return NextResponse.json({
         reply: aiResponse,
@@ -98,8 +90,7 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // 3. Gemini couldn't answer (or key missing) - create a ticket + notify staff
-    const ticketId = await createTicketAndNotify(
+    const { ticketId, emailResult } = await createTicketAndNotify(
       message,
       visitorName,
       visitorEmail,
@@ -114,6 +105,8 @@ export async function POST(req: NextRequest) {
       source: 'ticket',
       ticketCreated: true,
       ticketId,
+      emailed: emailResult.ok,
+      emailError: emailResult.ok ? undefined : emailResult.error,
     });
   } catch (error) {
     console.error('Chat API error:', error);

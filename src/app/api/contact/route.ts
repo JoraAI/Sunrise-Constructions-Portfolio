@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSupabase } from '@/lib/supabase';
-import { escapeHtml, sendStaffEmail } from '@/lib/email';
+import { quoteRequestEmailHtml, sendStaffEmail } from '@/lib/email';
 import { isValidEmail, isValidPhone } from '@/lib/form-validation';
+
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
 
 export async function POST(req: NextRequest) {
   try {
@@ -33,6 +36,7 @@ export async function POST(req: NextRequest) {
     }
 
     let submissionId: string | undefined;
+    let dbErrorMessage: string | undefined;
 
     try {
       const supabase = getServerSupabase();
@@ -52,39 +56,37 @@ export async function POST(req: NextRequest) {
 
       if (error) {
         console.error('Contact DB error:', error);
+        dbErrorMessage = error.message;
       } else {
         submissionId = data?.id;
       }
     } catch (err) {
       console.error('Contact DB exception:', err);
+      dbErrorMessage = err instanceof Error ? err.message : 'Database error';
     }
 
     const emailResult = await sendStaffEmail({
       subject: `New Quote Request — ${name}${company ? ` (${company})` : ''}`,
       replyTo: email,
-      html: `
-        <div style="font-family:Arial,sans-serif;line-height:1.5;color:#0b1b33">
-          <h2 style="margin:0 0 12px">New Quote / Contact Request</h2>
-          <p style="margin:0 0 16px;color:#5c6b7a">Submitted via the website contact form.</p>
-          <table style="border-collapse:collapse;width:100%;max-width:560px">
-            <tr><td style="padding:6px 0;font-weight:bold;width:140px">Name</td><td>${escapeHtml(name)}</td></tr>
-            <tr><td style="padding:6px 0;font-weight:bold">Email</td><td>${escapeHtml(email)}</td></tr>
-            <tr><td style="padding:6px 0;font-weight:bold">Phone</td><td>${escapeHtml(phone)}</td></tr>
-            <tr><td style="padding:6px 0;font-weight:bold">Company</td><td>${escapeHtml(company || '—')}</td></tr>
-            <tr><td style="padding:6px 0;font-weight:bold">Service</td><td>${escapeHtml(service || '—')}</td></tr>
-            <tr><td style="padding:6px 0;font-weight:bold">Submission ID</td><td>${escapeHtml(submissionId || 'N/A')}</td></tr>
-          </table>
-          <h3 style="margin:20px 0 8px">Project details</h3>
-          <blockquote style="margin:0;padding:12px 16px;background:#f7f3ea;border-left:3px solid #f5a623;white-space:pre-wrap">${escapeHtml(message)}</blockquote>
-          <hr style="margin:24px 0;border:none;border-top:1px solid #e5e7eb" />
-          <p style="font-size:13px;color:#5c6b7a">Reply directly to this email to respond to the visitor.</p>
-        </div>
-      `,
+      html: quoteRequestEmailHtml({
+        name,
+        email,
+        phone,
+        company,
+        service,
+        message,
+        submissionId,
+      }),
     });
 
-    if (!submissionId && !emailResult.ok && !emailResult.skipped) {
+    if (!submissionId && !emailResult.ok) {
       return NextResponse.json(
-        { error: 'Unable to submit your request right now. Please email info@sunrisegroupltd.in.' },
+        {
+          error:
+            emailResult.error ||
+            dbErrorMessage ||
+            'Unable to submit your request right now. Please email info@sunrisegroupltd.in.',
+        },
         { status: 502 },
       );
     }
@@ -93,6 +95,7 @@ export async function POST(req: NextRequest) {
       ok: true,
       id: submissionId,
       emailed: emailResult.ok,
+      emailError: emailResult.ok ? undefined : emailResult.error,
     });
   } catch (error) {
     console.error('Contact API error:', error);
