@@ -1,12 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
-import { Resend } from 'resend';
 import { askGemini, needsTicket, type GeminiChatTurn } from '@/lib/gemini';
+import { escapeHtml, sendStaffEmail } from '@/lib/email';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
-const resendApiKey = process.env.RESEND_API_KEY || '';
-const staffEmail = process.env.STAFF_EMAIL || 'info@sunrisegroupltd.in';
 
 /**
  * Creates a support ticket in Supabase and sends email notification to staff.
@@ -42,27 +40,23 @@ async function createTicketAndNotify(
     }
   }
 
-  // 2. Send email notification to staff
-  if (resendApiKey) {
-    const resend = new Resend(resendApiKey);
-    await resend.emails.send({
-      from: 'Sunrise Website <onboarding@resend.dev>',
-      to: staffEmail,
-      subject: `New Chat Message from Website${visitorName ? ` - ${visitorName}` : ''}`,
-      html: `
-        <h2>New Support Request from Website Chat</h2>
-        <p><strong>From:</strong> ${visitorName || 'Anonymous'}</p>
-        <p><strong>Email:</strong> ${visitorEmail || 'Not provided'}</p>
-        <p><strong>Phone:</strong> ${visitorPhone || 'Not provided'}</p>
-        <p><strong>Message:</strong></p>
-        <blockquote>${message}</blockquote>
-        <p><strong>Ticket ID:</strong> ${ticketId || 'N/A'}</p>
-        <p><strong>Time:</strong> ${new Date().toISOString()}</p>
-        <hr>
-        <p><em>Reply directly to this visitor's email to respond.</em></p>
-      `,
-    });
-  }
+  // 2. Send email notification to staff via Resend
+  await sendStaffEmail({
+    subject: `New Chat Message from Website${visitorName ? ` - ${visitorName}` : ''}`,
+    replyTo: visitorEmail,
+    html: `
+      <h2>New Support Request from Website Chat</h2>
+      <p><strong>From:</strong> ${escapeHtml(visitorName || 'Anonymous')}</p>
+      <p><strong>Email:</strong> ${escapeHtml(visitorEmail || 'Not provided')}</p>
+      <p><strong>Phone:</strong> ${escapeHtml(visitorPhone || 'Not provided')}</p>
+      <p><strong>Message:</strong></p>
+      <blockquote>${escapeHtml(message)}</blockquote>
+      <p><strong>Ticket ID:</strong> ${escapeHtml(ticketId || 'N/A')}</p>
+      <p><strong>Time:</strong> ${new Date().toISOString()}</p>
+      <hr>
+      <p><em>Reply directly to this visitor's email to respond.</em></p>
+    `,
+  });
 
   return ticketId;
 }
