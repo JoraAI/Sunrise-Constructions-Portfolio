@@ -1,0 +1,79 @@
+import { Resend } from 'resend';
+
+/**
+ * Prefer `resend_api_key` (as configured for this project).
+ * Fall back to `RESEND_API_KEY` for local/legacy env files.
+ */
+export function getResendApiKey(): string {
+  return process.env.resend_api_key || process.env.RESEND_API_KEY || '';
+}
+
+export function getStaffEmail(): string {
+  return process.env.STAFF_EMAIL || 'info@sunrisegroupltd.in';
+}
+
+export function getResendFrom(): string {
+  return (
+    process.env.RESEND_FROM_EMAIL ||
+    'Sunrise Website <noreply@sunrisegroupltd.in>'
+  );
+}
+
+export type StaffEmailAttachment = {
+  filename: string;
+  content: Buffer;
+};
+
+/**
+ * Sends a notification email to the staff inbox via Resend.
+ * Returns { ok, id?, error? }. Does not throw when the API key is missing —
+ * callers can still persist to the DB and succeed for the visitor.
+ */
+export async function sendStaffEmail(options: {
+  subject: string;
+  html: string;
+  replyTo?: string;
+  attachments?: StaffEmailAttachment[];
+}): Promise<{ ok: boolean; id?: string; error?: string; skipped?: boolean }> {
+  const apiKey = getResendApiKey();
+  if (!apiKey) {
+    console.warn('Resend skipped: resend_api_key is not set');
+    return { ok: false, skipped: true, error: 'resend_api_key is not set' };
+  }
+
+  try {
+    const resend = new Resend(apiKey);
+    const { data, error } = await resend.emails.send({
+      from: getResendFrom(),
+      to: getStaffEmail(),
+      subject: options.subject,
+      html: options.html,
+      replyTo: options.replyTo,
+      attachments: options.attachments?.map((a) => ({
+        filename: a.filename,
+        content: a.content,
+      })),
+    });
+
+    if (error) {
+      console.error('Resend error:', error);
+      return { ok: false, error: error.message };
+    }
+
+    return { ok: true, id: data?.id };
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'Failed to send email';
+    console.error('Resend exception:', err);
+    return { ok: false, error: message };
+  }
+}
+
+/** Escape user-provided text for safe HTML email bodies. */
+export function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}

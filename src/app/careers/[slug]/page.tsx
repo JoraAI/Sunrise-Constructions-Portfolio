@@ -141,7 +141,7 @@ export default function JobDetailPage({ params }: { params: { slug: string } }) 
             <aside className="lg:col-span-1">
               <div className="sticky top-28">
                 <h2 className="mb-5 font-heading text-lg font-bold text-navy">Apply Now</h2>
-                <ApplicationForm jobTitle={job.title} variant="compact" />
+                <ApplicationForm jobTitle={job.title} jobSlug={job.slug} variant="compact" />
               </div>
             </aside>
           </div>

@@ -1,20 +1,91 @@
 'use client';
 
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import { Send, CheckCircle2 } from 'lucide-react';
 import { services } from '@/lib/content';
+import { isValidEmail, isValidPhone, type FieldErrors } from '@/lib/form-validation';
+import { cn } from '@/lib/utils';
+
+type FormStatus = 'idle' | 'loading' | 'success' | 'error';
 
 export function ContactForm() {
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success'>('idle');
+  const uid = useId();
+  const [status, setStatus] = useState<FormStatus>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
 
-  function handleSubmit(e: React.FormEvent) {
+  function validate(data: {
+    name: string;
+    email: string;
+    phone: string;
+    message: string;
+  }): FieldErrors {
+    const errors: FieldErrors = {};
+    if (!data.name || data.name.length < 2) {
+      errors.name = 'Please enter your full name.';
+    }
+    if (!data.email) {
+      errors.email = 'Email is required.';
+    } else if (!isValidEmail(data.email)) {
+      errors.email = 'Please enter a valid email address.';
+    }
+    if (!data.phone) {
+      errors.phone = 'Phone number is required.';
+    } else if (!isValidPhone(data.phone)) {
+      errors.phone = 'Please enter a valid phone number (10+ digits).';
+    }
+    if (!data.message || data.message.length < 10) {
+      errors.message = 'Please share a short project description (at least 10 characters).';
+    }
+    return errors;
+  }
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setErrorMessage('');
+
+    const form = e.currentTarget;
+    const data = {
+      name: (form.elements.namedItem('name') as HTMLInputElement).value.trim(),
+      company: (form.elements.namedItem('company') as HTMLInputElement).value.trim(),
+      email: (form.elements.namedItem('email') as HTMLInputElement).value.trim(),
+      phone: (form.elements.namedItem('phone') as HTMLInputElement).value.trim(),
+      service: (form.elements.namedItem('service') as HTMLSelectElement).value,
+      message: (form.elements.namedItem('message') as HTMLTextAreaElement).value.trim(),
+    };
+
+    const errors = validate(data);
+    setFieldErrors(errors);
+    if (Object.keys(errors).length > 0) {
+      setStatus('error');
+      setErrorMessage('Please fix the highlighted fields and try again.');
+      const firstKey = Object.keys(errors)[0];
+      const el = form.elements.namedItem(firstKey);
+      if (el && 'focus' in el) (el as HTMLElement).focus();
+      return;
+    }
+
     setStatus('loading');
-    // Simulated submission - wire to real endpoint later.
-    setTimeout(() => {
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      const payload = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        throw new Error(payload.error || 'Failed to send message.');
+      }
+
       setStatus('success');
-      setTimeout(() => setStatus('idle'), 6000);
-    }, 1200);
+      setFieldErrors({});
+      form.reset();
+    } catch (err) {
+      setStatus('error');
+      setErrorMessage(err instanceof Error ? err.message : 'Failed to send message.');
+    }
   }
 
   if (status === 'success') {
@@ -25,8 +96,22 @@ export function ContactForm() {
         <p className="mt-2 text-sm text-charcoal-light">
           Thank you for reaching out. Our team will respond within one business day.
         </p>
+        <button
+          type="button"
+          className="btn-secondary mt-6"
+          onClick={() => {
+            setStatus('idle');
+            setErrorMessage('');
+          }}
+        >
+          Send another message
+        </button>
       </div>
     );
+  }
+
+  function fieldClass(name: string) {
+    return cn('input-field', fieldErrors[name] && 'border-red-400 focus:border-red-500 focus:ring-red-200');
   }
 
   return (
@@ -37,62 +122,137 @@ export function ContactForm() {
     >
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
-          <label htmlFor="contact-name" className="mb-1.5 block text-sm font-semibold text-navy">
+          <label htmlFor={`${uid}-name`} className="mb-1.5 block text-sm font-semibold text-navy">
             Full Name *
           </label>
-          <input id="contact-name" type="text" required className="input-field" placeholder="Your full name" />
+          <input
+            id={`${uid}-name`}
+            name="name"
+            type="text"
+            autoComplete="name"
+            required
+            maxLength={120}
+            className={fieldClass('name')}
+            placeholder="Your full name"
+            aria-invalid={Boolean(fieldErrors.name)}
+            aria-describedby={fieldErrors.name ? `${uid}-name-err` : undefined}
+            onChange={() => setFieldErrors((prev) => ({ ...prev, name: '' }))}
+          />
+          {fieldErrors.name && (
+            <p id={`${uid}-name-err`} className="mt-1.5 text-xs text-red-600">
+              {fieldErrors.name}
+            </p>
+          )}
         </div>
         <div>
-          <label htmlFor="contact-company" className="mb-1.5 block text-sm font-semibold text-navy">
+          <label htmlFor={`${uid}-company`} className="mb-1.5 block text-sm font-semibold text-navy">
             Company / Organisation
           </label>
-          <input id="contact-company" type="text" className="input-field" placeholder="Your company" />
+          <input
+            id={`${uid}-company`}
+            name="company"
+            type="text"
+            autoComplete="organization"
+            maxLength={160}
+            className="input-field"
+            placeholder="Your company"
+          />
         </div>
         <div>
-          <label htmlFor="contact-email" className="mb-1.5 block text-sm font-semibold text-navy">
+          <label htmlFor={`${uid}-email`} className="mb-1.5 block text-sm font-semibold text-navy">
             Email *
           </label>
-          <input id="contact-email" type="email" required className="input-field" placeholder="you@email.com" />
+          <input
+            id={`${uid}-email`}
+            name="email"
+            type="email"
+            autoComplete="email"
+            inputMode="email"
+            required
+            maxLength={160}
+            className={fieldClass('email')}
+            placeholder="you@email.com"
+            aria-invalid={Boolean(fieldErrors.email)}
+            aria-describedby={fieldErrors.email ? `${uid}-email-err` : undefined}
+            onChange={() => setFieldErrors((prev) => ({ ...prev, email: '' }))}
+          />
+          {fieldErrors.email && (
+            <p id={`${uid}-email-err`} className="mt-1.5 text-xs text-red-600">
+              {fieldErrors.email}
+            </p>
+          )}
         </div>
         <div>
-          <label htmlFor="contact-phone" className="mb-1.5 block text-sm font-semibold text-navy">
+          <label htmlFor={`${uid}-phone`} className="mb-1.5 block text-sm font-semibold text-navy">
             Phone *
           </label>
-          <input id="contact-phone" type="tel" required className="input-field" placeholder="+91 98765 43210" />
+          <input
+            id={`${uid}-phone`}
+            name="phone"
+            type="tel"
+            autoComplete="tel"
+            inputMode="tel"
+            required
+            maxLength={20}
+            className={fieldClass('phone')}
+            placeholder="+91 98765 43210"
+            aria-invalid={Boolean(fieldErrors.phone)}
+            aria-describedby={fieldErrors.phone ? `${uid}-phone-err` : undefined}
+            onChange={() => setFieldErrors((prev) => ({ ...prev, phone: '' }))}
+          />
+          {fieldErrors.phone && (
+            <p id={`${uid}-phone-err`} className="mt-1.5 text-xs text-red-600">
+              {fieldErrors.phone}
+            </p>
+          )}
         </div>
       </div>
 
       <div className="mt-5">
-        <label htmlFor="contact-service" className="mb-1.5 block text-sm font-semibold text-navy">
+        <label htmlFor={`${uid}-service`} className="mb-1.5 block text-sm font-semibold text-navy">
           Service of Interest
         </label>
-        <select
-          id="contact-service"
-          className="input-field"
-          defaultValue=""
-        >
-          <option value="" disabled>Select a service…</option>
+        <select id={`${uid}-service`} name="service" className="input-field" defaultValue="">
+          <option value="" disabled>
+            Select a service…
+          </option>
           {services.map((s) => (
-            <option key={s.slug} value={s.slug}>
+            <option key={s.slug} value={s.title}>
               {s.title}
             </option>
           ))}
-          <option value="other">Other / General Enquiry</option>
+          <option value="Other / General Enquiry">Other / General Enquiry</option>
         </select>
       </div>
 
       <div className="mt-5">
-        <label htmlFor="contact-message" className="mb-1.5 block text-sm font-semibold text-navy">
+        <label htmlFor={`${uid}-message`} className="mb-1.5 block text-sm font-semibold text-navy">
           Project Details *
         </label>
         <textarea
-          id="contact-message"
+          id={`${uid}-message`}
+          name="message"
           rows={5}
           required
-          className="input-field resize-none"
+          maxLength={4000}
+          className={cn(fieldClass('message'), 'resize-none')}
           placeholder="Tell us about your project - type, location, timeline, approximate scope…"
+          aria-invalid={Boolean(fieldErrors.message)}
+          aria-describedby={fieldErrors.message ? `${uid}-message-err` : undefined}
+          onChange={() => setFieldErrors((prev) => ({ ...prev, message: '' }))}
         />
+        {fieldErrors.message && (
+          <p id={`${uid}-message-err`} className="mt-1.5 text-xs text-red-600">
+            {fieldErrors.message}
+          </p>
+        )}
       </div>
+
+      {status === 'error' && errorMessage && (
+        <p className="mt-4 text-sm text-red-600" role="alert">
+          {errorMessage}
+        </p>
+      )}
 
       <button type="submit" disabled={status === 'loading'} className="btn-primary mt-6 w-full sm:w-auto">
         {status === 'loading' ? 'Sending…' : 'Send Message'}
