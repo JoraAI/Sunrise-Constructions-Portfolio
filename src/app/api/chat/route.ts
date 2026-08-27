@@ -6,7 +6,7 @@ import { askGemini, needsTicket, type GeminiChatTurn } from '@/lib/gemini';
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
 const resendApiKey = process.env.RESEND_API_KEY || '';
-const staffEmail = process.env.STAFF_EMAIL || 'hello@sunriseconstructions.in';
+const staffEmail = process.env.STAFF_EMAIL || 'info@sunrisegroupltd.in';
 
 /**
  * Creates a support ticket in Supabase and sends email notification to staff.
@@ -113,7 +113,7 @@ export async function POST(req: NextRequest) {
     );
 
     const fallbackReply =
-      "Thank you for reaching out! I've forwarded your message to our team and they'll get back to you soon. For urgent enquiries, please email hello@sunriseconstructions.in.";
+      "Thank you for reaching out! I've forwarded your message to our team and they'll get back to you soon. For urgent enquiries, please email info@sunrisegroupltd.in.";
 
     return NextResponse.json({
       reply: fallbackReply,

@@ -98,7 +98,7 @@ function ChatMode({ onClose }: { onClose: () => void }) {
       const reply = await sendMessageToLLM(trimmed, messages);
       setMessages((prev) => [...prev, { id: `a-${Date.now()}`, role: 'assistant', content: reply }]);
     } catch {
-      setMessages((prev) => [...prev, { id: `a-${Date.now()}`, role: 'assistant', content: 'Sorry, something went wrong. Email us at hello@sunriseconstructions.in.' }]);
+      setMessages((prev) => [...prev, { id: `a-${Date.now()}`, role: 'assistant', content: 'Sorry, something went wrong. Email us at info@sunrisegroupltd.in.' }]);
     } finally { setIsTyping(false); }
   }
 

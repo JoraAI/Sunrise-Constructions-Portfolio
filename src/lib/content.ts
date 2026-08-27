@@ -34,7 +34,7 @@ export const siteConfig = {
   contact: {
     phone: '',
     phoneHref: '',
-    email: 'hello@sunriseconstructions.in',
+    email: 'info@sunrisegroupltd.in',
     addressLine1: 'Ground Floor, Amar Palace Apartment, Dhantoli',
     addressLine2: '',
     city: 'Nagpur',
@@ -1701,7 +1701,7 @@ export const offices: OfficeLocation[] = [
     address:
       'Ground Floor, Amar Palace Apartment, Dhantoli, Nagpur, Maharashtra 440012',
     phone: '',
-    email: 'hello@sunriseconstructions.in',
+    email: 'info@sunrisegroupltd.in',
     isHQ: true,
   },
 ];
