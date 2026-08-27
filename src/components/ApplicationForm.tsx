@@ -1,12 +1,13 @@
 'use client';
 
 import { useId, useRef, useState } from 'react';
-import { Upload, CheckCircle2, Send, FileText, X } from 'lucide-react';
+import { Upload, CheckCircle2, Send, FileText, X, Loader2 } from 'lucide-react';
 import {
   isAllowedResume,
   isValidEmail,
   isValidPhone,
   MAX_RESUME_BYTES,
+  MAX_RESUME_LABEL,
   type FieldErrors,
 } from '@/lib/form-validation';
 import { cn } from '@/lib/utils';
@@ -19,6 +20,18 @@ interface ApplicationFormProps {
 
 type FormStatus = 'idle' | 'loading' | 'success' | 'error';
 
+async function readApiError(res: Response): Promise<string> {
+  if (res.status === 413) {
+    return `Resume is too large for upload. Please use a file under ${MAX_RESUME_LABEL}.`;
+  }
+  const contentType = res.headers.get('content-type') || '';
+  if (!contentType.includes('application/json')) {
+    return `Server could not process the upload. Please try a smaller PDF (under ${MAX_RESUME_LABEL}).`;
+  }
+  const payload = await res.json().catch(() => ({} as { error?: string }));
+  return payload.error || 'Failed to submit application.';
+}
+
 export function ApplicationForm({
   jobTitle,
   jobSlug,
@@ -30,7 +43,10 @@ export function ApplicationForm({
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [resumeFile, setResumeFile] = useState<File | null>(null);
 
+  const isLoading = status === 'loading';
+
   function openFilePicker() {
+    if (isLoading) return;
     fileInputRef.current?.click();
   }
 
@@ -50,7 +66,7 @@ export function ApplicationForm({
       if (fileInputRef.current) fileInputRef.current.value = '';
       setFieldErrors((prev) => ({
         ...prev,
-        resume: 'Resume must be 5MB or smaller.',
+        resume: `Resume must be ${MAX_RESUME_LABEL} or smaller.`,
       }));
       return;
     }
@@ -102,6 +118,7 @@ export function ApplicationForm({
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (isLoading) return;
     setErrorMessage('');
 
     const form = e.currentTarget;
@@ -119,8 +136,7 @@ export function ApplicationForm({
     if (Object.keys(errors).length > 0) {
       setStatus('error');
       setErrorMessage('Please fix the highlighted fields and try again.');
-      if (errors.resume) openFilePicker();
-      else {
+      if (!errors.resume) {
         const firstKey = Object.keys(errors)[0];
         const el = form.elements.namedItem(firstKey);
         if (el && 'focus' in el) (el as HTMLElement).focus();
@@ -145,10 +161,9 @@ export function ApplicationForm({
         method: 'POST',
         body: formData,
       });
-      const payload = await res.json().catch(() => ({}));
 
       if (!res.ok) {
-        throw new Error(payload.error || 'Failed to submit application.');
+        throw new Error(await readApiError(res));
       }
 
       setStatus('success');
@@ -191,186 +206,200 @@ export function ApplicationForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className="rounded-2xl border border-navy/10 bg-cream/30 p-6 lg:p-8"
+      className="relative overflow-hidden rounded-2xl border border-navy/10 bg-cream/30 p-6 lg:p-8"
       noValidate
+      aria-busy={isLoading}
     >
-      {jobTitle && (
-        <div className="mb-6 rounded-xl bg-gold/10 px-4 py-3">
-          <p className="text-sm font-semibold text-navy">Applying for: {jobTitle}</p>
+      {isLoading && (
+        <div
+          className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-3 bg-white/80 backdrop-blur-[2px]"
+          role="status"
+          aria-live="polite"
+        >
+          <Loader2 className="h-9 w-9 animate-spin text-gold" />
+          <p className="text-sm font-semibold text-navy">Submitting your application…</p>
+          <p className="text-xs text-charcoal-muted">Please wait — do not close this page.</p>
         </div>
       )}
 
-      <div className="grid gap-5 sm:grid-cols-2">
-        <div>
-          <label htmlFor={`${uid}-name`} className="mb-1.5 block text-sm font-semibold text-navy">
-            Full Name *
-          </label>
-          <input
-            id={`${uid}-name`}
-            name="name"
-            type="text"
-            autoComplete="name"
-            required
-            maxLength={120}
-            className={fieldClass('name')}
-            placeholder="Your full name"
-            aria-invalid={Boolean(fieldErrors.name)}
-            onChange={() => setFieldErrors((prev) => ({ ...prev, name: '' }))}
-          />
-          {fieldErrors.name && <p className="mt-1.5 text-xs text-red-600">{fieldErrors.name}</p>}
-        </div>
-        <div>
-          <label htmlFor={`${uid}-email`} className="mb-1.5 block text-sm font-semibold text-navy">
-            Email *
-          </label>
-          <input
-            id={`${uid}-email`}
-            name="email"
-            type="email"
-            autoComplete="email"
-            inputMode="email"
-            required
-            maxLength={160}
-            className={fieldClass('email')}
-            placeholder="you@email.com"
-            aria-invalid={Boolean(fieldErrors.email)}
-            onChange={() => setFieldErrors((prev) => ({ ...prev, email: '' }))}
-          />
-          {fieldErrors.email && <p className="mt-1.5 text-xs text-red-600">{fieldErrors.email}</p>}
-        </div>
-        <div>
-          <label htmlFor={`${uid}-phone`} className="mb-1.5 block text-sm font-semibold text-navy">
-            Phone *
-          </label>
-          <input
-            id={`${uid}-phone`}
-            name="phone"
-            type="tel"
-            autoComplete="tel"
-            inputMode="tel"
-            required
-            maxLength={20}
-            className={fieldClass('phone')}
-            placeholder="+91 98765 43210"
-            aria-invalid={Boolean(fieldErrors.phone)}
-            onChange={() => setFieldErrors((prev) => ({ ...prev, phone: '' }))}
-          />
-          {fieldErrors.phone && <p className="mt-1.5 text-xs text-red-600">{fieldErrors.phone}</p>}
-        </div>
-        <div>
-          <label htmlFor={`${uid}-experience`} className="mb-1.5 block text-sm font-semibold text-navy">
-            Years of Experience
-          </label>
-          <input
-            id={`${uid}-experience`}
-            name="experience"
-            type="number"
-            min={0}
-            max={60}
-            inputMode="numeric"
-            className={fieldClass('experience')}
-            placeholder="e.g. 8"
-            aria-invalid={Boolean(fieldErrors.experience)}
-            onChange={() => setFieldErrors((prev) => ({ ...prev, experience: '' }))}
-          />
-          {fieldErrors.experience && (
-            <p className="mt-1.5 text-xs text-red-600">{fieldErrors.experience}</p>
-          )}
-        </div>
-      </div>
-
-      <div className="mt-5">
-        <span className="mb-1.5 block text-sm font-semibold text-navy">Resume / CV *</span>
-
-        {/* Native file input — visually hidden but focusable; opened via button for reliable pickers */}
-        <input
-          ref={fileInputRef}
-          id={`${uid}-resume`}
-          name="resume"
-          type="file"
-          accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-          className="sr-only"
-          tabIndex={-1}
-          onChange={(e) => onResumeChange(e.target.files?.[0] ?? null)}
-        />
-
-        {!resumeFile ? (
-          <button
-            type="button"
-            onClick={openFilePicker}
-            className={cn(
-              'flex w-full items-center gap-3 rounded-xl border-2 border-dashed bg-white px-4 py-4 text-left transition-colors hover:border-gold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold',
-              fieldErrors.resume ? 'border-red-400' : 'border-navy/15',
-            )}
-            aria-describedby={fieldErrors.resume ? `${uid}-resume-err` : undefined}
-          >
-            <Upload className="h-5 w-5 shrink-0 text-gold" />
-            <span className="text-sm text-charcoal-muted">
-              Click to upload PDF or DOC (max 5MB)
-            </span>
-          </button>
-        ) : (
-          <div className="flex items-center justify-between gap-3 rounded-xl border border-navy/10 bg-white px-4 py-3">
-            <div className="flex min-w-0 items-center gap-3">
-              <FileText className="h-5 w-5 shrink-0 text-gold" />
-              <div className="min-w-0">
-                <p className="truncate text-sm font-medium text-navy">{resumeFile.name}</p>
-                <p className="text-xs text-charcoal-muted">
-                  {(resumeFile.size / 1024).toFixed(0)} KB
-                </p>
-              </div>
-            </div>
-            <div className="flex shrink-0 items-center gap-2">
-              <button
-                type="button"
-                onClick={openFilePicker}
-                className="text-xs font-semibold text-navy underline-offset-2 hover:underline"
-              >
-                Replace
-              </button>
-              <button
-                type="button"
-                onClick={clearResume}
-                className="rounded-lg p-1.5 text-charcoal-muted hover:bg-navy/5 hover:text-navy"
-                aria-label="Remove resume"
-              >
-                <X className="h-4 w-4" />
-              </button>
-            </div>
+      <fieldset disabled={isLoading} className="min-w-0 border-0 p-0">
+        {jobTitle && (
+          <div className="mb-6 rounded-xl bg-gold/10 px-4 py-3">
+            <p className="text-sm font-semibold text-navy">Applying for: {jobTitle}</p>
           </div>
         )}
 
-        {fieldErrors.resume && (
-          <p id={`${uid}-resume-err`} className="mt-1.5 text-xs text-red-600">
-            {fieldErrors.resume}
+        <div className="grid gap-5 sm:grid-cols-2">
+          <div>
+            <label htmlFor={`${uid}-name`} className="mb-1.5 block text-sm font-semibold text-navy">
+              Full Name *
+            </label>
+            <input
+              id={`${uid}-name`}
+              name="name"
+              type="text"
+              autoComplete="name"
+              required
+              maxLength={120}
+              className={fieldClass('name')}
+              placeholder="Your full name"
+              aria-invalid={Boolean(fieldErrors.name)}
+              onChange={() => setFieldErrors((prev) => ({ ...prev, name: '' }))}
+            />
+            {fieldErrors.name && <p className="mt-1.5 text-xs text-red-600">{fieldErrors.name}</p>}
+          </div>
+          <div>
+            <label htmlFor={`${uid}-email`} className="mb-1.5 block text-sm font-semibold text-navy">
+              Email *
+            </label>
+            <input
+              id={`${uid}-email`}
+              name="email"
+              type="email"
+              autoComplete="email"
+              inputMode="email"
+              required
+              maxLength={160}
+              className={fieldClass('email')}
+              placeholder="you@email.com"
+              aria-invalid={Boolean(fieldErrors.email)}
+              onChange={() => setFieldErrors((prev) => ({ ...prev, email: '' }))}
+            />
+            {fieldErrors.email && <p className="mt-1.5 text-xs text-red-600">{fieldErrors.email}</p>}
+          </div>
+          <div>
+            <label htmlFor={`${uid}-phone`} className="mb-1.5 block text-sm font-semibold text-navy">
+              Phone *
+            </label>
+            <input
+              id={`${uid}-phone`}
+              name="phone"
+              type="tel"
+              autoComplete="tel"
+              inputMode="tel"
+              required
+              maxLength={20}
+              className={fieldClass('phone')}
+              placeholder="+91 98765 43210"
+              aria-invalid={Boolean(fieldErrors.phone)}
+              onChange={() => setFieldErrors((prev) => ({ ...prev, phone: '' }))}
+            />
+            {fieldErrors.phone && <p className="mt-1.5 text-xs text-red-600">{fieldErrors.phone}</p>}
+          </div>
+          <div>
+            <label htmlFor={`${uid}-experience`} className="mb-1.5 block text-sm font-semibold text-navy">
+              Years of Experience
+            </label>
+            <input
+              id={`${uid}-experience`}
+              name="experience"
+              type="number"
+              min={0}
+              max={60}
+              inputMode="numeric"
+              className={fieldClass('experience')}
+              placeholder="e.g. 8"
+              aria-invalid={Boolean(fieldErrors.experience)}
+              onChange={() => setFieldErrors((prev) => ({ ...prev, experience: '' }))}
+            />
+            {fieldErrors.experience && (
+              <p className="mt-1.5 text-xs text-red-600">{fieldErrors.experience}</p>
+            )}
+          </div>
+        </div>
+
+        <div className="mt-5">
+          <span className="mb-1.5 block text-sm font-semibold text-navy">Resume / CV *</span>
+
+          <input
+            ref={fileInputRef}
+            id={`${uid}-resume`}
+            name="resume"
+            type="file"
+            accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            className="sr-only"
+            tabIndex={-1}
+            onChange={(e) => onResumeChange(e.target.files?.[0] ?? null)}
+          />
+
+          {!resumeFile ? (
+            <button
+              type="button"
+              onClick={openFilePicker}
+              className={cn(
+                'flex w-full items-center gap-3 rounded-xl border-2 border-dashed bg-white px-4 py-4 text-left transition-colors hover:border-gold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold',
+                fieldErrors.resume ? 'border-red-400' : 'border-navy/15',
+              )}
+              aria-describedby={fieldErrors.resume ? `${uid}-resume-err` : undefined}
+            >
+              <Upload className="h-5 w-5 shrink-0 text-gold" />
+              <span className="text-sm text-charcoal-muted">
+                Click to upload PDF or DOC (max {MAX_RESUME_LABEL})
+              </span>
+            </button>
+          ) : (
+            <div className="flex items-center justify-between gap-3 rounded-xl border border-navy/10 bg-white px-4 py-3">
+              <div className="flex min-w-0 items-center gap-3">
+                <FileText className="h-5 w-5 shrink-0 text-gold" />
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-medium text-navy">{resumeFile.name}</p>
+                  <p className="text-xs text-charcoal-muted">
+                    {(resumeFile.size / 1024).toFixed(0)} KB
+                  </p>
+                </div>
+              </div>
+              <div className="flex shrink-0 items-center gap-2">
+                <button
+                  type="button"
+                  onClick={openFilePicker}
+                  className="text-xs font-semibold text-navy underline-offset-2 hover:underline"
+                >
+                  Replace
+                </button>
+                <button
+                  type="button"
+                  onClick={clearResume}
+                  className="rounded-lg p-1.5 text-charcoal-muted hover:bg-navy/5 hover:text-navy"
+                  aria-label="Remove resume"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
+          )}
+
+          {fieldErrors.resume && (
+            <p id={`${uid}-resume-err`} className="mt-1.5 text-xs text-red-600">
+              {fieldErrors.resume}
+            </p>
+          )}
+        </div>
+
+        <div className="mt-5">
+          <label htmlFor={`${uid}-cover`} className="mb-1.5 block text-sm font-semibold text-navy">
+            Cover Letter
+          </label>
+          <textarea
+            id={`${uid}-cover`}
+            name="coverLetter"
+            rows={4}
+            maxLength={4000}
+            className="input-field resize-none"
+            placeholder="Tell us why you'd be a great fit for this role…"
+          />
+        </div>
+
+        {status === 'error' && errorMessage && (
+          <p className="mt-4 text-sm text-red-600" role="alert">
+            {errorMessage}
           </p>
         )}
-      </div>
 
-      <div className="mt-5">
-        <label htmlFor={`${uid}-cover`} className="mb-1.5 block text-sm font-semibold text-navy">
-          Cover Letter
-        </label>
-        <textarea
-          id={`${uid}-cover`}
-          name="coverLetter"
-          rows={4}
-          maxLength={4000}
-          className="input-field resize-none"
-          placeholder="Tell us why you'd be a great fit for this role…"
-        />
-      </div>
-
-      {status === 'error' && errorMessage && (
-        <p className="mt-4 text-sm text-red-600" role="alert">
-          {errorMessage}
-        </p>
-      )}
-
-      <button type="submit" disabled={status === 'loading'} className="btn-primary mt-6 w-full sm:w-auto">
-        {status === 'loading' ? 'Submitting…' : 'Submit Application'}
-        <Send className="h-4 w-4" />
-      </button>
+        <button type="submit" disabled={isLoading} className="btn-primary mt-6 w-full sm:w-auto">
+          {isLoading ? 'Submitting…' : 'Submit Application'}
+          <Send className="h-4 w-4" />
+        </button>
+      </fieldset>
     </form>
   );
 }

@@ -2,26 +2,33 @@ import { Resend } from 'resend';
 
 /**
  * Prefer `resend_api_key` (as configured for this project).
- * Fall back to `RESEND_API_KEY` for local/legacy env files.
+ * Also accept common aliases used in Vercel / local env files.
  */
 export function getResendApiKey(): string {
-  return process.env.resend_api_key || process.env.RESEND_API_KEY || '';
+  return (
+    process.env.resend_api_key ||
+    process.env.RESEND_API_KEY ||
+    process.env.Resend_Api_Key ||
+    ''
+  );
 }
 
 export function getStaffEmail(): string {
-  return process.env.STAFF_EMAIL || 'info@sunrisegroupltd.in';
+  return process.env.STAFF_EMAIL || process.env.staff_email || 'info@sunrisegroupltd.in';
 }
 
 export function getResendFrom(): string {
   return (
     process.env.RESEND_FROM_EMAIL ||
+    process.env.resend_from_email ||
     'Sunrise Website <noreply@sunrisegroupltd.in>'
   );
 }
 
 export type StaffEmailAttachment = {
   filename: string;
-  content: Buffer;
+  /** Raw file bytes — converted to base64 for Resend compatibility. */
+  content: Buffer | Uint8Array;
 };
 
 /**
@@ -51,7 +58,8 @@ export async function sendStaffEmail(options: {
       replyTo: options.replyTo,
       attachments: options.attachments?.map((a) => ({
         filename: a.filename,
-        content: a.content,
+        // Resend reliably accepts base64 strings across runtimes
+        content: Buffer.from(a.content).toString('base64'),
       })),
     });
 

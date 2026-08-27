@@ -31,6 +31,7 @@ export function isAllowedResume(file: File): boolean {
   return nameOk || typeOk;
 }
 
-export const MAX_RESUME_BYTES = 5 * 1024 * 1024;
+export const MAX_RESUME_BYTES = 3.5 * 1024 * 1024; // keep under Vercel ~4.5MB request limit
+export const MAX_RESUME_LABEL = '3.5MB';
 
 export type FieldErrors = Record<string, string>;
