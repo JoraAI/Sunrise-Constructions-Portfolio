@@ -10,7 +10,7 @@ import { siteConfig, offices } from '@/lib/content';
 export const metadata: Metadata = buildMetadata({
   title: 'Contact Us - Request a Quote',
   description:
-    'Get in touch with Sunrise Constructions. Email hello@sunriseconstructions.in or submit your project details for a quote.',
+    'Get in touch with Sunrise Constructions. Email info@sunrisegroupltd.in or submit your project details for a quote.',
   path: '/contact-us',
   keywords: [
     'contact construction company',
