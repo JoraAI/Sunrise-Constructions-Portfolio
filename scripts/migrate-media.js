@@ -96,6 +96,18 @@ const MEDIA_FILES = [
 
   // About
   { path: '/images/about-building.svg', section: 'about', alt: 'Sunrise Constructions engineers reviewing blueprints' },
+  { path: '/images/about-building.jpg', section: 'about', alt: 'Sunrise Constructions building project' },
+  { path: '/images/pageheader-about.jpg', section: 'pageheaders', alt: 'Sunrise Constructions team on site' },
+
+  // Plant & Machinery
+  { path: '/images/plant-machinery/concrete-batching-plant.jpg', section: 'plant-machinery', alt: 'High-capacity concrete batching plant with cement silos and transit mixer trucks' },
+  { path: '/images/plant-machinery/earthmoving-loaders-graders.jpg', section: 'plant-machinery', alt: 'Caterpillar 120 motor grader and CAT backhoe loader lined up at project machinery yard' },
+  { path: '/images/plant-machinery/commercial-trucks-boom-placer.jpg', section: 'plant-machinery', alt: 'Tata heavy commercial trucks and mobile concrete boom placer pump fleet in yard' },
+  { path: '/images/plant-machinery/heavy-tippers-haulage.jpg', section: 'plant-machinery', alt: 'Fleet of heavy multi-axle tippers and haulage equipment in company yard' },
+
+  // Social & Culture
+  { path: '/images/social/flag-hoisting-celebration.jpg', section: 'social', alt: 'Sunrise leadership, engineers, and workforce celebrating national flag hoisting ceremony at project site' },
+  { path: '/images/social/team-celebration-gathering.jpg', section: 'social', alt: 'Panoramic group photograph of Sunrise Constructions team, engineers, and site crew gathered together' },
 
   // Careers
   { path: '/images/life-1.svg', section: 'careers', alt: 'Life at Sunrise - team event' },

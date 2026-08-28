@@ -75,6 +75,14 @@ function mapToStoragePath(localPath: string): string {
   if (path.startsWith('images/clients/')) {
     return path.replace('images/', '');
   }
+  // /images/plant-machinery/ → plant-machinery/
+  if (path.startsWith('images/plant-machinery/')) {
+    return path.replace('images/', '');
+  }
+  // /images/social/ → social/
+  if (path.startsWith('images/social/')) {
+    return path.replace('images/', '');
+  }
 
   // Default: just strip the /images/ or /videos/ prefix
   return path.replace(/^(images|videos)\//, '');

@@ -2,6 +2,7 @@ export const dynamic = 'force-dynamic';
 import type { Metadata } from 'next';
 import { PageHeader } from '@/components/PageHeader';
 import { ServiceCard } from '@/components/ServiceCard';
+import { PlantMachinerySection } from '@/components/PlantMachinerySection';
 import { Reveal } from '@/components/Reveal';
 import { CTABand } from '@/components/CTABand';
 import { JsonLd } from '@/components/JsonLd';
@@ -49,6 +50,14 @@ export default async function ServicesPage() {
           </div>
         </div>
       </section>
+
+      {/* Plant & Machinery Fleet */}
+      <PlantMachinerySection
+        eyebrow="Self-Performance Assets"
+        title="Backed by our captive plant & machinery fleet"
+        description="We control project quality and schedules through direct ownership of modern batching plants, transit mixers, motor graders, and boom placers."
+        className="section bg-cream"
+      />
 
       <ProcessTimeline />
       <CTABand />

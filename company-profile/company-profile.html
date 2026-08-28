@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sunrise Constructions — Company Profile</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #0b1b33;
+      --navy-2: #132844;
+      --navy-3: #1f3560;
+      --gold: #d4a017;
+      --gold-bright: #f5a623;
+      --cream: #f7f3ea;
+      --ink: #1a2332;
+      --muted: #5c6b7a;
+      --line: rgba(212, 160, 23, 0.35);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    @page {
+      size: A4;
+      margin: 0;
+    }
+
+    html, body {
+      width: 210mm;
+      background: #111;
+      color: var(--ink);
+      font-family: "Manrope", system-ui, sans-serif;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .page {
+      width: 210mm;
+      height: 297mm;
+      page-break-after: always;
+      break-after: page;
+      position: relative;
+      overflow: hidden;
+      background: #fff;
+    }
+    .page:last-child { page-break-after: auto; }
+
+    .eyebrow {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    h1, h2, h3 {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      line-height: 1.05;
+    }
+
+    /* ========== COVER ========== */
+    .cover {
+      background:
+        linear-gradient(160deg, rgba(11,27,51,0.82) 0%, rgba(11,27,51,0.55) 45%, rgba(11,27,51,0.88) 100%),
+        url("../public/images/hero-poster-5.jpg") center/cover no-repeat;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 18mm 16mm 14mm;
+    }
+    .cover-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .cover-logo {
+      height: 28mm;
+      width: auto;
+      filter: drop-shadow(0 4px 18px rgba(0,0,0,0.35));
+    }
+    .cover-badge {
+      border: 1px solid rgba(245,166,35,0.55);
+      padding: 8px 14px;
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold-bright);
+      background: rgba(11,27,51,0.45);
+      backdrop-filter: blur(6px);
+    }
+    .cover-mid { max-width: 160mm; margin-top: 42mm; }
+    .cover-mid .eyebrow { color: var(--gold-bright); margin-bottom: 10px; }
+    .cover-mid h1 {
+      font-size: 54px;
+      color: #fff;
+      margin-bottom: 14px;
+    }
+    .cover-mid h1 em {
+      font-style: italic;
+      color: var(--gold-bright);
+      font-weight: 500;
+    }
+    .cover-mid p {
+      font-size: 13.5px;
+      line-height: 1.55;
+      color: rgba(255,255,255,0.82);
+      max-width: 130mm;
+      font-weight: 400;
+    }
+    .cover-bottom {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      border-top: 1px solid rgba(245,166,35,0.35);
+      padding-top: 12mm;
+    }
+    .stat-block .num {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 28px;
+      color: var(--gold-bright);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .stat-block .label {
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+    }
+
+    /* ========== INNER PAGES ========== */
+    .inner {
+      padding: 14mm 14mm 12mm;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      background:
+        radial-gradient(ellipse at top right, rgba(245,166,35,0.08), transparent 45%),
+        linear-gradient(180deg, #fbfaf7 0%, #ffffff 40%, #f7f3ea 100%);
+    }
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 8mm;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 8mm;
+    }
+    .page-header img { height: 14mm; }
+    .page-header .meta {
+      text-align: right;
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .page-footer {
+      margin-top: auto;
+      padding-top: 6mm;
+      border-top: 1px solid rgba(11,27,51,0.08);
+      display: flex;
+      justify-content: space-between;
+      font-size: 8.5px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .section-title {
+      font-size: 34px;
+      color: var(--navy);
+      margin: 4px 0 6px;
+    }
+    .lead {
+      font-size: 12.5px;
+      line-height: 1.6;
+      color: var(--muted);
+      max-width: 165mm;
+      margin-bottom: 8mm;
+    }
+
+    /* About */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 8mm;
+      flex: 1;
+    }
+    .about-copy p {
+      font-size: 11.5px;
+      line-height: 1.65;
+      color: #334155;
+      margin-bottom: 4mm;
+    }
+    .about-photo {
+      position: relative;
+      border-radius: 2px;
+      overflow: hidden;
+      min-height: 95mm;
+      background: url("../public/images/about-building.jpg") center/cover no-repeat;
+      box-shadow: 0 18px 40px rgba(11,27,51,0.18);
+    }
+    .about-photo::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 40%;
+      background: linear-gradient(transparent, rgba(11,27,51,0.75));
+    }
+    .about-photo .caption {
+      position: absolute;
+      left: 4mm;
+      right: 4mm;
+      bottom: 4mm;
+      z-index: 1;
+      color: #fff;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+    }
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4mm;
+      margin-top: 6mm;
+    }
+    .pillar {
+      background: var(--navy);
+      color: #fff;
+      padding: 5mm 4.5mm;
+    }
+    .pillar strong {
+      display: block;
+      color: var(--gold-bright);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 2mm;
+    }
+    .pillar span {
+      font-size: 10.5px;
+      line-height: 1.45;
+      color: rgba(255,255,255,0.78);
+    }
+
+    /* Services */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 5mm;
+    }
+    .service-card {
+      border: 1px solid rgba(11,27,51,0.08);
+      background: #fff;
+      padding: 6mm 5.5mm;
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: linear-gradient(var(--gold-bright), var(--gold));
+    }
+    .service-card .idx {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 22px;
+      color: var(--gold);
+      margin-bottom: 2mm;
+    }
+    .service-card h3 {
+      font-size: 18px;
+      color: var(--navy);
+      margin-bottom: 2.5mm;
+    }
+    .service-card p {
+      font-size: 10.5px;
+      line-height: 1.55;
+      color: var(--muted);
+    }
+
+    /* Projects */
+    .projects-intro {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 8mm;
+      margin-bottom: 6mm;
+    }
+    .projects-intro .lead { margin-bottom: 0; }
+    .value-chip {
+      white-space: nowrap;
+      background: var(--navy);
+      color: var(--gold-bright);
+      padding: 3mm 4.5mm;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .project-hero {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 5mm;
+      margin-bottom: 5mm;
+      min-height: 72mm;
+    }
+    .project-hero-img {
+      background-size: cover;
+      background-position: center;
+      border-radius: 1px;
+      position: relative;
+      min-height: 72mm;
+      box-shadow: 0 12px 28px rgba(11,27,51,0.16);
+    }
+    .project-hero-img .tag {
+      position: absolute;
+      top: 4mm;
+      left: 4mm;
+      background: rgba(11,27,51,0.85);
+      color: var(--gold-bright);
+      font-size: 8.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 2mm 3mm;
+    }
+    .project-hero-copy {
+      background: var(--navy);
+      color: #fff;
+      padding: 6mm 5.5mm;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .project-hero-copy h3 {
+      font-size: 22px;
+      margin: 2mm 0 3mm;
+      color: #fff;
+    }
+    .project-hero-copy p {
+      font-size: 10.5px;
+      line-height: 1.55;
+      color: rgba(255,255,255,0.78);
+    }
+    .metric-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3mm;
+      margin-top: 4mm;
+    }
+    .metric-row div {
+      border-top: 1px solid rgba(245,166,35,0.35);
+      padding-top: 2.5mm;
+    }
+    .metric-row strong {
+      display: block;
+      color: var(--gold-bright);
+      font-size: 14px;
+      font-family: "Cormorant Garamond", serif;
+    }
+    .metric-row span {
+      font-size: 8px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 4.5mm;
+    }
+    .project-card {
+      display: grid;
+      grid-template-rows: 42mm auto;
+      background: #fff;
+      border: 1px solid rgba(11,27,51,0.07);
+      overflow: hidden;
+      box-shadow: 0 8px 18px rgba(11,27,51,0.06);
+    }
+    .project-card .thumb {
+      background-size: cover;
+      background-position: center;
+    }
+    .project-card .body {
+      padding: 3.5mm 4mm 4mm;
+    }
+    .project-card .cat {
+      font-size: 8px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 700;
+      margin-bottom: 1.5mm;
+    }
+    .project-card h3 {
+      font-size: 15px;
+      color: var(--navy);
+      margin-bottom: 1.5mm;
+      line-height: 1.15;
+    }
+    .project-card .meta-line {
+      font-size: 9.5px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+    .project-card .value {
+      margin-top: 2mm;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    /* Clients + contact closing */
+    .clients-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7mm;
+      flex: 1;
+    }
+    .client-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5mm 4mm;
+      align-content: start;
+    }
+    .client-list li {
+      list-style: none;
+      font-size: 11px;
+      color: var(--navy);
+      padding: 2.8mm 3mm;
+      background: #fff;
+      border-left: 2px solid var(--gold);
+      box-shadow: 0 2px 8px rgba(11,27,51,0.04);
+    }
+    .why-panel {
+      background: var(--navy);
+      color: #fff;
+      padding: 7mm 6mm;
+      display: flex;
+      flex-direction: column;
+      gap: 4mm;
+    }
+    .why-panel h3 {
+      font-size: 24px;
+      color: #fff;
+    }
+    .why-panel li {
+      list-style: none;
+      font-size: 11px;
+      line-height: 1.45;
+      color: rgba(255,255,255,0.82);
+      padding-left: 4.5mm;
+      position: relative;
+    }
+    .why-panel li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 5px;
+      width: 7px;
+      height: 7px;
+      background: var(--gold-bright);
+      border-radius: 50%;
+    }
+
+    .closing {
+      background:
+        linear-gradient(135deg, rgba(11,27,51,0.92), rgba(19,40,68,0.88)),
+        url("../public/images/pageheader-about.jpg") center/cover no-repeat;
+      color: #fff;
+      padding: 18mm 16mm;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .closing h1 {
+      font-size: 46px;
+      max-width: 150mm;
+      margin: 8mm 0 6mm;
+    }
+    .closing h1 em {
+      font-style: italic;
+      color: var(--gold-bright);
+    }
+    .closing .invite {
+      font-size: 14px;
+      line-height: 1.55;
+      color: rgba(255,255,255,0.82);
+      max-width: 140mm;
+      margin-bottom: 10mm;
+    }
+    .contact-panel {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(245,166,35,0.4);
+      padding: 8mm;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 8mm;
+      backdrop-filter: blur(8px);
+    }
+    .contact-panel h3 {
+      color: var(--gold-bright);
+      font-size: 22px;
+      margin-bottom: 4mm;
+    }
+    .contact-panel p {
+      font-size: 12px;
+      line-height: 1.55;
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 2mm;
+    }
+    .contact-panel a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .cta-box {
+      border-left: 2px solid var(--gold-bright);
+      padding-left: 5mm;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .cta-box .big {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 26px;
+      line-height: 1.15;
+      margin-bottom: 3mm;
+    }
+    .cta-box .small {
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===================== COVER ===================== -->
+  <section class="page cover">
+    <div class="cover-top">
+      <img class="cover-logo" src="./sunrise-logo.png" alt="Sunrise Constructions" />
+      <div class="cover-badge">Company Profile 2026</div>
+    </div>
+    <div class="cover-mid">
+      <div class="eyebrow">Engineers &amp; Contractors · Nagpur</div>
+      <h1>Building stronger futures, <em>together.</em></h1>
+      <p>
+        Since 2014, Sunrise Constructions has delivered highways, bridges, irrigation systems,
+        healthcare facilities, and civic infrastructure across Maharashtra — trusted by NHAI,
+        NH-PWD, Irrigation Department, and leading public institutions.
+      </p>
+    </div>
+    <div class="cover-bottom">
+      <div class="stat-block"><div class="num">12+</div><div class="label">Years Experience</div></div>
+      <div class="stat-block"><div class="num">28+</div><div class="label">Projects Delivered</div></div>
+      <div class="stat-block"><div class="num">₹115Cr+</div><div class="label">Annual Turnover</div></div>
+      <div class="stat-block"><div class="num">250+</div><div class="label">Professionals</div></div>
+    </div>
+  </section>
+
+  <!-- ===================== ABOUT ===================== -->
+  <section class="page inner">
+    <div class="page-header">
+      <img src="./logo-brand.png" alt="Sunrise" />
+      <div class="meta">About the Enterprise · 02</div>
+    </div>
+    <div class="eyebrow">Who We Are</div>
+    <h2 class="section-title">An engineering enterprise trusted for demanding work</h2>
+    <p class="lead">
+      Founded in Nagpur in 2014, Sunrise Constructions has grown into a ₹115 crore+ engineering
+      and construction enterprise delivering landmark infrastructure with institutional rigor.
+    </p>
+    <div class="about-grid">
+      <div class="about-copy">
+        <p>
+          We work with prestigious clients including NHAI, NH-PWD, and the Irrigation Department —
+          delivering highway packages, major bridges, lift irrigation schemes, residential colonies,
+          and healthcare facilities across Maharashtra.
+        </p>
+        <p>
+          Our team of 250+ engineers, project managers, and skilled tradespeople combines modern
+          project controls with hands-on field expertise. The result: disciplined execution,
+          transparent reporting, and infrastructure built to perform for generations.
+        </p>
+        <div class="pillars">
+          <div class="pillar"><strong>Integrity</strong><span>Commitments kept. No shortcuts on quality or safety.</span></div>
+          <div class="pillar"><strong>Engineering</strong><span>Method-driven delivery against MoRTH &amp; IRC standards.</span></div>
+          <div class="pillar"><strong>Partnership</strong><span>The contractor clients call when a project truly matters.</span></div>
+        </div>
+      </div>
+      <div class="about-photo">
+        <div class="caption">Large-scale site execution across Maharashtra</div>
+      </div>
+    </div>
+    <div class="page-footer">
+      <span>Sunrise Constructions · Inspiring Possibilities</span>
+      <span>info@sunrisegroupltd.in</span>
+    </div>
+  </section>
+
+  <!-- ===================== CAPABILITIES ===================== -->
+  <section class="page inner">
+    <div class="page-header">
+      <img src="./logo-brand.png" alt="Sunrise" />
+      <div class="meta">Capabilities · 03</div>
+    </div>
+    <div class="eyebrow">What We Deliver</div>
+    <h2 class="section-title">End-to-end construction capability</h2>
+    <p class="lead">
+      From highways and bridges to irrigation, healthcare, and campus works — we self-perform
+      critical packages and manage complex programmes with enterprise-grade controls.
+    </p>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="idx">01</div>
+        <h3>General Construction</h3>
+        <p>Structural, civil, and finishing works for landmark builds — RCC, steel, MEP rough-in, and architectural finishes with in-house plant and workforce.</p>
+      </div>
+      <div class="service-card">
+        <div class="idx">02</div>
+        <h3>Project Management</h3>
+        <p>Owner’s representative services with digital scheduling, earned-value tracking, procurement control, and transparent stakeholder reporting.</p>
+      </div>
+      <div class="service-card">
+        <div class="idx">03</div>
+        <h3>Design &amp; Build</h3>
+        <p>Integrated design-to-delivery for faster mobilisation, coordinated detailing, and single-point accountability from concept to handover.</p>
+      </div>
+      <div class="service-card">
+        <div class="idx">04</div>
+        <h3>Highway &amp; Infrastructure</h3>
+        <p>4-laning, white topping, bridges, FOBs, underpasses, and irrigation canals executed to NHAI / PWD / Irrigation Department standards.</p>
+      </div>
+      <div class="service-card">
+        <div class="idx">05</div>
+        <h3>Healthcare &amp; Institutional</h3>
+        <p>Hospital wards, colonies, and civic facilities built to operational standards with MEP, medical gas, and hospital-grade finishes.</p>
+      </div>
+      <div class="service-card">
+        <div class="idx">06</div>
+        <h3>Irrigation &amp; Water Works</h3>
+        <p>Lift irrigation schemes, feeder canals, aqueducts, and wildlife-sensitive alignments that protect habitats while serving agriculture.</p>
+      </div>
+    </div>
+    <div class="page-footer">
+      <span>Sunrise Constructions · Inspiring Possibilities</span>
+      <span>www.sunriseconstructions.in</span>
+    </div>
+  </section>
+
+  <!-- ===================== FLAGSHIP PROJECTS ===================== -->
+  <section class="page inner">
+    <div class="page-header">
+      <img src="./logo-brand.png" alt="Sunrise" />
+      <div class="meta">Selected Works · 04</div>
+    </div>
+    <div class="projects-intro">
+      <div>
+        <div class="eyebrow">Flagship Delivery</div>
+        <h2 class="section-title">Projects that define our standard</h2>
+        <p class="lead">Landmark packages for NHAI and state agencies — scale, complexity, and on-time execution.</p>
+      </div>
+      <div class="value-chip">Cumulative portfolio ₹300Cr+</div>
+    </div>
+
+    <div class="project-hero">
+      <div class="project-hero-img" style="background-image:url('../public/images/projects/nh7-laning.jpg')">
+        <div class="tag">Infrastructure · NHAI</div>
+      </div>
+      <div class="project-hero-copy">
+        <div>
+          <div class="eyebrow" style="color:var(--gold-bright)">2019 · Nagpur</div>
+          <h3>4-Laning of NH-7<br/>(MP–MH Border to Nagpur)</h3>
+          <p>77 km four-laning including Kamptee–Kanhan and Nagpur Bypass under NHDP Phase-II on DBFOT for NHAI — a critical freight corridor for central India.</p>
+        </div>
+        <div class="metric-row">
+          <div><strong>77 km</strong><span>Highway length</span></div>
+          <div><strong>₹114.34 Cr</strong><span>Project value</span></div>
+          <div><strong>NHDP-II</strong><span>Programme</span></div>
+          <div><strong>NHAI</strong><span>Client</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-grid">
+      <article class="project-card">
+        <div class="thumb" style="background-image:url('../public/images/projects/mokhabardi-canal.jpg')"></div>
+        <div class="body">
+          <div class="cat">Irrigation · Ongoing</div>
+          <h3>Mokhabardi Lift Irrigation Scheme</h3>
+          <div class="meta-line">Ambhora Lift Irrigation Division, Bhiwapur · 44.4 km main canal lining</div>
+          <div class="value">₹51.89 Cr</div>
+        </div>
+      </article>
+      <article class="project-card">
+        <div class="thumb" style="background-image:url('../public/images/projects/khindasi-feeder-canal.jpg')"></div>
+        <div class="body">
+          <div class="cat">Irrigation · Wildlife-sensitive</div>
+          <h3>Khindasi Feeder Canal with Wildlife Passes</h3>
+          <div class="meta-line">Irrigation Project Division, Nagpur · 16,000 ha command · 3 animal overpasses</div>
+          <div class="value">₹48.62 Cr</div>
+        </div>
+      </article>
+    </div>
+    <div class="page-footer">
+      <span>Sunrise Constructions · Inspiring Possibilities</span>
+      <span>Selected Works · 04</span>
+    </div>
+  </section>
+
+  <!-- ===================== MORE PROJECTS ===================== -->
+  <section class="page inner">
+    <div class="page-header">
+      <img src="./logo-brand.png" alt="Sunrise" />
+      <div class="meta">Selected Works · 05</div>
+    </div>
+    <div class="eyebrow">Highways · Bridges · Civic</div>
+    <h2 class="section-title">Recent and signature packages</h2>
+    <p class="lead" style="margin-bottom:6mm">A cross-section of completed and current work spanning transport, healthcare, and public facilities.</p>
+
+    <div class="project-grid" style="grid-template-rows: auto;">
+      <article class="project-card">
+        <div class="thumb" style="background-image:url('../public/images/projects/nh353j-katol.jpg')"></div>
+        <div class="body">
+          <div class="cat">Highway · NHAI · 2026</div>
+          <h3>NH-353J Nagpur–Katol Improvement</h3>
+          <div class="meta-line">6.7 km one-time improvement · Km 7+300 to 13+400 · EPC</div>
+          <div class="value">₹25.67 Cr</div>
+        </div>
+      </article>
+      <article class="project-card">
+        <div class="thumb" style="background-image:url('../public/images/projects/deoli-nh361-white-topping.jpg')"></div>
+        <div class="body">
+          <div class="cat">Highway · NHAI · 2026</div>
+          <h3>Deoli Town White Topping, NH-361</h3>
+          <div class="meta-line">3.2 km rigid white topping · Yavatmal–Wardha section · EPC</div>
+          <div class="value">₹20.73 Cr</div>
+        </div>
+      </article>
+      <article class="project-card">
+        <div class="thumb" style="background-image:url('../public/images/projects/kanhan-bridge.jpg')"></div>
+        <div class="body">
+          <div class="cat">Bridge · NH-PWD · 2022</div>
+          <h3>Kanhan Major Bridge, NH-7</h3>
+          <div class="meta-line">Deep well foundations · RCC piers · Structural steel superstructure</div>
+          <div class="value">₹7.31 Cr</div>
+        </div>
+      </article>
+      <article class="project-card">
+        <div class="thumb" style="background-image:url('../public/images/projects/pedestrian-underpass-nh44.jpg')"></div>
+        <div class="body">
+          <div class="cat">Safety · NHAI · 2020</div>
+          <h3>Pedestrian Underpass, NH-44</h3>
+          <div class="meta-line">Box-pushing underpass at Km 685+820 · Forest section · EPC</div>
+          <div class="value">₹12.64 Cr</div>
+        </div>
+      </article>
+      <article class="project-card">
+        <div class="thumb" style="background-image:url('../public/images/projects/gmc-paying-ward.jpg')"></div>
+        <div class="body">
+          <div class="cat">Healthcare · Medical PWD · 2026</div>
+          <h3>100-Bedded Paying Ward, GMCH Nagpur</h3>
+          <div class="meta-line">Hospital-grade construction · Medical gas · HVAC &amp; electrification</div>
+          <div class="value">₹22.38 Cr</div>
+        </div>
+      </article>
+      <article class="project-card">
+        <div class="thumb" style="background-image:url('../public/images/projects/mpeb-colony.jpg')"></div>
+        <div class="body">
+          <div class="cat">Residential · Pench · 2020</div>
+          <h3>MPEB &amp; WRD Employee Colony</h3>
+          <div class="meta-line">Complete colony near Pench National Park · Roads, water, power</div>
+          <div class="value">₹23.99 Cr</div>
+        </div>
+      </article>
+    </div>
+    <div class="page-footer">
+      <span>Sunrise Constructions · Inspiring Possibilities</span>
+      <span>Selected Works · 05</span>
+    </div>
+  </section>
+
+  <!-- ===================== CLIENTS ===================== -->
+  <section class="page inner">
+    <div class="page-header">
+      <img src="./logo-brand.png" alt="Sunrise" />
+      <div class="meta">Clients &amp; Credibility · 06</div>
+    </div>
+    <div class="eyebrow">Institutions That Trust Us</div>
+    <h2 class="section-title">Built on public-sector confidence</h2>
+    <p class="lead">Repeat engagement with national and state agencies is our strongest credential.</p>
+    <div class="clients-wrap">
+      <ul class="client-list">
+        <li>National Highways Authority of India (NHAI)</li>
+        <li>NH-PWD Nagpur</li>
+        <li>PWD Maharashtra</li>
+        <li>Irrigation Department / WRD</li>
+        <li>Pench Irrigation Division</li>
+        <li>Ambhora Lift Irrigation Division</li>
+        <li>Integrated Unit Medical PWD</li>
+        <li>GMCH Nagpur</li>
+        <li>MOIL Limited</li>
+        <li>Western Coalfields Ltd</li>
+        <li>NBCC (India) Ltd</li>
+        <li>MSSIDC</li>
+        <li>PMGSY</li>
+        <li>NMRDA</li>
+        <li>MADC</li>
+        <li>CIDCO</li>
+      </ul>
+      <div class="why-panel">
+        <h3>Why clients return</h3>
+        <ul>
+          <li>95% on-time delivery culture with programme discipline</li>
+          <li>99% client satisfaction across completed packages</li>
+          <li>Self-performed critical works with QA/QC rigor</li>
+          <li>EPC capability for NHAI and state highway packages</li>
+          <li>Proven irrigation &amp; wildlife-sensitive engineering</li>
+          <li>Transparent reporting and single-point accountability</li>
+          <li>Safety-first site culture — zero shortcuts</li>
+        </ul>
+        <div style="margin-top:auto;padding-top:4mm;border-top:1px solid rgba(245,166,35,0.35);font-size:11px;color:rgba(255,255,255,0.7);line-height:1.5;">
+          “The contractor clients call when a project truly matters.”
+          <div style="margin-top:2mm;color:var(--gold-bright);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;">— D Mallikarjun Reddy, Chairman &amp; Founder</div>
+        </div>
+      </div>
+    </div>
+    <div class="page-footer">
+      <span>Sunrise Constructions · Inspiring Possibilities</span>
+      <span>Clients &amp; Credibility · 06</span>
+    </div>
+  </section>
+
+  <!-- ===================== CLOSING / CONTACT ===================== -->
+  <section class="page closing">
+    <div>
+      <img src="./sunrise-logo.png" alt="Sunrise" style="height:24mm;filter:drop-shadow(0 4px 16px rgba(0,0,0,0.35))" />
+      <div class="eyebrow" style="margin-top:14mm;color:var(--gold-bright)">Next Conversation</div>
+      <h1>Let’s build something <em>that lasts.</em></h1>
+      <p class="invite">
+        Whether you need an EPC partner for a highway package, a bridge specialist, an irrigation contractor,
+        or a trusted builder for institutional works — we would be honoured to bid, partner, and deliver.
+      </p>
+    </div>
+    <div class="contact-panel">
+      <div>
+        <h3>Contact</h3>
+        <p><strong>Sunrise Constructions</strong><br/>Engineers &amp; Contractors</p>
+        <p>Ground Floor, Amar Palace Apartment<br/>Dhantoli, Nagpur, Maharashtra 440012</p>
+        <p><a href="mailto:info@sunrisegroupltd.in">info@sunrisegroupltd.in</a></p>
+        <p><a href="https://www.sunriseconstructions.in">www.sunriseconstructions.in</a></p>
+        <p style="margin-top:3mm;color:rgba(255,255,255,0.6);font-size:10px;">Mon–Sat · 10:00 AM – 7:00 PM</p>
+      </div>
+      <div class="cta-box">
+        <div class="big">Request a capability presentation or bid invitation.</div>
+        <div class="small">Confidential · Prompt response</div>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>

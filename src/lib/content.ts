@@ -17,6 +17,8 @@ import type {
   JobPerk,
   CareerStat,
   OfficeLocation,
+  PlantAndMachineryItem,
+  SocialActivityItem,
 } from '@/types/content';
 
 /* ----------------------------------------------------------------------------
@@ -311,9 +313,10 @@ export const services: Service[] = [
     ],
     gallery: [
       '/images/services/general-construction.jpg',
-      '/images/services/general-construction-2.jpg',
-      '/images/services/general-construction-3.jpg',
-      '/images/services/general-construction-4.jpg',
+      '/images/plant-machinery/concrete-batching-plant.jpg',
+      '/images/plant-machinery/earthmoving-loaders-graders.jpg',
+      '/images/plant-machinery/commercial-trucks-boom-placer.jpg',
+      '/images/plant-machinery/heavy-tippers-haulage.jpg',
     ],
     capabilities: [
       'Reinforced cement concrete (RCC) - foundations, columns, beams, slabs, shear walls',
@@ -1579,12 +1582,122 @@ export const employeeTestimonials: Testimonial[] = [
 ];
 
 export const lifeAtSunrise: string[] = [
-  '/images/life-1.svg',
-  '/images/life-2.svg',
-  '/images/life-3.svg',
-  '/images/life-4.svg',
-  '/images/life-5.svg',
-  '/images/life-6.svg',
+  '/images/social/team-celebration-gathering.jpg',
+  '/images/social/flag-hoisting-celebration.jpg',
+  '/images/plant-machinery/concrete-batching-plant.jpg',
+  '/images/plant-machinery/earthmoving-loaders-graders.jpg',
+  '/images/plant-machinery/commercial-trucks-boom-placer.jpg',
+  '/images/plant-machinery/heavy-tippers-haulage.jpg',
+];
+
+/* ----------------------------------------------------------------------------
+ * PLANT & MACHINERY FLEET
+ * ------------------------------------------------------------------------- */
+export const plantAndMachinery: PlantAndMachineryItem[] = [
+  {
+    id: 'concrete-batching-plant',
+    name: 'Automated Concrete Batching Plant & Transit Mixers',
+    category: 'Concrete & Paving Infrastructure',
+    specs: 'High-Capacity Automated Batching with Twin Bulk Silos & Transit Mixer Fleet',
+    description:
+      'Fully automated, computer-controlled concrete batching facility with dedicated twin bulk cement storage silos, automated aggregate conveyor systems, and captive transit mixers for seamless, zero-delay structural and PQC concrete pours.',
+    image: '/images/plant-machinery/concrete-batching-plant.jpg',
+    alt: 'High-capacity concrete batching plant with cement silos and Ashok Leyland transit mixer trucks',
+    features: [
+      'Twin bulk cement storage silos',
+      'Dedicated Ashok Leyland transit mixer fleet',
+      'Computerised aggregate & moisture control',
+      'Continuous PQC & structural pour capability',
+    ],
+  },
+  {
+    id: 'earthmoving-loaders-graders',
+    name: 'Precision Motor Graders & Earthmoving Equipment',
+    category: 'Earthmoving & Road Construction',
+    specs: 'Caterpillar 120 Motor Grader, CAT Backhoe Loaders & Vibratory Rollers',
+    description:
+      'Company-owned fleet of Caterpillar 120 motor graders, CAT 424B backhoe loaders, and heavy compaction machinery for precision sub-grade preparation, embankment shaping, and fast-track earthwork execution.',
+    image: '/images/plant-machinery/earthmoving-loaders-graders.jpg',
+    alt: 'Caterpillar 120 motor grader and CAT backhoe loader lined up at project machinery yard',
+    features: [
+      'Caterpillar 120 precision road motor grader',
+      'CAT heavy-duty backhoe loaders',
+      'High-tonnage vibratory soil compactors',
+      'Laser-guided leveling & sub-base grading',
+    ],
+  },
+  {
+    id: 'commercial-trucks-boom-placer',
+    name: 'Concrete Boom Placers & Heavy Commercial Fleet',
+    category: 'Concrete Placement & Fleet Logistics',
+    specs: 'Mobile Concrete Boom Placers, Tata Heavy Commercial Carriers & Transit Mixers',
+    description:
+      'Integrated high-reach concrete boom placer pumps and Tata heavy commercial carrier vehicles for high-elevation bridge decks, multi-storey structures, and long-distance pour sites without manual handling.',
+    image: '/images/plant-machinery/commercial-trucks-boom-placer.jpg',
+    alt: 'Tata heavy commercial trucks and mobile concrete boom placer pump fleet in yard',
+    features: [
+      'Long-reach hydraulic concrete boom pump',
+      'Heavy-duty Tata tippers and utility carriers',
+      'High-flow continuous concrete placement',
+      'All-weather rapid deployment capability',
+    ],
+  },
+  {
+    id: 'heavy-tippers-haulage',
+    name: 'Multi-Axle Heavy Tippers & Material Haulage Fleet',
+    category: 'Material Logistics & Haulage',
+    specs: 'Multi-Axle Dumper Trucks & Heavy Tractors for Rapid Aggregate Logistics',
+    description:
+      'High-capacity multi-axle tippers and material transport trucks deployed for massive quarry-to-site aggregate transport, earth excavation haulage, and uninterrupted site feeding across highway corridors.',
+    image: '/images/plant-machinery/heavy-tippers-haulage.jpg',
+    alt: 'Fleet of heavy multi-axle tippers and haulage equipment in company yard',
+    features: [
+      'Multi-axle high-capacity dumper fleet',
+      'Heavy quarry & aggregate transport logistics',
+      'Robust site-to-plant haulage management',
+      'Zero reliance on third-party transport delays',
+    ],
+  },
+];
+
+/* ----------------------------------------------------------------------------
+ * SOCIAL ACTIVITIES & COMPANY CULTURE
+ * ------------------------------------------------------------------------- */
+export const socialActivities: SocialActivityItem[] = [
+  {
+    id: 'flag-hoisting-ceremony',
+    title: 'National Flag Hoisting & Independence Day Celebration',
+    category: 'National Pride & Company Culture',
+    date: 'Annual National Celebration',
+    location: 'Sunrise Project Base Camp & Site Offices',
+    description:
+      'Sunrise leadership, project directors, site engineers, administrative staff, and frontline construction workers gather proudly at site base camps to hoist the National Tricolour, honouring the nation and our collective commitment to nation-building infrastructure.',
+    image: '/images/social/flag-hoisting-celebration.jpg',
+    alt: 'Sunrise leadership, engineers, and workforce celebrating national flag hoisting ceremony at project site',
+    highlights: [
+      'Site base camp flag hoisting ceremony',
+      'Leadership & on-site workforce solidarity',
+      'Recognition of outstanding site safety & progress',
+      'Community feast & cultural camaraderie',
+    ],
+  },
+  {
+    id: 'team-celebration-gathering',
+    title: 'Team Unity, Workforce Welfare & Site Celebrations',
+    category: 'Culture, Team Welfare & CSR',
+    date: 'Milestone & Festival Gatherings',
+    location: 'Project Campuses across Maharashtra',
+    description:
+      'Building enduring infrastructure starts with building a united, well-cared-for workforce. From festival celebrations and safety milestones to employee recognition, our inclusive culture treats every worker, engineer, and manager as part of the Sunrise family.',
+    image: '/images/social/team-celebration-gathering.jpg',
+    alt: 'Panoramic group photograph of Sunrise Constructions team, engineers, and site crew gathered together',
+    highlights: [
+      'Inclusive workforce welfare initiatives',
+      'Milestone achievements & festival celebrations',
+      'Site safety awards & recognition ceremonies',
+      'Health checkup camps and skill development',
+    ],
+  },
 ];
 
 export const jobListings: JobListing[] = [

@@ -94,26 +94,49 @@ export default async function CareersPage() {
         <div className="container-page">
           <SectionHeading
             eyebrow="Life at Sunrise"
-            title="More than a job"
-            description="From site visits and team events to office life and learning sessions - here is a glimpse of what it is like to work here."
+            title="More than a job — A thriving community"
+            description="From site milestone celebrations and national pride to operating world-class plant & machinery fleets across Maharashtra."
           />
-          <div className="mt-12 grid grid-cols-2 gap-4 md:grid-cols-3">
-            {lifeAtSunrise.map((img, i) => (
-              <Reveal
-                key={img}
-                delay={(i % 3) * 0.08}
-                className={i === 0 || i === 5 ? 'col-span-2 md:col-span-1' : ''}
-              >
-                <SmartImage
-                  src={img}
-                  alt={`Life at Sunrise Constructions - culture snapshot ${i + 1}`}
-                  aspect="aspect-square"
-                  sizes="(max-width: 768px) 50vw, 33vw"
-                  className="rounded-2xl shadow-navy-sm"
-                  imgClassName="transition-transform duration-700 hover:scale-105"
-                />
-              </Reveal>
-            ))}
+          <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {lifeAtSunrise.map((img, i) => {
+              const labels = [
+                { tag: 'Team Solidarity', title: 'Life at Sunrise Team Gathering' },
+                { tag: 'National Celebration', title: 'Independence Day Flag Hoisting' },
+                { tag: 'Infrastructure', title: 'Automated Concrete Batching Plant' },
+                { tag: 'Heavy Equipment', title: 'Caterpillar Grader & CAT Loader Fleet' },
+                { tag: 'Fleet Logistics', title: 'Commercial Trucks & Boom Placers' },
+                { tag: 'Material Transport', title: 'Heavy Tippers & Haulage Lineup' },
+              ];
+              const info = labels[i % labels.length];
+
+              return (
+                <Reveal
+                  key={img}
+                  delay={(i % 3) * 0.08}
+                  className="group relative overflow-hidden rounded-2xl border border-navy/5 bg-white shadow-navy-sm transition-all duration-500 hover:-translate-y-1 hover:border-gold/30 hover:shadow-navy"
+                >
+                  <div className="relative overflow-hidden aspect-[4/3]">
+                    <SmartImage
+                      src={img}
+                      alt={info.title}
+                      aspect="aspect-[4/3]"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="h-full w-full"
+                      imgClassName="transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/20 to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-90" />
+                    <div className="absolute bottom-0 left-0 right-0 p-5">
+                      <span className="inline-block rounded-full bg-gold/20 backdrop-blur-md px-2.5 py-0.5 text-[11px] font-semibold text-gold border border-gold/30">
+                        {info.tag}
+                      </span>
+                      <p className="mt-1.5 font-heading text-base font-bold text-white">
+                        {info.title}
+                      </p>
+                    </div>
+                  </div>
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </section>
