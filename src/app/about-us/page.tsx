@@ -8,6 +8,8 @@ import { Reveal } from '@/components/Reveal';
 import { StatsBar } from '@/components/StatsBar';
 import { MissionVisionValues } from '@/components/MissionVisionValues';
 import { TeamGrid } from '@/components/TeamGrid';
+import { PlantMachinerySection } from '@/components/PlantMachinerySection';
+import { SocialActivitySection } from '@/components/SocialActivitySection';
 import { CTABand } from '@/components/CTABand';
 import { JsonLd } from '@/components/JsonLd';
 import { buildMetadata, breadcrumbJsonLd } from '@/lib/seo';
@@ -242,7 +244,23 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Plant & Machinery Fleet */}
+      <PlantMachinerySection
+        eyebrow="Company-Owned Infrastructure"
+        title="In-house plant, machinery & heavy equipment fleet"
+        description="We own and operate modern automated batching plants, precision motor graders, mobile boom placers, and heavy tippers—giving us 100% control over execution quality, concrete mix integrity, and delivery milestones."
+        className="section bg-white"
+      />
+
       <TeamGrid />
+
+      {/* Social Activity, Culture & Celebrations */}
+      <SocialActivitySection
+        eyebrow="Culture & Celebrations"
+        title="Community, national pride & life at Sunrise"
+        description="Behind our engineering achievements are the committed engineers, supervisors, and workforce who celebrate milestones and uphold unity on every site."
+        className="section bg-cream"
+      />
 
       {/* Employee Testimonials */}
       <section className="section bg-navy" aria-labelledby="emp-testimonials-heading">

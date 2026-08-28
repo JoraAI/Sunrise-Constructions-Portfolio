@@ -201,3 +201,26 @@ export interface OfficeLocation {
   email: string;
   isHQ: boolean;
 }
+
+export interface PlantAndMachineryItem {
+  id: string;
+  name: string;
+  category: string;
+  specs: string;
+  description: string;
+  image: string;
+  alt: string;
+  features: string[];
+}
+
+export interface SocialActivityItem {
+  id: string;
+  title: string;
+  category: string;
+  date?: string;
+  location: string;
+  description: string;
+  image: string;
+  alt: string;
+  highlights: string[];
+}
