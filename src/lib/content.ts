@@ -131,20 +131,20 @@ export const aboutSection = {
 };
 
 /* ----------------------------------------------------------------------------
- * ABOUT PAGE - FOUNDER MESSAGE
+ * ABOUT PAGE - MANAGING DIRECTOR MESSAGE
  * ------------------------------------------------------------------------- */
-export const founderMessage = {
-  name: 'D Mallikarjun Reddy',
-  title: 'Chairman and Founder',
-  image: '/images/team/mallikarjun-reddy.jpg',
-  alt: 'Portrait of D Mallikarjun Reddy, Chairman and Founder of Sunrise Constructions',
-  heading: 'A message from our founder',
+export const mdMessage = {
+  name: 'D Anant Reddy',
+  title: 'Managing Director',
+  image: '/images/team/anant-reddy.jpg',
+  alt: 'Portrait of D Anant Reddy, Managing Director of Sunrise Constructions',
+  heading: 'A message from our Managing Director',
   body: [
-    'When I founded Sunrise Constructions in Nagpur in 2014, I had a simple conviction: that infrastructure built with engineering rigor and uncompromising integrity would always find a client. A decade later, that conviction has been validated by the trust of institutions like NHAI, NH-PWD, and the Irrigation Department.',
-    'Today, our 250+ strong team has delivered landmark highways, bridges, irrigation systems, and public infrastructure across Maharashtra. But I am most proud not of the structures we have built, but of the culture we have built them with - one where safety is non-negotiable, quality has no shortcuts, and every commitment we make is kept.',
-    'As we look to the next decade, our ambition is unchanged: to be the contractor that clients call when a project truly matters. Thank you for considering Sunrise Constructions. We would be honoured to build with you.',
+    'At Sunrise Constructions, every highway, bridge, and irrigation system we deliver is guided by one standard: engineering rigor without compromise. Leading day-to-day operations across our sites, I see firsthand how disciplined planning, self-performed works, and an uncompromising safety culture turn ambitious briefs into infrastructure that lasts.',
+    'Our 250+ strong team has earned the trust of institutions like NHAI, NH-PWD, and the Irrigation Department by keeping quality non-negotiable and every commitment intact. From mobilisation to handover, we hold ourselves accountable for schedule, cost, and craftsmanship.',
+    'As we grow into the next chapter, our ambition remains clear: to be the contractor clients call when a project truly matters. Thank you for considering Sunrise Constructions. We would be honoured to build with you.',
   ],
-  signature: 'D Mallikarjun Reddy',
+  signature: 'D Anant Reddy',
 };
 
 /* ----------------------------------------------------------------------------
@@ -1256,15 +1256,6 @@ export const testimonials: Testimonial[] = [
 export const team: TeamMember[] = [
   {
     id: 'm1',
-    name: 'D Mallikarjun Reddy',
-    title: 'Chairman and Founder',
-    bio: 'Founded Sunrise Constructions in 2014 in Nagpur, Maharashtra. A visionary leader with deep expertise in large-scale infrastructure and highway construction, Mallikarjun guides the group\u2019s long-term strategy and growth.',
-    image: '/images/team/mallikarjun-reddy.jpg',
-    alt: 'Portrait of D Mallikarjun Reddy, Chairman and Founder',
-    linkedin: '',
-  },
-  {
-    id: 'm2',
     name: 'D Anant Reddy',
     title: 'Managing Director',
     bio: 'Leads day-to-day operations and project delivery across all sites. Anant brings hands-on engineering expertise and a relentless focus on quality, safety, and on-time delivery.',
@@ -1273,7 +1264,7 @@ export const team: TeamMember[] = [
     linkedin: '',
   },
   {
-    id: 'm3',
+    id: 'm2',
     name: 'Ashok Rawat',
     title: 'General Manager (Technical)',
     bio: 'Heads the technical function with over a decade of experience across highway and bridge projects. Ashok oversees engineering design, quality assurance, and on-site technical problem-solving across all active sites.',
@@ -1282,7 +1273,7 @@ export const team: TeamMember[] = [
     linkedin: '',
   },
   {
-    id: 'm4',
+    id: 'm3',
     name: 'Muntazim Akhtar',
     title: 'Billing & Planning Engineer',
     bio: 'Manages billing, quantity estimation, and project planning for large infrastructure packages. Muntazim ensures contractual compliance, accurate RA bills, and resource-loaded schedules that keep projects on budget and on time.',
@@ -1291,7 +1282,7 @@ export const team: TeamMember[] = [
     linkedin: '',
   },
   {
-    id: 'm5',
+    id: 'm4',
     name: 'Mujeeb Ansari',
     title: 'Chief Project Manager',
     bio: 'Leads end-to-end delivery of complex highway, bridge, and irrigation projects from concept to handover. Mujeeb coordinates multi-disciplinary site teams, client interfaces, and subcontractor management to ensure milestone adherence.',
@@ -1300,7 +1291,7 @@ export const team: TeamMember[] = [
     linkedin: '',
   },
   {
-    id: 'm6',
+    id: 'm5',
     name: 'Roshan Waghale',
     title: 'Senior Accounts Officer',
     bio: 'Oversees financial operations across the group, including GST/TDS compliance, vendor payments, project cost accounting, and statutory audits. Roshan brings rigorous financial discipline to multi-crore infrastructure engagements.',
@@ -1309,7 +1300,7 @@ export const team: TeamMember[] = [
     linkedin: '',
   },
   {
-    id: 'm7',
+    id: 'm6',
     name: 'Vishal Kumar Tiwari',
     title: 'Project Manager',
     bio: 'Manages concurrent infrastructure projects with a focus on meticulous planning and strong team coordination. Vishal drives site execution, progress monitoring, and client reporting across highway and irrigation packages.',
@@ -1318,7 +1309,7 @@ export const team: TeamMember[] = [
     linkedin: '',
   },
   {
-    id: 'm8',
+    id: 'm7',
     name: 'Amit Pandey',
     title: 'Deputy Project Manager',
     bio: 'Supports project management across site execution, procurement, and progress tracking. Amit brings hands-on experience from site engineering to planning, ensuring day-to-day milestones are met across active projects.',
@@ -1327,7 +1318,7 @@ export const team: TeamMember[] = [
     linkedin: '',
   },
   {
-    id: 'm9',
+    id: 'm8',
     name: 'Navin Nikhar',
     title: 'Senior Surveyor & Design Engineer',
     bio: 'Leads survey, setting-out, and design coordination with precision and autonomy. Navin ensures every project\u2019s engineering meets the highest standards, from baseline surveys to as-built documentation.',

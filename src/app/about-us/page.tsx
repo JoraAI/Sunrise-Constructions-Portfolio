@@ -16,7 +16,7 @@ import { buildMetadata, breadcrumbJsonLd } from '@/lib/seo';
 import { Star, Quote } from 'lucide-react';
 import {
   aboutSection,
-  founderMessage,
+  mdMessage,
   aboutApproach,
   aboutDifferentiators,
   employeeTestimonials,
@@ -59,19 +59,19 @@ export default function AboutPage() {
         backgroundImage="/images/pageheader-about.jpg"
       />
 
-      {/* Founder's Message */}
-      <section className="section bg-white" aria-labelledby="founder-heading">
+      {/* Managing Director's Message */}
+      <section className="section bg-white" aria-labelledby="md-heading">
         <div className="container-page">
           <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
-            {/* Founder image */}
+            {/* MD image */}
             <div className="lg:col-span-5">
               <Reveal direction="right">
                 <div className="relative">
                   <div className="absolute -left-4 -top-4 h-24 w-24 rounded-2xl border-2 border-gold/30" aria-hidden />
                   <div className="absolute -bottom-4 -right-4 h-24 w-24 rounded-2xl bg-gold/10" aria-hidden />
                   <SmartImage
-                    src={founderMessage.image}
-                    alt={founderMessage.alt}
+                    src={mdMessage.image}
+                    alt={mdMessage.alt}
                     aspect="aspect-[4/5]"
                     className="relative rounded-2xl shadow-navy"
                     sizes="(max-width: 1024px) 100vw, 40vw"
@@ -84,12 +84,12 @@ export default function AboutPage() {
             {/* Message */}
             <div className="lg:col-span-7">
               <SectionHeading
-                eyebrow="From the Founder&rsquo;s Desk"
-                title={<span id="founder-heading">{founderMessage.heading}</span>}
+                eyebrow="From the MD&rsquo;s Desk"
+                title={<span id="md-heading">{mdMessage.heading}</span>}
                 align="left"
               />
               <div className="mt-6 space-y-4">
-                {founderMessage.body.map((para, i) => (
+                {mdMessage.body.map((para, i) => (
                   <Reveal key={i} delay={i * 0.05}>
                     <p className="text-base leading-relaxed text-charcoal-light lg:text-lg">
                       {para}
@@ -98,8 +98,8 @@ export default function AboutPage() {
                 ))}
               </div>
               <Reveal delay={0.2} className="mt-6">
-                <p className="font-heading text-xl font-bold text-navy">{founderMessage.signature}</p>
-                <p className="text-sm font-semibold text-gold">{founderMessage.title}</p>
+                <p className="font-heading text-xl font-bold text-navy">{mdMessage.signature}</p>
+                <p className="text-sm font-semibold text-gold">{mdMessage.title}</p>
               </Reveal>
             </div>
           </div>

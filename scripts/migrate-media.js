@@ -79,8 +79,14 @@ const MEDIA_FILES = [
   { path: '/images/industry-infrastructure.svg', section: 'industries', alt: 'Elevated metro viaduct under construction' },
 
   // Team
-  { path: '/images/team-1.svg', section: 'team', alt: 'Portrait of D Mallikarjun Reddy, Chairman and Founder' },
-  { path: '/images/team-2.svg', section: 'team', alt: 'Portrait of D Anant Reddy, Managing Director' },
+  { path: '/images/team/anant-reddy.jpg', section: 'team', alt: 'Portrait of D Anant Reddy, Managing Director' },
+  { path: '/images/team/ashok-rawat.jpg', section: 'team', alt: 'Portrait of Ashok Rawat, General Manager (Technical)' },
+  { path: '/images/team/muntazim-akhtar.jpg', section: 'team', alt: 'Portrait of Muntazim Akhtar, Billing & Planning Engineer' },
+  { path: '/images/team/mujeeb-ansari.jpg', section: 'team', alt: 'Portrait of Mujeeb Ansari, Chief Project Manager' },
+  { path: '/images/team/roshan-waghale.jpg', section: 'team', alt: 'Portrait of Roshan Waghale, Senior Accounts Officer' },
+  { path: '/images/team/vishal-tiwari.jpg', section: 'team', alt: 'Portrait of Vishal Kumar Tiwari, Project Manager' },
+  { path: '/images/team/amit-pandey.jpg', section: 'team', alt: 'Portrait of Amit Pandey, Deputy Project Manager' },
+  { path: '/images/team/navin-nikhar.jpg', section: 'team', alt: 'Portrait of Navin Nikhar, Senior Surveyor & Design Engineer' },
 
   // Testimonials
   { path: '/images/testimonial-1.svg', section: 'testimonials', alt: 'NH-PWD official' },
