@@ -70,24 +70,26 @@ export function Navbar() {
               {utilityBar.email}
             </a>
           </div>
-          <div className="flex items-center gap-4">
-            <span className="text-white/40">Follow us</span>
-            {utilityBar.socials.map((s) => {
-              const SocialIcon = socialIconMap[s.icon];
-              return (
-                <a
-                  key={s.label}
-                  href={s.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={s.label}
-                  className="text-white/60 transition-colors hover:text-gold"
-                >
-                  <SocialIcon className="h-4 w-4" />
-                </a>
-              );
-            })}
-          </div>
+          {utilityBar.socials.length > 0 && (
+            <div className="flex items-center gap-4">
+              <span className="text-white/40">Follow us</span>
+              {utilityBar.socials.map((s) => {
+                const SocialIcon = socialIconMap[s.icon];
+                return (
+                  <a
+                    key={s.label}
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={s.label}
+                    className="text-white/60 transition-colors hover:text-gold"
+                  >
+                    <SocialIcon className="h-4 w-4" />
+                  </a>
+                );
+              })}
+            </div>
+          )}
         </div>
       </div>
 
@@ -202,23 +204,25 @@ export function Navbar() {
                     <Mail className="h-4 w-4 text-gold" /> {utilityBar.email}
                   </a>
                 </div>
-                <div className="flex items-center gap-4 pt-4">
-                  {utilityBar.socials.map((s) => {
-                    const SocialIcon = socialIconMap[s.icon];
-                    return (
-                      <a
-                        key={s.label}
-                        href={s.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={s.label}
-                        className="text-white/60 hover:text-gold"
-                      >
-                        <SocialIcon className="h-5 w-5" />
-                      </a>
-                    );
-                  })}
-                </div>
+                {utilityBar.socials.length > 0 && (
+                  <div className="flex items-center gap-4 pt-4">
+                    {utilityBar.socials.map((s) => {
+                      const SocialIcon = socialIconMap[s.icon];
+                      return (
+                        <a
+                          key={s.label}
+                          href={s.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={s.label}
+                          className="text-white/60 hover:text-gold"
+                        >
+                          <SocialIcon className="h-5 w-5" />
+                        </a>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
               </div>
             </div>

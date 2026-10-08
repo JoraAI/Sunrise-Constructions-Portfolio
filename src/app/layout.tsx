@@ -5,7 +5,7 @@ import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { ChatWidget } from '@/components/ChatWidget';
 import { JsonLd } from '@/components/JsonLd';
-import { organizationJsonLd } from '@/lib/seo';
+import { organizationJsonLd, websiteJsonLd } from '@/lib/seo';
 import { siteConfig } from '@/lib/content';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
@@ -22,14 +22,17 @@ export const metadata: Metadata = {
   creator: siteConfig.legalName,
   publisher: siteConfig.legalName,
   keywords: [
-    'construction company India',
-    'commercial construction',
-    'residential construction',
-    'industrial construction',
-    'infrastructure',
+    'Sunrise Constructions',
+    'Sunrise Group Nagpur',
+    'construction company Nagpur',
+    'construction company Maharashtra',
+    'NHAI highway contractor',
+    'bridge construction Nagpur',
+    'irrigation construction Maharashtra',
+    'infrastructure contractor India',
+    'general contractor Nagpur',
     'design and build',
-    'project management',
-    'Bengaluru construction',
+    'project management construction',
   ],
   alternates: { canonical: '/' },
   openGraph: {
@@ -39,13 +42,13 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     locale: 'en_IN',
     type: 'website',
-    images: [{ url: '/og/og-default.svg', width: 1200, height: 630, alt: siteConfig.name }],
+    images: [{ url: '/og/og-default.jpg', width: 1200, height: 630, alt: siteConfig.name }],
   },
   twitter: {
     card: 'summary_large_image',
     title: `${siteConfig.name} - ${siteConfig.tagline}`,
     description: siteConfig.description,
-    images: ['/og/og-default.svg'],
+    images: ['/og/og-default.jpg'],
   },
   robots: {
     index: true,
@@ -73,6 +76,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className="min-h-screen bg-white font-sans antialiased">
         {!isAdmin && <JsonLd data={organizationJsonLd()} />}
+        {!isAdmin && <JsonLd data={websiteJsonLd()} />}
         {!isAdmin && (
           <>
             {/* Skip to content for accessibility */}

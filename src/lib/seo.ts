@@ -31,15 +31,21 @@ export function buildMetadata({
   type = 'website',
   noIndex = false,
 }: BuildMetadataArgs): Metadata {
-  const url = `${baseUrl}${path}`;
-  const ogImage = image ?? `${baseUrl}/og/og-default.svg`;
+  const normalizedPath = path === '/' ? '' : path.startsWith('/') ? path : `/${path}`;
+  const url = `${baseUrl}${normalizedPath || '/'}`;
+  const ogImage = image ?? `${baseUrl}/og/og-default.jpg`;
 
   return {
     title,
     description,
     keywords: [
-      'construction company',
-      'commercial construction',
+      'Sunrise Constructions',
+      'construction company Nagpur',
+      'construction company Maharashtra',
+      'NHAI contractor',
+      'highway construction',
+      'bridge construction',
+      'irrigation projects',
       'general contractor',
       'infrastructure',
       'design and build',
@@ -49,7 +55,7 @@ export function buildMetadata({
     alternates: { canonical: url },
     robots: noIndex
       ? { index: false, follow: false }
-      : { index: true, follow: true, 'max-image-preview': 'large' },
+      : { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 },
     openGraph: {
       title,
       description,
@@ -70,19 +76,43 @@ export function buildMetadata({
 
 /**
  * JSON-LD structured data: Organization + GeneralContractor/LocalBusiness.
+ * Avoids fabricated aggregateRating (Google spam risk) and empty phone fields.
  */
 export function organizationJsonLd() {
+  const realSocials = siteConfig.socials
+    .map((s) => s.href)
+    .filter((href) => {
+      try {
+        const host = new URL(href).hostname.replace(/^www\./, '');
+        return !['linkedin.com', 'twitter.com', 'x.com', 'facebook.com', 'instagram.com', 'youtube.com'].includes(host);
+      } catch {
+        return false;
+      }
+    });
+
+  const contactPoint: Record<string, unknown> = {
+    '@type': 'ContactPoint',
+    contactType: 'sales',
+    email: siteConfig.contact.email,
+    areaServed: ['IN', 'Maharashtra'],
+    availableLanguage: ['English', 'Hindi', 'Marathi'],
+  };
+  if (siteConfig.contact.phone) {
+    contactPoint.telephone = siteConfig.contact.phone;
+  }
+
   return {
     '@context': 'https://schema.org',
     '@type': ['Organization', 'GeneralContractor', 'LocalBusiness'],
     '@id': `${baseUrl}#organization`,
     name: siteConfig.name,
+    alternateName: ['Sunrise Group', 'Sunrise Group Ltd'],
     legalName: siteConfig.legalName,
     url: baseUrl,
     logo: `${baseUrl}/images/logo.png`,
-    image: `${baseUrl}/og/og-default.svg`,
+    image: `${baseUrl}/og/og-default.jpg`,
     description: siteConfig.description,
-    telephone: siteConfig.contact.phone,
+    ...(siteConfig.contact.phone ? { telephone: siteConfig.contact.phone } : {}),
     email: siteConfig.contact.email,
     foundingDate: siteConfig.founded,
     slogan: siteConfig.tagline,
@@ -94,24 +124,34 @@ export function organizationJsonLd() {
       postalCode: siteConfig.contact.pincode,
       addressCountry: 'IN',
     },
-    contactPoint: [
-      {
-        '@type': 'ContactPoint',
-        telephone: siteConfig.contact.phone,
-        contactType: 'sales',
-        email: siteConfig.contact.email,
-        areaServed: 'IN',
-        availableLanguage: ['English', 'Hindi', 'Tamil', 'Kannada'],
-      },
-    ],
-    sameAs: siteConfig.socials.map((s) => s.href),
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '4.9',
-      reviewCount: '320',
-      bestRating: '5',
-      worstRating: '1',
+    geo: {
+      '@type': 'GeoCoordinates',
+      // Approximate Dhantoli, Nagpur — refine if exact coords are available
+      latitude: 21.1398,
+      longitude: 79.0815,
     },
+    contactPoint: [contactPoint],
+    areaServed: [
+      { '@type': 'State', name: 'Maharashtra' },
+      { '@type': 'City', name: 'Nagpur' },
+    ],
+    ...(realSocials.length > 0 ? { sameAs: realSocials } : {}),
+  };
+}
+
+/**
+ * JSON-LD: WebSite entity so Google can associate the domain with the brand.
+ */
+export function websiteJsonLd() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': `${baseUrl}#website`,
+    url: baseUrl,
+    name: siteConfig.name,
+    description: siteConfig.description,
+    publisher: { '@id': `${baseUrl}#organization` },
+    inLanguage: 'en-IN',
   };
 }
 
