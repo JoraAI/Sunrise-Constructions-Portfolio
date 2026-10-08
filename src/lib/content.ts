@@ -30,8 +30,9 @@ export const siteConfig = {
   shortName: 'Sunrise',
   tagline: 'Inspiring Possibilities',
   description:
-    'Sunrise Constructions is a ₹115Cr+ engineering and construction enterprise delivering large-scale commercial, residential, industrial, and infrastructure projects across India since 2014.',
-  url: 'https://www.sunriseconstructions.in',
+    'Sunrise Constructions (Sunrise Group) is a Nagpur-based ₹115Cr+ engineering and construction enterprise delivering NHAI highways, bridges, irrigation systems, and public infrastructure across Maharashtra since 2014.',
+  /** Canonical production domain — must match the live site & Search Console property */
+  url: 'https://sunrisegroupltd.in',
   founded: '2014',
   contact: {
     phone: '',
@@ -45,13 +46,8 @@ export const siteConfig = {
     mapUrl: 'https://maps.app.goo.gl/ajuSEx2VScxB4Sww9',
     hours: 'Mon-Sat: 10:00 AM - 7:00 PM',
   } satisfies ContactInfo,
-  socials: [
-    { label: 'LinkedIn', href: 'https://linkedin.com', icon: 'linkedin' },
-    { label: 'Twitter', href: 'https://twitter.com', icon: 'twitter' },
-    { label: 'Facebook', href: 'https://facebook.com', icon: 'facebook' },
-    { label: 'Instagram', href: 'https://instagram.com', icon: 'instagram' },
-    { label: 'YouTube', href: 'https://youtube.com', icon: 'youtube' },
-  ] satisfies SocialLink[],
+  /** Only include real profile URLs. Generic homepage links hurt structured data. */
+  socials: [] as SocialLink[],
 };
 
 export const navLinks: NavLink[] = [

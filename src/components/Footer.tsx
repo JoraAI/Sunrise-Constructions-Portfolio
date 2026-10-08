@@ -117,24 +117,26 @@ export function Footer() {
               </li>
             </ul>
 
-            {/* Socials */}
-            <div className="mt-5 flex items-center gap-3">
-              {siteConfig.socials.map((s) => {
-                const SocialIcon = socialIconMap[s.icon];
-                return (
-                  <a
-                    key={s.label}
-                    href={s.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={s.label}
-                    className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 text-white/60 transition-colors hover:border-gold hover:text-gold"
-                  >
-                    <SocialIcon className="h-4 w-4" />
-                  </a>
-                );
-              })}
-            </div>
+            {/* Socials — only render when real profile URLs are configured */}
+            {siteConfig.socials.length > 0 && (
+              <div className="mt-5 flex items-center gap-3">
+                {siteConfig.socials.map((s) => {
+                  const SocialIcon = socialIconMap[s.icon];
+                  return (
+                    <a
+                      key={s.label}
+                      href={s.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={s.label}
+                      className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 text-white/60 transition-colors hover:border-gold hover:text-gold"
+                    >
+                      <SocialIcon className="h-4 w-4" />
+                    </a>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </div>
 
